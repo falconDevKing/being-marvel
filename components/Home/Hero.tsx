@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Hero = () => {
   return (
-    <Box width={'85%'} display={'flex'} justifyContent={'space-between'} mx="auto">
+    <Box width={'85%'} display={'flex'} justifyContent={'space-between'} mx="auto" bgcolor="aqua">
       <Box width={'60%'} p={6} borderRadius={'16px'}>
         <Image src="/HomePicture.png" alt="Welcome Image" layout="responsive" width={1024} height={775} style={{ borderRadius: '16px' }} />
       </Box>
