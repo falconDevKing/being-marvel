@@ -3,17 +3,10 @@ import Head from 'next/head'
 import { Box, Stack } from '@mui/material'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import Hero from '../components/Home/Hero'
-import Caption from '../components/Home/Caption'
 import Image from 'next/image'
-import HomeBlogSamples from '../components/Home/HomeBlogSamples'
 import { SiInstagram, SiTwitter } from 'react-icons/si'
 import { RiLinkedinFill } from 'react-icons/ri'
 import { AiOutlineMail } from 'react-icons/ai'
-import localFont from '@next/font/local'
-
-// Font files can be colocated inside of `pages`
-const Tomatoes = localFont({ src: '../fonts/Tomatoes.ttf' })
 
 const About: NextPage = () => {
   return (
@@ -30,7 +23,7 @@ const About: NextPage = () => {
       <Box width={'300px'} height={'300px'} mx={'auto'} mt={'-150px'}>
         <Image src={'/AboutPicture.png'} alt="about picture" width={402} height={402} layout="responsive" style={{ borderRadius: '50%' }} />
       </Box>
-      <Box style={Tomatoes.style} textAlign={'center'} fontSize={'3rem'} py={6}>
+      <Box fontFamily={'Tomatoes'} textAlign={'center'} fontSize={'3rem'} py={6}>
         Being Marvel
       </Box>
 
