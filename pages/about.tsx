@@ -10,6 +10,10 @@ import HomeBlogSamples from '../components/Home/HomeBlogSamples'
 import { SiInstagram, SiTwitter } from 'react-icons/si'
 import { RiLinkedinFill } from 'react-icons/ri'
 import { AiOutlineMail } from 'react-icons/ai'
+import localFont from '@next/font/local'
+
+// Font files can be colocated inside of `pages`
+const Tomatoes = localFont({ src: '../fonts/Tomatoes.ttf' })
 
 const About: NextPage = () => {
   return (
@@ -26,11 +30,11 @@ const About: NextPage = () => {
       <Box width={'300px'} height={'300px'} mx={'auto'} mt={'-150px'}>
         <Image src={'/AboutPicture.png'} alt="about picture" width={402} height={402} layout="responsive" style={{ borderRadius: '50%' }} />
       </Box>
-      <Box fontFamily={'Tomatoes'} textAlign={'center'} fontSize={'3rem'} py={6}>
+      <Box style={Tomatoes.style} textAlign={'center'} fontSize={'3rem'} py={6}>
         Being Marvel
       </Box>
 
-      <Box px={8} textAlign={'center'} py={4} width={'60%'} mx={'auto'}>
+      <Box px={8} textAlign={'center'} py={4} width={'60%'} mx={'auto'} fontSize={'1.25rem'}>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam sit cum facere aperiam laboriosam nulla s milique quaerat hic magnam aliquid, accusamus
         nesciunt consectetur aspernatur repellendus? Commodi, illum beatae omnis impedit facilis deserunt minus. At aliquid dicta nihil, suscipit reiciendis
         porro blanditiis iste dolore accusamus tempora? Commodi, ea nulla repudiandae earum asperiores corrupti perferendis maiores! Nihil consectetur nesciunt

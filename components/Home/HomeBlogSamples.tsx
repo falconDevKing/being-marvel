@@ -1,10 +1,14 @@
 import { Box, Stack } from '@mui/material'
 import HomeBlogCard from './HomeBlogCard'
+import localFont from '@next/font/local'
+
+// Font files can be colocated inside of `pages`
+const Tomatoes = localFont({ src: '../../fonts/Tomatoes.ttf' })
 
 const HomeBlogSamples = () => {
   return (
     <Box display={'flex'} flexDirection={'column'} alignItems={'center'} p={8}>
-      <Box fontFamily={'Tomatoes'} fontSize={'6rem'} color="#2C2C2C" mb={-4}>
+      <Box style={Tomatoes.style} fontSize={'6rem'} color="#2C2C2C" mb={-4}>
         Lorem ip
       </Box>
 
