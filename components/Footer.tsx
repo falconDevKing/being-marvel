@@ -32,7 +32,8 @@ const Footer = ({ width }: FooterProps) => {
                   outline: 'none',
                   border: 'none',
                   width: '100%',
-                  fontSize: '1.3rem',
+                  fontSize: '1.25rem',
+                  fontFamily: 'Cormorant Garamond',
                 }}
               />
 
