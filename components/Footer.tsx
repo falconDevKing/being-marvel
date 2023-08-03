@@ -7,8 +7,8 @@ type FooterProps = {
 
 const Footer = ({ width }: FooterProps) => {
   return (
-    <Box bgcolor={'orange'} width={'100%'} py={6} color="#fff">
-      <Box bgcolor={'green'} width={width} mx={'auto'} fontSize={'1.25rem'}>
+    <Box bgcolor={'#222'} width={'100%'} py={6} color="#fff">
+      <Box bgcolor={'#222'} width={width} mx={'auto'} fontSize={'1.25rem'}>
         <Box justifyContent={'space-between'} display={'flex'}>
           <Box>
             <Image src="/BeingMarvelLogoPurple.png" alt="being marvel logo" width={100} height={50} />
