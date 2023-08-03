@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Tomatoes";
-  src: url('../public/fonts/Tomatoes.ttf');
+  src: url('/fonts/Tomatoes.ttf');
 }
 
 html,
