@@ -1,6 +1,7 @@
 import { Box, Stack } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 type HeaderProps = {
   width: string
@@ -39,14 +40,39 @@ const Header = ({ width }: HeaderProps) => {
 
   return (
     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} width={width} mx="auto" py={2}>
-      <Image src="/BeingMarvelLogo.png" alt="being marvel logo" width={100} height={50} style={{ cursor: 'pointer' }} />
+      <Link href={'/'}>
+        <a>
+          <Image src="/BeingMarvelLogo.png" alt="being marvel logo" width={100} height={50} style={{ cursor: 'pointer' }} />
+        </a>
+      </Link>
+
       <Stack spacing={2} direction={'row'}>
-        <Box sx={activePath === 'home' ? selectedNav : unSelectedNav}>HOME</Box>
-        <Box sx={activePath === 'about' ? selectedNav : unSelectedNav}>ABOUT</Box>
-        <Box sx={activePath === 'blog' ? selectedNav : unSelectedNav}>BLOG</Box>
-        <Box sx={activePath === 'contact' ? selectedNav : unSelectedNav}>CONTACT</Box>
+        <Link href={'/'}>
+          <a>
+            <Box sx={activePath === 'home' ? selectedNav : unSelectedNav}>HOME</Box>
+          </a>
+        </Link>
+        <Link href={'/about'}>
+          <a>
+            <Box sx={activePath === 'about' ? selectedNav : unSelectedNav}>ABOUT</Box>
+          </a>
+        </Link>
+        <Link href={'/blog'}>
+          <a>
+            <Box sx={activePath === 'blog' ? selectedNav : unSelectedNav}>BLOG</Box>
+          </a>
+        </Link>
+        <Link href={'/contact'}>
+          <a>
+            <Box sx={activePath === 'contact' ? selectedNav : unSelectedNav}>CONTACT</Box>
+          </a>
+        </Link>
       </Stack>
-      <Box sx={selectedNav}>SIGN IN</Box>
+      <Link href={'/'}>
+        <a>
+          <Box sx={selectedNav}>SIGN IN</Box>
+        </a>
+      </Link>
     </Box>
   )
 }
