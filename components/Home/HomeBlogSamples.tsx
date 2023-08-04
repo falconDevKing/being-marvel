@@ -5,7 +5,7 @@ const HomeBlogSamples = () => {
   return (
     <Box display={'flex'} flexDirection={'column'} alignItems={'center'} p={8}>
       <Box fontFamily={'Tomatoes'} fontSize={'6rem'} color="#2C2C2C" mb={-4}>
-        Larry X
+        Lorem ip
       </Box>
 
       <Box fontSize={'1.5rem'} color="#2C2C2C">
