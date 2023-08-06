@@ -1,17 +1,24 @@
 import { Box } from '@mui/material'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 type FooterProps = {
   width: string
 }
 
 const Footer = ({ width }: FooterProps) => {
+  const router = useRouter()
+
+  const navToDashboard = () => {
+    router.push('/blogger/dashboard')
+  }
+
   return (
     <Box bgcolor={'#222'} width={'100%'} py={6} color="#fff">
       <Box bgcolor={'#222'} width={width} mx={'auto'} fontSize={'1.25rem'}>
         <Box justifyContent={'space-between'} display={'flex'}>
           <Box>
-            <Image src="/BeingMarvelLogoPurple.png" alt="being marvel logo" width={100} height={50} />
+            <Image src="/BeingMarvelLogoPurple.png" alt="being marvel logo" width={100} height={50} onClick={navToDashboard} style={{ cursor: 'pointer' }} />
             <Box py={2}>
               <Box py={1}>Lagos State, Nigeria</Box>
               <Box py={1}>beingmarvelblog@gmail.com</Box>
