@@ -152,7 +152,7 @@ const NewBlog = () => {
                 <Editor
                   theme="snow"
                   // defaultValue={value}
-                  readOnly={true}
+                  // readOnly={true}
                   value={value}
                   onChange={setValue}
                   modules={QuillModules}
