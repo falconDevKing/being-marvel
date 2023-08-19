@@ -41,6 +41,8 @@ const Header = ({ width }: HeaderProps) => {
       ? 'contact'
       : router.pathname === '/blog'
       ? 'blog'
+      : router.pathname.includes('/blog/')
+      ? 'blog'
       : router.pathname === '/about'
       ? 'about'
       : router.pathname === '/'

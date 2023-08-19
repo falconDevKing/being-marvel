@@ -26,6 +26,10 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   const userImage = userDetails?.image as string
   // const userId = userDetails?.id as string
 
+  const signOutHandler = () => {
+    signOut({ callbackUrl: '/blog' })
+  }
+
   const navToBlogger = (section: string) => {
     router.push('/blogger/' + section)
   }
@@ -133,7 +137,7 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
                     Profile
                   </Box>
                 </Box>
-                <Box display={'flex'} alignItems={'center'} p={1} sx={activePath === 'logout' ? selectedNav : unSelectedNav}>
+                <Box display={'flex'} alignItems={'center'} p={1} sx={activePath === 'logout' ? selectedNav : unSelectedNav} onClick={signOutHandler}>
                   <LogoutIcon color="primary" />
                   <Box component="span" px={1}>
                     Logout
@@ -158,7 +162,7 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
               }}
             />
             <Divider orientation="vertical" flexItem />
-            <Box px={2} py={1} bgcolor={'#6E87DC88'} mx={2} color="#fff" fontWeight={700} onClick={() => signOut()}>
+            <Box px={2} py={1} bgcolor={'#6E87DC88'} mx={2} color="#fff" fontWeight={700} onClick={signOutHandler} sx={{ cursor: 'pointer' }}>
               Logout
             </Box>
           </Box>

@@ -48,7 +48,7 @@ const Dashboard = () => {
         </Box>
         <Box width="100%" my={1}>
           <Box px={2} py={1} width="100%" display="flex" justifyContent={'space-around'} alignItems={'center'} bgcolor="#fff" my={'2px'}>
-            <Box width="50%">Blog Title </Box>
+            <Box width="50%">Blog Post </Box>
             <Box width="15%" textAlign={'center'}>
               Date Published
             </Box>
