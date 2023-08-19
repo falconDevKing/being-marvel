@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import Layout from '../../components/blogger/Layout'
+import Layout from '../../components/blogger/BloggerLayout'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { useRouter } from 'next/router'
 import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
@@ -18,7 +18,7 @@ const Dashboard = () => {
     {
       Icon: TimelineRoundedIcon,
       figure: 70,
-      metric: 'Number of Blogs',
+      metric: 'Number of Blog Posts',
     },
     {
       Icon: FavoriteRoundedIcon,

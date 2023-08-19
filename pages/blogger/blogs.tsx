@@ -1,11 +1,12 @@
-import { Box } from '@mui/material'
-import Layout from '../../components/blogger/Layout'
+import { Box, Stack } from '@mui/material'
+import Layout from '../../components/blogger/BloggerLayout'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { useRouter } from 'next/router'
 import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded'
 import SearchIcon from '@mui/icons-material/Search'
+import PreviewIcon from '@mui/icons-material/Preview'
 import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 import Image from 'next/image'
@@ -86,10 +87,11 @@ const Dashboard = () => {
                   Published
                 </Box>
               </Box>
-              <Box width="15%" display="flex" justifyContent={'center'}>
+              <Stack width="15%" direction={'row'} justifyContent={'center'} spacing={1}>
+                <PreviewIcon fontSize="large" sx={{ color: '#95A8D3', cursor: 'pointer' }} />
                 <EditNoteRoundedIcon fontSize="large" sx={{ color: '#6E87DC', cursor: 'pointer' }} />
                 <DeleteForeverRoundedIcon fontSize="large" sx={{ color: '#FF000077', cursor: 'pointer' }} />
-              </Box>
+              </Stack>
             </Box>
           ))}
         </Box>

@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Hero = () => {
   return (
@@ -15,9 +16,20 @@ const Hero = () => {
         <Box py={2} fontSize={'1rem'}>
           LOREM IPSUM DOLOR SIT, AMET CONSE TETUR ADIPISICING ELIT.
         </Box>
-        <Box fontSize={'1rem'} py={1} px={2} bgcolor={'#95A8D3'} width={'max-content'} borderRadius={'24px'} color="#fff">
-          READ MORE
-        </Box>
+        <Link href="/blog">
+          <a
+            style={{
+              fontSize: '1rem',
+              padding: '12px 16px',
+              backgroundColor: '#95A8D3',
+              width: 'max-content',
+              borderRadius: '24px',
+              color: '#fff',
+            }}
+          >
+            READ MORE
+          </a>
+        </Link>
       </Box>
     </Box>
   )

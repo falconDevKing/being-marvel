@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-beingmarvel-dev-121137-authRole",
+      "UnauthRoleArn": "arn:aws:iam::013882496498:role/amplify-beingmarvel-dev-121137-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::013882496498:role/amplify-beingmarvel-dev-121137-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-beingmarvel-dev-121137-deployment",
+      "UnauthRoleName": "amplify-beingmarvel-dev-121137-unauthRole",
+      "StackName": "amplify-beingmarvel-dev-121137",
+      "StackId": "arn:aws:cloudformation:eu-west-1:013882496498:stack/amplify-beingmarvel-dev-121137/2c631ba0-3e81-11ee-be00-0a86954fb243",
+      "AmplifyAppId": "d1gh7hhdwlkn4o"
+    },
+    "categories": {
+      "api": {
+        "beingmarvel": {}
+      }
+    }
+  }
+}

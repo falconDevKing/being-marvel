@@ -12,6 +12,8 @@ import TrendingBlog from '../../components/Blog/TrendingBlog'
 import FeaturedBlog from '../../components/Blog/FeaturedBlog'
 import Comments from '../../components/Blog/Comments'
 import Comment from '../../components/Blog/Comment'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Link from 'next/link'
 
 const BlogPost = () => {
   const [openSignin, setOpenSignin] = useState<boolean>(false)
@@ -31,8 +33,13 @@ const BlogPost = () => {
       <Header width={'85%'} />
 
       <Box display={'flex'} width={'85%'} mx={'auto'} mt={4} py={1}>
-        <Box color="#D8D6D6"> HOME / BLOG </Box>
-        <Box>/ FIRST BLOG POST</Box>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link href="/">HOME</Link>
+          <Link href="/blog">BLOG</Link>
+          <Box color="black" fontWeight={600}>
+            FIRST BLOG POST
+          </Box>
+        </Breadcrumbs>
       </Box>
       <BlogCaption />
       <Box width={'85%'} mx={'auto'} py={4}>

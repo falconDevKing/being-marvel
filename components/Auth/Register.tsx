@@ -4,12 +4,30 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { Dispatch, SetStateAction } from 'react'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+
+const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as string
 
 type RegisterProps = {
   setAuthMode: Dispatch<SetStateAction<string>>
 }
 
 const Register = ({ setAuthMode }: RegisterProps) => {
+  const router = useRouter()
+
+  const { email, mode: defaultMode, message } = router.query
+
+  let callback = '/blog'
+  const { callbackUrl } = router.query
+  if (typeof callbackUrl === 'string') {
+    callback = callbackUrl.split(baseUrl as string)[1]
+  }
+
+  const loginGoogle = async () => {
+    const googleResponse = await signIn('google', { redirect: false, callbackUrl: callback })
+  }
+
   return (
     <Box px={4} py={1} color="#302F2F" fontWeight={700}>
       <Box>
@@ -99,6 +117,7 @@ const Register = ({ setAuthMode }: RegisterProps) => {
         border="1px solid #f4f7fd"
         my={2}
         sx={{ cursor: 'pointer' }}
+        onClick={loginGoogle}
       >
         <Image src="/googleLogo.png" alt="google logo" width={30} height={30} />
       </Box>

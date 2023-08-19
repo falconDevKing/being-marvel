@@ -14,12 +14,12 @@ const AudioCard = () => {
   }
 
   return (
-    <Box display={'flex'} p={2} bgcolor="#F4F7FD" borderRadius="24px" width={'31%'} mx="auto" my={2}>
+    <Box display={'flex'} p={2} bgcolor="#F4F7FD" borderRadius="24px" width={'31%'} mx="auto" my={2} alignItems={'center'}>
       <Box width="50%" borderRadius={'50%'} boxShadow={'1px 1px 1px 1px  #f4f7fd'}>
         <Image src="/AudioPicture1.png" alt="Audio Picture" layout="responsive" height={148} width={148} style={{ borderRadius: '50%', cursor: 'pointer' }} />
       </Box>
-      <Box pl={1}>
-        <Box fontWeight={700} color="#2C2C2C" lineHeight={'16px'}>
+      <Box pl={2}>
+        <Box fontWeight={700} color="#2C2C2C" lineHeight={'1.5rem'} fontSize={'1.3rem'}>
           Lorem ipsum dolor, sit amet conset adipisicing elit.
         </Box>
 
