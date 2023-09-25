@@ -1,47 +1,47 @@
-import { v4 as uuidv4 } from 'uuid'
-import bcrypt from 'bcryptjs'
-import { errorResponseCreator, successResponseCreator } from './responseFormat'
-import { putInTable, queryTable } from './dynamodb'
+import { v4 as uuidv4 } from "uuid";
+import bcrypt from "bcryptjs";
+import { errorResponseCreator, successResponseCreator } from "./responseFormat";
+import { putInTable, queryTable } from "./dynamodb";
 
-import { GraphQLResult } from '@aws-amplify/api-graphql'
-import { Amplify, API, withSSRContext } from 'aws-amplify'
-import awsExports from '../aws-exports'
-import { getUserByEmail } from '../graphql/queries'
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { Amplify, API, withSSRContext } from "aws-amplify";
+import awsExports from "../aws-exports";
+import { getUserByEmail } from "../graphql/queries";
 
 type userData = {
-  id?: string | null
-  name?: string | null
-  email?: string | null
-  image?: string | null
-  [x: string]: any
-}
+  id?: string | null;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  [x: string]: any;
+};
 
-const userTable = (process.env.USERS_TABLE || process.env.NEXT_PUBLIC_USERS_TABLE) as string
+const userTable = (process.env.USERS_TABLE || process.env.NEXT_PUBLIC_USERS_TABLE) as string;
 
-Amplify.configure({ ...awsExports })
+Amplify.configure({ ...awsExports });
 
 const LatestSession = async (email: string) => {
   try {
-    const existingUserData = await API.graphql({
+    const existingUserData = (await API.graphql({
       query: getUserByEmail,
       variables: {
         email: email,
       },
-    })
+    })) as GraphQLResult<any>;
 
-    const existingUser = existingUserData.data?.userByEmail
+    const existingUser = existingUserData.data?.userByEmail;
 
     if (!existingUser) {
-      return null
+      return null;
     }
 
-    const { id, name, image, blogger } = existingUser
+    const { id, name, image, blogger } = existingUser;
 
-    return { id, name, image, blogger }
+    return { id, name, image, blogger };
   } catch (err) {
-    console.log('Error updating user', err)
-    return null
+    console.log("Error updating user", err);
+    return null;
   }
-}
+};
 
-export default LatestSession
+export default LatestSession;
