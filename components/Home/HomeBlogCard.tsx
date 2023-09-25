@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import Image from 'next/image'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat'
+import Link from 'next/link'
 
 const HomeBlogCard = () => {
   return (
@@ -17,21 +18,25 @@ const HomeBlogCard = () => {
           LOREM IPSUM DOLOR SIT, AMET CONSECTETUR ADIPISICING ELIT. OBCAECATI ADIPISCI IPSA TENETUR, ALIQUAM EXCEPTURI IMPEDIT FUGIT RATIONE QUIDEM NUMQUAM ISTE
           QUAERAT ET ATQUE NAM APERIAM DOLORUM REM QUAE UNDE. RECUSANDAE CONSEQUATUR DUCIMUS NEQUE REM? NATUS SIMILIQUE CUMQUE REPREHENDERIT? IMPEDIT, PORRO.
         </Box>
-        <Box
-          fontSize={'1rem'}
-          py={1}
-          width={'max-content'}
-          display={'flex'}
-          alignItems={'center'}
-          borderBottom={1}
-          borderColor={'#6e6f72b9'}
-          sx={{ cursor: ' pointer' }}
-        >
-          <Box component={'span'} fontWeight={700} color="#282828">
-            READ MORE
-          </Box>
-          <TrendingFlatIcon fontSize="small" />
-        </Box>
+        <Link href="/blog/2">
+          <a>
+            <Box
+              fontSize={'1rem'}
+              py={1}
+              width={'max-content'}
+              display={'flex'}
+              alignItems={'center'}
+              borderBottom={1}
+              borderColor={'#6e6f72b9'}
+              sx={{ cursor: ' pointer' }}
+            >
+              <Box component={'span'} fontWeight={700} color="#282828">
+                READ MORE
+              </Box>
+              <TrendingFlatIcon fontSize="small" />
+            </Box>
+          </a>
+        </Link>
       </Box>
     </Box>
   )

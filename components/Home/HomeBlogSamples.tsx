@@ -1,5 +1,6 @@
 import { Box, Stack } from '@mui/material'
 import HomeBlogCard from './HomeBlogCard'
+import Link from 'next/link'
 
 const HomeBlogSamples = () => {
   return (
@@ -18,9 +19,20 @@ const HomeBlogSamples = () => {
         <HomeBlogCard />
       </Stack>
 
-      <Box fontSize={'1.5rem'} py={1} px={3} bgcolor={'#95A8D3'} width={'max-content'} borderRadius={'24px'} color="#fff">
-        SEE MORE
-      </Box>
+      <Link href="/blog">
+        <a
+          style={{
+            fontSize: '1.5rem',
+            padding: '8px 24px',
+            backgroundColor: '#95A8D3',
+            width: 'max-content',
+            borderRadius: '24px',
+            color: '#fff',
+          }}
+        >
+          SEE MORE
+        </a>
+      </Link>
     </Box>
   )
 }

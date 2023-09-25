@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import Layout from '../../components/blogger/Layout'
+import Layout from '../../components/blogger/BloggerLayout'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { useRouter } from 'next/router'
 import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
@@ -97,7 +97,8 @@ const Profile = () => {
                 <Box>Lorem ipsum dolor sit</Box>
                 <Box display={'flex'} pb={1}>
                   <input
-                    id="name"
+                    id="oldPassword"
+                    name="oldPassword"
                     placeholder="Old Password"
                     style={{
                       color: '#302F2F',
@@ -118,8 +119,31 @@ const Profile = () => {
                 <Box>Lorem ipsum dolor sit</Box>
                 <Box display={'flex'} pb={1}>
                   <input
-                    id="email"
+                    id="newPassword"
+                    name="newPassword"
                     placeholder="New Password"
+                    style={{
+                      color: '#302F2F',
+                      backgroundColor: '#F4F7FD',
+                      padding: '8px',
+                      height: '52px',
+                      borderRadius: '4px 0px 0px 4px',
+                      outline: 'none',
+                      border: 'none',
+                      width: '100%',
+                      fontSize: '1.25rem',
+                      fontFamily: 'Cormorant Garamond',
+                    }}
+                  />
+                </Box>
+              </Box>
+              <Box>
+                <Box>Lorem ipsum dolor sit</Box>
+                <Box display={'flex'} pb={1}>
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
                     style={{
                       color: '#302F2F',
                       backgroundColor: '#F4F7FD',
@@ -137,7 +161,7 @@ const Profile = () => {
               </Box>
             </Box>
 
-            <Box display={'flex'} justifyContent={'flex-end'} fontWeight={700}>
+            <Box display={'flex'} justifyContent={'space-between'} fontWeight={700}>
               <Box bgcolor="#fff" p={2} width="max-content">
                 Delete Profile
               </Box>

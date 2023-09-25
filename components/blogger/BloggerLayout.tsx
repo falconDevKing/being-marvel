@@ -8,13 +8,27 @@ import ListAltIcon from '@mui/icons-material/ListAlt'
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
+import ProfileAvatar from '../ProfileAvatar'
+import { signOut, useSession } from 'next-auth/react'
 
-type LayoutProps = {
+type BloggerLayoutProps = {
   children: React.ReactNode
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   const router = useRouter()
+
+  const { status, data: session } = useSession()
+
+  const userDetails = session?.user
+  const userName = userDetails?.name as string
+  const userEmail = userDetails?.email as string
+  const userImage = userDetails?.image as string
+  // const userId = userDetails?.id as string
+
+  const signOutHandler = () => {
+    signOut({ callbackUrl: '/blog' })
+  }
 
   const navToBlogger = (section: string) => {
     router.push('/blogger/' + section)
@@ -123,7 +137,7 @@ const Layout = ({ children }: LayoutProps) => {
                     Profile
                   </Box>
                 </Box>
-                <Box display={'flex'} alignItems={'center'} p={1} sx={activePath === 'logout' ? selectedNav : unSelectedNav}>
+                <Box display={'flex'} alignItems={'center'} p={1} sx={activePath === 'logout' ? selectedNav : unSelectedNav} onClick={signOutHandler}>
                   <LogoutIcon color="primary" />
                   <Box component="span" px={1}>
                     Logout
@@ -136,17 +150,19 @@ const Layout = ({ children }: LayoutProps) => {
       </Box>
       <Box width="100%" borderLeft={'1px solid #CCC'}>
         <Box bgcolor="#F4F7FD" height="100%">
-          <Box bgcolor="#fff" display={'flex'} justifyContent={'flex-end'} alignItems={'center'} px={2} py={1} borderBottom={'1px solid #CCC'}>
-            <Box display={'flex'} alignItems={'center'}>
-              <Box width="60px">
-                <Image src="/AboutPicture.png" alt="being marvel logo" width={60} height={60} style={{ cursor: 'pointer', borderRadius: '50%' }} />
-              </Box>
-              <Box fontSize={'1.5rem'} px={2}>
-                Smith Yarn
-              </Box>
-            </Box>
+          <Box bgcolor="#fff" display={'flex'} justifyContent={'flex-end'} alignItems={'center'} px={2} py={2} borderBottom={'1px solid #CCC'}>
+            <ProfileAvatar
+              name={userName}
+              src={userImage}
+              hasImage
+              sx={{
+                width: '60px',
+                height: '60px',
+                background: '#E77A0C',
+              }}
+            />
             <Divider orientation="vertical" flexItem />
-            <Box px={2} py={1} bgcolor={'#6E87DC88'} mx={2} color="#fff" fontWeight={700}>
+            <Box px={2} py={1} bgcolor={'#6E87DC88'} mx={2} color="#fff" fontWeight={700} onClick={signOutHandler} sx={{ cursor: 'pointer' }}>
               Logout
             </Box>
           </Box>
@@ -157,4 +173,4 @@ const Layout = ({ children }: LayoutProps) => {
   )
 }
 
-export default Layout
+export default BloggerLayout

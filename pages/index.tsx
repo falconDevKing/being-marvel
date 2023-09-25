@@ -8,6 +8,11 @@ import Hero from '../components/Home/Hero'
 import Caption from '../components/Home/Caption'
 import HomeBlogSamples from '../components/Home/HomeBlogSamples'
 
+import { Amplify, withSSRContext } from 'aws-amplify'
+import awsExports from '../aws-exports'
+
+Amplify.configure({ ...awsExports, ssr: true })
+
 const Home: NextPage = () => {
   return (
     <Box color="#2c2c2c">

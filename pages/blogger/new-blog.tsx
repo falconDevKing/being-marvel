@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import Layout from '../../components/blogger/Layout'
+import BloggerLayout from '../../components/blogger/BloggerLayout'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { useRouter } from 'next/router'
 import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
@@ -37,7 +37,7 @@ const NewBlog = () => {
   // // run on mounting
 
   return (
-    <Layout>
+    <BloggerLayout>
       <Box>
         <Box display={'flex'} justifyContent={'space-between'} py={2}>
           <Box>
@@ -120,35 +120,6 @@ const NewBlog = () => {
               </Box>
 
               <Box>
-                {/* {loaded && (
-                  <CKEditor
-                    editor={ClassicEditor}
-                    data="<p>Hello from CKEditor 5!</p>"
-                    onReady={(editor) => {
-                      // You can store the "editor" and use when it is needed.
-                      console.log('Editor is ready to use!', editor)
-                      editor.setData(blogContent)
-                    }}
-                    onChange={(event, editor) => {
-                      const data = editor.getData()
-                      console.log({ event: event.name, data })
-                    }}
-                    onBlur={(event, editor) => {
-                      const updatedData = editor.getData()
-                      setBlogContent(updatedData)
-                      console.log('Blur.', { event: event.name, updatedData })
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log('Focus.', editor)
-                    }}
-                    config={{
-                      plugins: [Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize],
-                      image: {
-                        toolbar: ['imageStyle:block', 'imageStyle:side', '|', 'toggleImageCaption', 'imageTextAlternative', '|', 'linkImage'],
-                      },
-                    }}
-                  />
-                )} */}
                 <Editor
                   theme="snow"
                   // defaultValue={value}
@@ -169,6 +140,28 @@ const NewBlog = () => {
                 Blog Caption Image
               </Box>
               <Box fontSize="0.8rem">Lorem ipsum dolor sit</Box>
+
+              <Box pt={1}>
+                <Box>Lorem ipsum dolor sit</Box>
+                <Box display={'flex'} pb={1}>
+                  <input
+                    id="captionText"
+                    placeholder="Caption Text"
+                    style={{
+                      color: '#302F2F',
+                      backgroundColor: '#F4F7FD',
+                      padding: '8px',
+                      height: '52px',
+                      borderRadius: '4px 0px 0px 4px',
+                      outline: 'none',
+                      border: 'none',
+                      width: '100%',
+                      fontSize: '1.25rem',
+                      fontFamily: 'Cormorant Garamond',
+                    }}
+                  />
+                </Box>
+              </Box>
               <Box px={4} py={4} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} bgcolor={'#F4F7FD'} my={2}>
                 <CloudUploadOutlinedIcon sx={{ fontSize: '120px' }} />
                 <Box
@@ -197,7 +190,7 @@ const NewBlog = () => {
           </Box>
         </Box>
       </Box>
-    </Layout>
+    </BloggerLayout>
   )
 }
 

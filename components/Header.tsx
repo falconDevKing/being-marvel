@@ -9,6 +9,9 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Register from './Auth/Register'
 import Login from './Auth/Login'
+import { useSession } from 'next-auth/react'
+import { ModifiedSession } from '../utils/helper'
+import ProfileAvatar from './ProfileAvatar'
 
 type HeaderProps = {
   width: string
@@ -16,6 +19,15 @@ type HeaderProps = {
 
 const Header = ({ width }: HeaderProps) => {
   const router = useRouter()
+
+  const { status, data: session } = useSession()
+  const [loading, setLoading] = useState(false)
+
+  const userDetails = session?.user
+  const userName = userDetails?.name as string
+  const userEmail = userDetails?.email as string
+  const userImage = userDetails?.image as string
+  // const userId = userDetails?.id as string
 
   const [openSignin, setOpenSignin] = useState<boolean>(false)
   const [authMode, setAuthMode] = useState<string>('Login')
@@ -28,6 +40,8 @@ const Header = ({ width }: HeaderProps) => {
     router.pathname === '/contact'
       ? 'contact'
       : router.pathname === '/blog'
+      ? 'blog'
+      : router.pathname.includes('/blog/')
       ? 'blog'
       : router.pathname === '/about'
       ? 'about'
@@ -84,14 +98,27 @@ const Header = ({ width }: HeaderProps) => {
           </Link>
         </Stack>
 
-        <Box
-          sx={selectedNav}
-          onClick={() => {
-            setOpenSignin(true)
-          }}
-        >
-          SIGN IN
-        </Box>
+        {status === 'authenticated' ? (
+          <ProfileAvatar
+            name={userName}
+            src={userImage}
+            hasImage
+            sx={{
+              width: '3rem',
+              height: '3rem',
+              background: '#E77A0C',
+            }}
+          />
+        ) : (
+          <Box
+            sx={selectedNav}
+            onClick={() => {
+              setOpenSignin(true)
+            }}
+          >
+            SIGN IN
+          </Box>
+        )}
       </Box>
       <Modal open={openSignin} handleClose={closeSignin} title={authMode} maxWidth="sm">
         {authMode === 'Register' ? <Register setAuthMode={setAuthMode} /> : <Login setAuthMode={setAuthMode} />}

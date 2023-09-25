@@ -1,14 +1,20 @@
 import { Box } from '@mui/material'
-import Layout from '../../components/blogger/Layout'
+import Layout from '../../components/blogger/BloggerLayout'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { useRouter } from 'next/router'
 import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded'
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded'
+import { useSession } from 'next-auth/react'
 
 const Dashboard = () => {
   const router = useRouter()
+
+  const { status, data: session } = useSession()
+
+  const userDetails = session?.user
+  const userName = userDetails?.name as string
 
   const navToBlogger = (section: string) => {
     router.push('/blogger/' + section)
@@ -18,7 +24,7 @@ const Dashboard = () => {
     {
       Icon: TimelineRoundedIcon,
       figure: 70,
-      metric: 'Number of Blogs',
+      metric: 'Number of Blog Posts',
     },
     {
       Icon: FavoriteRoundedIcon,
@@ -43,7 +49,7 @@ const Dashboard = () => {
         <Box display={'flex'} justifyContent={'space-between'} py={2}>
           <Box>
             <Box fontSize={'1.5rem'} fontWeight={700}>
-              Welcome back, Smith Yarn!
+              Welcome back, {userName}!
             </Box>
             <Box fontSize={'1.2rem'} color="#C0C0C0">
               Lorem ipsum dolor sit amet, consecte turcing elit.{' '}
