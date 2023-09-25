@@ -10,9 +10,15 @@ import PreviewIcon from '@mui/icons-material/Preview'
 import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
 
 const Dashboard = () => {
   const router = useRouter()
+
+  const { status, data: session } = useSession()
+
+  const userDetails = session?.user
+  const userName = userDetails?.name as string
 
   return (
     <Layout>
@@ -20,7 +26,7 @@ const Dashboard = () => {
         <Box display={'flex'} justifyContent={'space-between'} py={2}>
           <Box>
             <Box fontSize={'1.5rem'} fontWeight={700}>
-              Welcome back, Smith Yarn!
+              Welcome back, {userName}!
             </Box>
             <Box fontSize={'1.2rem'} color="#C0C0C0">
               Lorem ipsum dolor sit amet, consecte turcing elit.{' '}

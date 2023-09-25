@@ -6,9 +6,15 @@ import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded'
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded'
+import { useSession } from 'next-auth/react'
 
 const Dashboard = () => {
   const router = useRouter()
+
+  const { status, data: session } = useSession()
+
+  const userDetails = session?.user
+  const userName = userDetails?.name as string
 
   const navToBlogger = (section: string) => {
     router.push('/blogger/' + section)
@@ -43,7 +49,7 @@ const Dashboard = () => {
         <Box display={'flex'} justifyContent={'space-between'} py={2}>
           <Box>
             <Box fontSize={'1.5rem'} fontWeight={700}>
-              Welcome back, Smith Yarn!
+              Welcome back, {userName}!
             </Box>
             <Box fontSize={'1.2rem'} color="#C0C0C0">
               Lorem ipsum dolor sit amet, consecte turcing elit.{' '}
