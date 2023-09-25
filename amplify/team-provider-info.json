@@ -16,5 +16,23 @@
         "beingmarvel": {}
       }
     }
+  },
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-beingmarvel-prod-14509-authRole",
+      "UnauthRoleArn": "arn:aws:iam::013882496498:role/amplify-beingmarvel-prod-14509-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::013882496498:role/amplify-beingmarvel-prod-14509-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-beingmarvel-prod-14509-deployment",
+      "UnauthRoleName": "amplify-beingmarvel-prod-14509-unauthRole",
+      "StackName": "amplify-beingmarvel-prod-14509",
+      "StackId": "arn:aws:cloudformation:eu-west-1:013882496498:stack/amplify-beingmarvel-prod-14509/c9471bb0-5b3c-11ee-99d3-022cd50ce3d9",
+      "AmplifyAppId": "d1gh7hhdwlkn4o"
+    },
+    "categories": {
+      "api": {
+        "beingmarvel": {}
+      }
+    }
   }
 }
