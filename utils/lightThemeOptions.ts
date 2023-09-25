@@ -1,27 +1,27 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles'
 
 const lightTheme = createTheme({
   palette: {
     primary: {
-      main: "#101988",
+      main: '#101988',
       // light: "#FBA34B",
       // contrastText: "#3D1E01",
     },
     neutral: {
-      main: "#F2F4F6",
-      light: "#FEFEFE",
+      main: '#F2F4F6',
+      light: '#FEFEFE',
       // contrastText: "#fff",
     },
     secondary: {
-      main: "#44CDE0",
+      main: '#44CDE0',
       // contrastText: "#8083A3",
     },
     blue: {
-      main: "#44CDE0",
+      main: '#44CDE0',
       // contrastText: "#3E7EFF",
     },
     error: {
-      main: "#E22828",
+      main: '#E22828',
       // light: "#FDF4F4",
       // dark: "#E22828",
       // contrastText: "#A73636",
@@ -39,7 +39,7 @@ const lightTheme = createTheme({
     //   contrastText: "#2952CC",
     // },
     success: {
-      main: "#509F58",
+      main: '#509F58',
       // light: "#F5FBF7",
       // dark: "#42975E",
       // contrastText: "#42975E",
@@ -48,24 +48,24 @@ const lightTheme = createTheme({
 
   typography: {
     allVariants: {
-      fontFamily: "Catamaran, sans-serif",
-      textTransform: "none",
+      fontFamily: 'Cormorant Garamond',
+      textTransform: 'none',
     },
     button: {
-      textTransform: "none",
+      textTransform: 'none',
     },
   },
-});
+})
 
-declare module "@mui/material/styles" {
+declare module '@mui/material/styles' {
   interface Palette {
-    neutral: Palette["primary"];
-    blue: Palette["primary"];
+    neutral: Palette['primary']
+    blue: Palette['primary']
   }
   interface PaletteOptions {
-    neutral: PaletteOptions["primary"];
-    blue: PaletteOptions["primary"];
+    neutral: PaletteOptions['primary']
+    blue: PaletteOptions['primary']
   }
 }
 
-export default lightTheme;
+export default lightTheme
