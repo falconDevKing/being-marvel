@@ -7,18 +7,9 @@ const lightTheme = createTheme({
       // light: "#FBA34B",
       // contrastText: "#3D1E01",
     },
-    neutral: {
-      main: '#F2F4F6',
-      light: '#FEFEFE',
-      // contrastText: "#fff",
-    },
     secondary: {
       main: '#44CDE0',
       // contrastText: "#8083A3",
-    },
-    blue: {
-      main: '#44CDE0',
-      // contrastText: "#3E7EFF",
     },
     error: {
       main: '#E22828',
@@ -57,15 +48,5 @@ const lightTheme = createTheme({
   },
 })
 
-declare module '@mui/material/styles' {
-  interface Palette {
-    neutral: Palette['primary']
-    blue: Palette['primary']
-  }
-  interface PaletteOptions {
-    neutral: PaletteOptions['primary']
-    blue: PaletteOptions['primary']
-  }
-}
 
 export default lightTheme
