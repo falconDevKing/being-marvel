@@ -6,6 +6,8 @@ import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import type { NextComponentType, NextPageContext } from "next";
 import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -38,13 +40,15 @@ const MyApp: React.FunctionComponent<CustomAppProps> = (props) => {
 
   return (
     <CacheProvider value={emotionCache}>
-      <SessionProvider session={pageProps.session} refetchInterval={7200} refetchWhenOffline={false}>
-        <ThemeProvider theme={lightTheme}>
-          <Toaster />
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </SessionProvider>
+      <Provider store={store}>
+        <SessionProvider session={pageProps.session} refetchInterval={7200} refetchWhenOffline={false}>
+          <ThemeProvider theme={lightTheme}>
+            <Toaster />
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </SessionProvider>
+      </Provider>
     </CacheProvider>
   );
 };

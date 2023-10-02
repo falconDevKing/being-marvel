@@ -1,6 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
-import { errorResponseCreator, successResponseCreator } from "./responseFormat";
 
 const REGION = (process.env.REGION || process.env.NEXT_PUBLIC_REGION) as string;
 const CREDENTIALS = {
@@ -9,16 +7,17 @@ const CREDENTIALS = {
 };
 const sesClient = new SESClient({ region: REGION, credentials: CREDENTIALS });
 
-const senderMail = (process.env.SENDER_MAIL || process.env.NEXT_PUBLIC_SENDER_MAIL) as string;
-const recipientMail = (process.env.SUPPORT_MAIL || process.env.NEXT_PUBLIC_SUPPORT_MAIL) as string;
+type desitinationData = {
+  ToAddresses: string[];
+  CcAddresses?: string[];
+  BccAddresses?: string[];
+};
 
-export const sendMail = async (senderMail: string, recipientMail: string, mailSubject: string, mailBody: string) => {
+export const sendMail = async (senderMail: string, recipients: desitinationData, mailSubject: string, mailBody: string) => {
   try {
     const params = {
       Source: senderMail,
-      Destination: {
-        ToAddresses: [recipientMail],
-      },
+      Destination: recipients,
       Message: {
         Body: {
           Html: {
@@ -34,7 +33,7 @@ export const sendMail = async (senderMail: string, recipientMail: string, mailSu
     };
 
     await sesClient.send(new SendEmailCommand(params));
-
+    console.log("Mail sent for", mailSubject);
     return "sent";
   } catch (err: any) {
     console.log("ses error", err);
