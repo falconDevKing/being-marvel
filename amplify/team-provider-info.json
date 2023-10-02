@@ -24,11 +24,11 @@
         },
         "beingmarvel77a6094ePostConfirmation": {
           "deploymentBucketName": "amplify-beingmarvel-dev-121137-deployment",
-          "s3Key": "amplify-builds/beingmarvel77a6094ePostConfirmation-5a736471315151644445-build.zip"
+          "s3Key": "amplify-builds/beingmarvel77a6094ePostConfirmation-32587a6c346135794d48-build.zip"
         },
         "beingmarvel77a6094ePreSignup": {
           "deploymentBucketName": "amplify-beingmarvel-dev-121137-deployment",
-          "s3Key": "amplify-builds/beingmarvel77a6094ePreSignup-4b457179654c4b797542-build.zip"
+          "s3Key": "amplify-builds/beingmarvel77a6094ePreSignup-6d76554974653547636a-build.zip"
         }
       },
       "auth": {

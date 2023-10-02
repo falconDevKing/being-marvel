@@ -2,6 +2,7 @@
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 exports.handler = async (event, context) => {
+  console.log('presignup', event)
   // Confirm the user
   event.response.autoConfirmUser = true;
   // Set the email as verified if it is in the request

@@ -23,6 +23,7 @@ const modules = moduleNames.map(name => require(`./${name}`));
  * 
  */
 exports.handler = async (event, context) => {
+  console.log('post confirm', event)
   /**
    * Instead of naively iterating over all handlers, run them concurrently with
    * `await Promise.all(...)`. This would otherwise just be determined by the
