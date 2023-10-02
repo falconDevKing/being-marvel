@@ -18,7 +18,7 @@ const SignUpValidation = Yup.object({
     .matches(/^(.*\d.*)$/, "At least 8 Characters, One Uppercase, Lowercase, Number and Special Character"),
   confirmPassword: Yup.string()
     .required("Confirm password is required")
-    .when("pasword", {
+    .when("password", {
       is: (val: string) => (val && val.length > 0 ? true : false),
       then: (schema) => schema.oneOf([Yup.ref("password")], "Confirm password does not match password"),
     }),

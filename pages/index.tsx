@@ -1,19 +1,45 @@
-import React from 'react'
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { Box } from '@mui/material'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import Hero from '../components/Home/Hero'
-import Caption from '../components/Home/Caption'
-import HomeBlogSamples from '../components/Home/HomeBlogSamples'
+import React from "react";
+import type { NextPage } from "next";
+import Head from "next/head";
+import { Box } from "@mui/material";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Hero from "../components/Home/Hero";
+import Caption from "../components/Home/Caption";
+import HomeBlogSamples from "../components/Home/HomeBlogSamples";
 
-import { Amplify, withSSRContext } from 'aws-amplify'
-import awsExports from '../aws-exports'
+import { Amplify, withSSRContext, Hub } from "aws-amplify";
+import awsExports from "../aws-exports";
+import { getLoggedInUser } from "../redux/authSlice";
+import { saveAuthUser, setLogout } from "../services/auth";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
-Amplify.configure({ ...awsExports, ssr: true })
+Amplify.configure({ ...awsExports, ssr: true });
 
 const Home: NextPage = () => {
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    console.log("app loaded");
+    const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
+      switch (event) {
+        case "autoSignIn":
+          saveAuthUser(data);
+          break;
+        case "signIn":
+          saveAuthUser(data);
+          break;
+        case "signOut":
+          setLogout();
+          break;
+      }
+    });
+
+    dispatch(getLoggedInUser());
+
+    return unsubscribe;
+  }, []);
+
   return (
     <Box color="#2c2c2c">
       <Head>
@@ -22,16 +48,16 @@ const Home: NextPage = () => {
         <link rel="icon" href="/BeingMarvelLogo.png" />
       </Head>
 
-      <Header width={'85%'} />
+      <Header width={"85%"} />
 
       <Hero />
       <Caption />
 
       <HomeBlogSamples />
 
-      <Footer width={'85%'} />
+      <Footer width={"85%"} />
     </Box>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

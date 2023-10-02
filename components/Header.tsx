@@ -121,7 +121,11 @@ const Header = ({ width }: HeaderProps) => {
         )}
       </Box>
       <Modal open={openSignin} handleClose={closeSignin} title={authMode} maxWidth="sm">
-        {authMode === "Register" ? <Register setAuthMode={setAuthMode} /> : <Login setAuthMode={setAuthMode} />}
+        {authMode === "Register" ? (
+          <Register setAuthMode={setAuthMode} setOpenSignin={setOpenSignin} />
+        ) : (
+          <Login setAuthMode={setAuthMode} setOpenSignin={setOpenSignin} />
+        )}
       </Modal>
     </>
   );

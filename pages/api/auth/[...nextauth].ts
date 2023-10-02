@@ -52,7 +52,7 @@ export const authOptions: NextAuthOptions = {
         })) as GraphQLResult<any>;
 
         const existingUsers = existingUserData.data?.getUserByEmail?.items;
-        console.log({ data: existingUserData.data?.getUserByEmail, existingUsers });
+        console.log("login", { data: existingUserData.data?.getUserByEmail, existingUsers });
 
         if (existingUsers?.length > 1) {
           return null;

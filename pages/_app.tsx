@@ -18,6 +18,10 @@ import createEmotionCache from "../utils/createEmotionCache";
 import lightThemeOptions from "../styles/theme/lightThemeOptions";
 import "../styles/globals.css";
 import "react-quill/dist/quill.snow.css";
+import { Amplify, Hub, withSSRContext } from "aws-amplify";
+import awsExports from "../aws-exports";
+
+Amplify.configure({ ...awsExports, ssr: true });
 
 type NextAppProps<P = any> = {
   pageProps: P;

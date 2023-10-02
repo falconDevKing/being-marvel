@@ -21,8 +21,9 @@ export const getUser = /* GraphQL */ `
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -67,6 +68,8 @@ export const getBlog = /* GraphQL */ `
       id
       name
       logo
+      darkLogo
+      subscriber
       userId
       user {
         id
@@ -87,7 +90,6 @@ export const getBlog = /* GraphQL */ `
       }
       about {
         id
-        blogId
         title
         logo
         content
@@ -95,6 +97,7 @@ export const getBlog = /* GraphQL */ `
         linkedIn
         instagram
         twitter
+        blogId
         createdAt
         updatedAt
       }
@@ -107,7 +110,6 @@ export const getBlog = /* GraphQL */ `
       comments {
         nextToken
       }
-      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -125,8 +127,9 @@ export const listBlogs = /* GraphQL */ `
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -139,17 +142,6 @@ export const getAbout = /* GraphQL */ `
   query GetAbout($id: ID!) {
     getAbout(id: $id) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        subscriber
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       title
       logo
       content
@@ -157,6 +149,18 @@ export const getAbout = /* GraphQL */ `
       linkedIn
       instagram
       twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       createdAt
       updatedAt
     }
@@ -171,7 +175,6 @@ export const listAbouts = /* GraphQL */ `
     listAbouts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        blogId
         title
         logo
         content
@@ -179,6 +182,7 @@ export const listAbouts = /* GraphQL */ `
         linkedIn
         instagram
         twitter
+        blogId
         createdAt
         updatedAt
       }
@@ -190,17 +194,6 @@ export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        subscriber
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       category
       title
       description
@@ -211,15 +204,27 @@ export const getPost = /* GraphQL */ `
       status
       publishedAt
       expireAt
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       comments {
         nextToken
       }
       audio {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -238,7 +243,6 @@ export const listPosts = /* GraphQL */ `
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        blogId
         category
         title
         description
@@ -249,6 +253,7 @@ export const listPosts = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
@@ -261,13 +266,18 @@ export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
       id
+      content
+      subComment
+      parentComment
+      likes
       blogId
       blog {
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -275,7 +285,6 @@ export const getComment = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
@@ -286,14 +295,11 @@ export const getComment = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      content
-      subComment
-      parentComment
-      likes
       createdAt
       updatedAt
     }
@@ -308,12 +314,12 @@ export const listComments = /* GraphQL */ `
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        blogId
-        postId
         content
         subComment
         parentComment
         likes
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -325,13 +331,16 @@ export const getAudio = /* GraphQL */ `
   query GetAudio($id: ID!) {
     getAudio(id: $id) {
       id
+      duration
+      filePath
       blogId
       blog {
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -339,7 +348,6 @@ export const getAudio = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
@@ -350,12 +358,11 @@ export const getAudio = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      duration
-      filePath
       createdAt
       updatedAt
     }
@@ -370,10 +377,10 @@ export const listAudio = /* GraphQL */ `
     listAudio(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -440,8 +447,9 @@ export const getBlogByUser = /* GraphQL */ `
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -469,7 +477,6 @@ export const getAboutByBlog = /* GraphQL */ `
     ) {
       items {
         id
-        blogId
         title
         logo
         content
@@ -477,6 +484,7 @@ export const getAboutByBlog = /* GraphQL */ `
         linkedIn
         instagram
         twitter
+        blogId
         createdAt
         updatedAt
       }
@@ -503,7 +511,6 @@ export const fetchPostsByBlog = /* GraphQL */ `
     ) {
       items {
         id
-        blogId
         category
         title
         description
@@ -514,6 +521,7 @@ export const fetchPostsByBlog = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
@@ -541,12 +549,12 @@ export const fetchCommentsByBlog = /* GraphQL */ `
     ) {
       items {
         id
-        blogId
-        postId
         content
         subComment
         parentComment
         likes
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -573,12 +581,12 @@ export const fetchCommentsByPost = /* GraphQL */ `
     ) {
       items {
         id
-        blogId
-        postId
         content
         subComment
         parentComment
         likes
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -605,10 +613,10 @@ export const fetchAudiosByBlog = /* GraphQL */ `
     ) {
       items {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -635,10 +643,10 @@ export const getAudioByPost = /* GraphQL */ `
     ) {
       items {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }

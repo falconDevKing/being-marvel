@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { CSSProperties } from "react";
 
 interface inputProps {
@@ -7,7 +7,7 @@ interface inputProps {
   name: string;
   placeholder?: string;
   required?: boolean;
-  style: CSSProperties;
+  style?: CSSProperties;
   disabled?: boolean;
   value: string | number | undefined;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -55,7 +55,7 @@ const Input = ({
   }
 
   return (
-    <div>
+    <Box width="100%">
       <input
         type={type}
         id={id}
@@ -74,15 +74,15 @@ const Input = ({
           borderRadius: "4px 0px 0px 4px",
           outline: "none",
           border: "none",
-          width: "100%",
           fontSize: "1.25rem",
+          width: "100%",
           fontFamily: "Cormorant Garamond",
           backgroundColor: "#f4f7fd",
           ...style,
         }}
       />
-      {inputError && inputTouched && <Typography sx={{ color: "#E22828" }}>{errors?.[name] || getValueFromPath(errors, name)}</Typography>}
-    </div>
+      {inputError && inputTouched && <Typography sx={{ color: "#E22828", pl: 3 }}>{errors?.[name] || getValueFromPath(errors, name)}</Typography>}
+    </Box>
   );
 };
 

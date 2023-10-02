@@ -18,9 +18,10 @@ const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as st
 
 type LoginProps = {
   setAuthMode: Dispatch<SetStateAction<string>>;
+  setOpenSignin: Dispatch<SetStateAction<boolean>>;
 };
 
-const Login = ({ setAuthMode }: LoginProps) => {
+const Login = ({ setAuthMode, setOpenSignin }: LoginProps) => {
   const router = useRouter();
 
   const { email, mode: defaultMode, message } = router.query;
@@ -45,7 +46,7 @@ const Login = ({ setAuthMode }: LoginProps) => {
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values, { resetForm }) => {
-      LoadingHandler({ message: "Registering..." });
+      LoadingHandler({ message: "Logging in..." });
       setLoading(true);
       try {
         const result = await signIn("credentials", {
@@ -58,6 +59,7 @@ const Login = ({ setAuthMode }: LoginProps) => {
           DismissHandler();
           SuccessHandler({ message: "Signed In successfully" });
           setLoading(false);
+          setOpenSignin(false);
           router.push(callback);
         } else {
           DismissHandler();
@@ -65,6 +67,7 @@ const Login = ({ setAuthMode }: LoginProps) => {
         }
         setLoading(false);
       } catch (error) {
+        DismissHandler();
         if (isAxiosError(error)) {
           const message = error?.response?.data?.message;
           ErrorHandler({ message });
@@ -76,7 +79,7 @@ const Login = ({ setAuthMode }: LoginProps) => {
     },
   });
 
-  const { values, errors, touched, handleChange, handleBlur } = formik;
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
 
   const loginGoogle = async () => {
     const googleResponse = await signIn("google", { redirect: false, callbackUrl: callback });
@@ -105,20 +108,9 @@ const Login = ({ setAuthMode }: LoginProps) => {
           name="email"
           value={values?.email}
           onChange={handleChange}
+          onBlur={handleBlur}
           errors={errors}
           touched={touched}
-          style={{
-            color: "#302F2F",
-            padding: "4px 24px",
-            height: "52px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
         />
       </Box>
 
@@ -142,20 +134,9 @@ const Login = ({ setAuthMode }: LoginProps) => {
             name="password"
             value={values?.password}
             onChange={handleChange}
+            onBlur={handleBlur}
             errors={errors}
             touched={touched}
-            style={{
-              color: "#302F2F",
-              padding: "4px 24px",
-              height: "52px",
-              borderRadius: "4px 0px 0px 4px",
-              outline: "none",
-              border: "none",
-              width: "100%",
-              fontSize: "1.25rem",
-              fontFamily: "Cormorant Garamond",
-              backgroundColor: "#f4f7fd",
-            }}
           />
         </Box>
         {values?.password &&
@@ -176,7 +157,18 @@ const Login = ({ setAuthMode }: LoginProps) => {
       <Box color={"#FF4100"} textAlign={"right"} sx={{ cursor: "pointer" }}>
         Forgot password?
       </Box>
-      <Box bgcolor={"#3367DC"} color={"#fff"} p={2} textAlign={"center"} borderRadius={"4px"} my={2} sx={{ cursor: "pointer" }}>
+      <Box
+        bgcolor={"#3367DC"}
+        color={"#fff"}
+        p={2}
+        textAlign={"center"}
+        borderRadius={"4px"}
+        my={2}
+        sx={{ cursor: "pointer" }}
+        onClick={() => {
+          handleSubmit();
+        }}
+      >
         Sign In
       </Box>
       <Box>

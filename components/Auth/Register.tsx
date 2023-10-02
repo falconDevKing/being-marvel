@@ -18,9 +18,10 @@ const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as st
 
 type RegisterProps = {
   setAuthMode: Dispatch<SetStateAction<string>>;
+  setOpenSignin: Dispatch<SetStateAction<boolean>>;
 };
 
-const Register = ({ setAuthMode }: RegisterProps) => {
+const Register = ({ setAuthMode, setOpenSignin }: RegisterProps) => {
   const router = useRouter();
 
   // const { email, mode: defaultMode, message } = router.query;
@@ -49,19 +50,16 @@ const Register = ({ setAuthMode }: RegisterProps) => {
       setLoading(true);
       try {
         try {
-          const user = {
-            name: values.name,
-            email: values.email,
-            password: values.password,
-            confirmPassword: values.confirmPassword,
-          };
-          const authResponse = await axios.post("/api/auth/signup", user);
+          const authResponse = await axios.post("/api/auth/signup", values);
           const message = authResponse?.data?.message;
+          DismissHandler();
           SuccessHandler({ message });
+          SuccessHandler({ message: "Kindly Login" });
           setLoading(false);
-          router.push("/blog");
+          setAuthMode("Login");
         } catch (error) {
           console.log("error signing up", error);
+          DismissHandler();
           if (isAxiosError(error)) {
             const message = error?.response?.data?.message;
             ErrorHandler({ message });
@@ -81,7 +79,7 @@ const Register = ({ setAuthMode }: RegisterProps) => {
       }
     },
   });
-  const { values, errors, touched, handleChange, handleBlur } = formik;
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
 
   const loginGoogle = async () => {
     const googleResponse = await signIn("google", { redirect: false, callbackUrl: callback });
@@ -114,18 +112,6 @@ const Register = ({ setAuthMode }: RegisterProps) => {
           errors={errors}
           touched={touched}
           autoFocus
-          style={{
-            color: "#302F2F",
-            padding: "4px 24px",
-            height: "52px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
         />
       </Box>
 
@@ -141,33 +127,10 @@ const Register = ({ setAuthMode }: RegisterProps) => {
           onBlur={handleBlur}
           errors={errors}
           touched={touched}
-          style={{
-            color: "#302F2F",
-            padding: "4px 24px",
-            height: "52px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
         />
       </Box>
-
-      <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        py={0.5}
-        px={2}
-        bgcolor={"#f4f7fd"}
-        my={0.5}
-        borderRadius={"4px"}
-        width="100%"
-      >
-        <Box display={"flex"} alignItems={"center"}>
+      <Box display={"flex"} alignItems={"center"} py={0.5} px={2} bgcolor={"#f4f7fd"} my={0.5} borderRadius={"4px"}>
+        <Box display={"flex"} alignItems={"center"} width="100%">
           <LockOutlinedIcon />
           <Input
             id="password"
@@ -179,18 +142,6 @@ const Register = ({ setAuthMode }: RegisterProps) => {
             onBlur={handleBlur}
             errors={errors}
             touched={touched}
-            style={{
-              color: "#302F2F",
-              padding: "4px 24px",
-              height: "52px",
-              borderRadius: "4px 0px 0px 4px",
-              outline: "none",
-              border: "none",
-              width: "100%",
-              fontSize: "1.25rem",
-              fontFamily: "Cormorant Garamond",
-              backgroundColor: "#f4f7fd",
-            }}
           />
         </Box>
         {values?.password &&
@@ -209,18 +160,8 @@ const Register = ({ setAuthMode }: RegisterProps) => {
           ))}
       </Box>
 
-      <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        py={0.5}
-        px={2}
-        bgcolor={"#f4f7fd"}
-        my={0.5}
-        borderRadius={"4px"}
-        width="100%"
-      >
-        <Box display={"flex"} alignItems={"center"}>
+      <Box display={"flex"} alignItems={"center"} py={0.5} px={2} bgcolor={"#f4f7fd"} my={0.5} borderRadius={"4px"}>
+        <Box display={"flex"} alignItems={"center"} width="100%">
           <LockOutlinedIcon />
           <Input
             id="confirmPassword"
@@ -232,18 +173,6 @@ const Register = ({ setAuthMode }: RegisterProps) => {
             onBlur={handleBlur}
             errors={errors}
             touched={touched}
-            style={{
-              color: "#302F2F",
-              padding: "4px 24px",
-              height: "52px",
-              borderRadius: "4px 0px 0px 4px",
-              outline: "none",
-              border: "none",
-              width: "100%",
-              fontSize: "1.25rem",
-              fontFamily: "Cormorant Garamond",
-              backgroundColor: "#f4f7fd",
-            }}
           />
         </Box>
         {values?.confirmPassword &&
@@ -261,8 +190,21 @@ const Register = ({ setAuthMode }: RegisterProps) => {
             />
           ))}
       </Box>
+
+      {/* </Box> */}
       <Box>Minimum 8 characters with 1 number and 1 letter</Box>
-      <Box bgcolor={"#3367DC"} color={"#fff"} p={2} textAlign={"center"} borderRadius={"4px"} my={2} sx={{ cursor: "pointer" }}>
+      <Box
+        bgcolor={loading ? "#f4f7fd" : "#3367DC"}
+        onClick={() => {
+          handleSubmit();
+        }}
+        color={"#fff"}
+        p={2}
+        textAlign={"center"}
+        borderRadius={"4px"}
+        my={2}
+        sx={{ cursor: "pointer" }}
+      >
         Sign Up
       </Box>
       <Box>

@@ -24,8 +24,9 @@ export const createUser = /* GraphQL */ `
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -58,8 +59,9 @@ export const updateUser = /* GraphQL */ `
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -92,8 +94,9 @@ export const deleteUser = /* GraphQL */ `
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -113,6 +116,8 @@ export const createBlog = /* GraphQL */ `
       id
       name
       logo
+      darkLogo
+      subscriber
       userId
       user {
         id
@@ -133,7 +138,6 @@ export const createBlog = /* GraphQL */ `
       }
       about {
         id
-        blogId
         title
         logo
         content
@@ -141,6 +145,7 @@ export const createBlog = /* GraphQL */ `
         linkedIn
         instagram
         twitter
+        blogId
         createdAt
         updatedAt
       }
@@ -153,7 +158,6 @@ export const createBlog = /* GraphQL */ `
       comments {
         nextToken
       }
-      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -169,6 +173,8 @@ export const updateBlog = /* GraphQL */ `
       id
       name
       logo
+      darkLogo
+      subscriber
       userId
       user {
         id
@@ -189,7 +195,6 @@ export const updateBlog = /* GraphQL */ `
       }
       about {
         id
-        blogId
         title
         logo
         content
@@ -197,6 +202,7 @@ export const updateBlog = /* GraphQL */ `
         linkedIn
         instagram
         twitter
+        blogId
         createdAt
         updatedAt
       }
@@ -209,7 +215,6 @@ export const updateBlog = /* GraphQL */ `
       comments {
         nextToken
       }
-      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -225,6 +230,8 @@ export const deleteBlog = /* GraphQL */ `
       id
       name
       logo
+      darkLogo
+      subscriber
       userId
       user {
         id
@@ -245,7 +252,6 @@ export const deleteBlog = /* GraphQL */ `
       }
       about {
         id
-        blogId
         title
         logo
         content
@@ -253,6 +259,7 @@ export const deleteBlog = /* GraphQL */ `
         linkedIn
         instagram
         twitter
+        blogId
         createdAt
         updatedAt
       }
@@ -265,7 +272,6 @@ export const deleteBlog = /* GraphQL */ `
       comments {
         nextToken
       }
-      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -279,17 +285,6 @@ export const createAbout = /* GraphQL */ `
   ) {
     createAbout(input: $input, condition: $condition) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        subscriber
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       title
       logo
       content
@@ -297,6 +292,18 @@ export const createAbout = /* GraphQL */ `
       linkedIn
       instagram
       twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       createdAt
       updatedAt
     }
@@ -309,17 +316,6 @@ export const updateAbout = /* GraphQL */ `
   ) {
     updateAbout(input: $input, condition: $condition) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        subscriber
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       title
       logo
       content
@@ -327,6 +323,18 @@ export const updateAbout = /* GraphQL */ `
       linkedIn
       instagram
       twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       createdAt
       updatedAt
     }
@@ -339,17 +347,6 @@ export const deleteAbout = /* GraphQL */ `
   ) {
     deleteAbout(input: $input, condition: $condition) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        subscriber
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       title
       logo
       content
@@ -357,6 +354,18 @@ export const deleteAbout = /* GraphQL */ `
       linkedIn
       instagram
       twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       createdAt
       updatedAt
     }
@@ -369,17 +378,6 @@ export const createPost = /* GraphQL */ `
   ) {
     createPost(input: $input, condition: $condition) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        subscriber
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       category
       title
       description
@@ -390,15 +388,27 @@ export const createPost = /* GraphQL */ `
       status
       publishedAt
       expireAt
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       comments {
         nextToken
       }
       audio {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -415,17 +425,6 @@ export const updatePost = /* GraphQL */ `
   ) {
     updatePost(input: $input, condition: $condition) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        subscriber
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       category
       title
       description
@@ -436,15 +435,27 @@ export const updatePost = /* GraphQL */ `
       status
       publishedAt
       expireAt
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       comments {
         nextToken
       }
       audio {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -461,17 +472,6 @@ export const deletePost = /* GraphQL */ `
   ) {
     deletePost(input: $input, condition: $condition) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        subscriber
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       category
       title
       description
@@ -482,15 +482,27 @@ export const deletePost = /* GraphQL */ `
       status
       publishedAt
       expireAt
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       comments {
         nextToken
       }
       audio {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -507,13 +519,18 @@ export const createComment = /* GraphQL */ `
   ) {
     createComment(input: $input, condition: $condition) {
       id
+      content
+      subComment
+      parentComment
+      likes
       blogId
       blog {
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -521,7 +538,6 @@ export const createComment = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
@@ -532,14 +548,11 @@ export const createComment = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      content
-      subComment
-      parentComment
-      likes
       createdAt
       updatedAt
     }
@@ -552,13 +565,18 @@ export const updateComment = /* GraphQL */ `
   ) {
     updateComment(input: $input, condition: $condition) {
       id
+      content
+      subComment
+      parentComment
+      likes
       blogId
       blog {
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -566,7 +584,6 @@ export const updateComment = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
@@ -577,14 +594,11 @@ export const updateComment = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      content
-      subComment
-      parentComment
-      likes
       createdAt
       updatedAt
     }
@@ -597,13 +611,18 @@ export const deleteComment = /* GraphQL */ `
   ) {
     deleteComment(input: $input, condition: $condition) {
       id
+      content
+      subComment
+      parentComment
+      likes
       blogId
       blog {
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -611,7 +630,6 @@ export const deleteComment = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
@@ -622,14 +640,11 @@ export const deleteComment = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      content
-      subComment
-      parentComment
-      likes
       createdAt
       updatedAt
     }
@@ -642,13 +657,16 @@ export const createAudio = /* GraphQL */ `
   ) {
     createAudio(input: $input, condition: $condition) {
       id
+      duration
+      filePath
       blogId
       blog {
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -656,7 +674,6 @@ export const createAudio = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
@@ -667,12 +684,11 @@ export const createAudio = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      duration
-      filePath
       createdAt
       updatedAt
     }
@@ -685,13 +701,16 @@ export const updateAudio = /* GraphQL */ `
   ) {
     updateAudio(input: $input, condition: $condition) {
       id
+      duration
+      filePath
       blogId
       blog {
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -699,7 +718,6 @@ export const updateAudio = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
@@ -710,12 +728,11 @@ export const updateAudio = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      duration
-      filePath
       createdAt
       updatedAt
     }
@@ -728,13 +745,16 @@ export const deleteAudio = /* GraphQL */ `
   ) {
     deleteAudio(input: $input, condition: $condition) {
       id
+      duration
+      filePath
       blogId
       blog {
         id
         name
         logo
-        userId
+        darkLogo
         subscriber
+        userId
         createdAt
         updatedAt
         blogAboutId
@@ -742,7 +762,6 @@ export const deleteAudio = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
@@ -753,12 +772,11 @@ export const deleteAudio = /* GraphQL */ `
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      duration
-      filePath
       createdAt
       updatedAt
     }

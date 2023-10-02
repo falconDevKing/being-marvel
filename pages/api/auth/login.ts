@@ -23,12 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   try {
-    const { name, email, password, confirmPassword } = req.body;
-
-    if (password !== confirmPassword) {
-      const errorResponse = errorResponseCreator(401, "Passwords dont match", {});
-      return res.status(errorResponse.statusCode).json(errorResponse);
-    }
+    const { email, password } = req.body;
 
     const existingUserData = (await API.graphql({
       query: getUserByEmail,
@@ -37,27 +32,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       },
     })) as GraphQLResult<any>;
 
-    const existingUsers = existingUserData.data?.getUserByEmail?.items;
-    console.log({ data: existingUserData.data?.getUserByEmail, existingUsers });
+    const existingUser = existingUserData.data?.getUserByEmail?.items[0];
 
-    if (existingUsers?.length) {
-      const errorResponse = errorResponseCreator(422, "User Exsits", existingUsers);
+    if (!existingUser) {
+      const errorResponse = errorResponseCreator(422, "No user found", {});
       return res.status(errorResponse.statusCode).json(errorResponse);
     }
 
-    const { user } = await Auth.signUp({
-      username: email.trim(),
-      password,
-      attributes: {
-        email: email.trim(),
-        name: name.trim(), // optional
-        // other custom attributes
-      },
-      autoSignIn: {
-        // optional - enables auto sign in after user is confirmed
-        enabled: true,
-      },
-    });
+    const username = email;
+    const user = await Auth.signIn(username, password);
 
     console.log(user);
 
@@ -85,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     //   },
     // })) as GraphQLResult<any>;
 
-    const successResponse = successResponseCreator(201, "User registered", user);
+    const successResponse = successResponseCreator(201, "Logged in successfully", user);
     return res.status(successResponse.statusCode).json(successResponse);
   } catch (err) {
     const errorResponse = errorResponseCreator(500, "Error creating user", err);
