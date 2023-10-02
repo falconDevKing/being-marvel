@@ -22,6 +22,7 @@ export const onCreateUser = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -52,6 +53,7 @@ export const onUpdateUser = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -82,6 +84,7 @@ export const onDeleteUser = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -138,6 +141,7 @@ export const onCreateBlog = /* GraphQL */ `
       comments {
         nextToken
       }
+      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -190,6 +194,7 @@ export const onUpdateBlog = /* GraphQL */ `
       comments {
         nextToken
       }
+      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -242,6 +247,7 @@ export const onDeleteBlog = /* GraphQL */ `
       comments {
         nextToken
       }
+      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -258,6 +264,7 @@ export const onCreateAbout = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -284,6 +291,7 @@ export const onUpdateAbout = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -310,6 +318,7 @@ export const onDeleteAbout = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -336,6 +345,7 @@ export const onCreatePost = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -378,6 +388,7 @@ export const onUpdatePost = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -420,6 +431,7 @@ export const onDeletePost = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -462,6 +474,7 @@ export const onCreateComment = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -503,6 +516,7 @@ export const onUpdateComment = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -544,6 +558,7 @@ export const onDeleteComment = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -585,6 +600,7 @@ export const onCreateAudio = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -624,6 +640,7 @@ export const onUpdateAudio = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -663,6 +680,7 @@ export const onDeleteAudio = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId

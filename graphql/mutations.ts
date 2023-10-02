@@ -25,6 +25,7 @@ export const createUser = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -58,6 +59,7 @@ export const updateUser = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -91,6 +93,7 @@ export const deleteUser = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -150,6 +153,7 @@ export const createBlog = /* GraphQL */ `
       comments {
         nextToken
       }
+      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -205,6 +209,7 @@ export const updateBlog = /* GraphQL */ `
       comments {
         nextToken
       }
+      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -260,6 +265,7 @@ export const deleteBlog = /* GraphQL */ `
       comments {
         nextToken
       }
+      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -279,6 +285,7 @@ export const createAbout = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -308,6 +315,7 @@ export const updateAbout = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -337,6 +345,7 @@ export const deleteAbout = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -366,6 +375,7 @@ export const createPost = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -411,6 +421,7 @@ export const updatePost = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -456,6 +467,7 @@ export const deletePost = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -501,6 +513,7 @@ export const createComment = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -545,6 +558,7 @@ export const updateComment = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -589,6 +603,7 @@ export const deleteComment = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -633,6 +648,7 @@ export const createAudio = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -675,6 +691,7 @@ export const updateAudio = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -717,6 +734,7 @@ export const deleteAudio = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId

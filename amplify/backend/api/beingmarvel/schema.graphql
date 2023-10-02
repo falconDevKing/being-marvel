@@ -6,7 +6,6 @@ type User @model {
   id: ID!
   customId: String
   name: String
-  
   email: String
   @index(
       name: "byEmail"
@@ -28,6 +27,8 @@ type Blog @model {
   id: ID!
   name: String!
   logo: String
+  darkLogo: String
+  subscriber: [String] 
   userId: ID!
   @index(
       name: "byUser"
@@ -39,18 +40,10 @@ type Blog @model {
   posts: [Post] @hasMany(indexName: "byblog", fields: ["id"])
   audios: [Audio] @hasMany(indexName: "byblog", fields: ["id"])
   comments: [Comment] @hasMany(indexName: "byblog", fields: ["id"])
-  subscriber: [String] 
 }
 
 type About @model {
   id: ID!
-  blogId: ID!
-  @index(
-      name: "byblog"
-      queryField: "getAboutByBlog"
-      sortKeyFields: ["id"]
-    )
-  blog: Blog @belongsTo(fields: ["blogId"])
   title: String
   logo: String
   content: String
@@ -58,17 +51,17 @@ type About @model {
   linkedIn: String
   instagram: String
   twitter: String
+  blogId: ID!
+  @index(
+      name: "byblog"
+      queryField: "getAboutByBlog"
+      sortKeyFields: ["id"]
+    )
+  blog: Blog @belongsTo(fields: ["blogId"])
 }
 
 type Post @model {
   id: ID!
-  blogId: ID!
-  @index(
-      name: "byblog"
-      queryField: "fetchPostsByBlog"
-      sortKeyFields: ["id"]
-    )
-  blog: Blog @belongsTo(fields: ["blogId"])
   category: String
   title: String
   description: String
@@ -79,12 +72,23 @@ type Post @model {
   status: Boolean
   publishedAt: String
   expireAt: Int
+  blogId: ID!
+  @index(
+      name: "byblog"
+      queryField: "fetchPostsByBlog"
+      sortKeyFields: ["id"]
+    )
+  blog: Blog @belongsTo(fields: ["blogId"])
   comments: [Comment] @hasMany(indexName: "bypost", fields: ["id"])
   audio: Audio @hasOne
 }
 
 type Comment @model {
   id: ID!
+  content: String
+  subComment: Boolean
+  parentComment: String
+  likes: Int
   blogId: ID!
   @index(
       name: "byblog"
@@ -99,15 +103,12 @@ type Comment @model {
       sortKeyFields: ["id"]
     )
   post: Post @belongsTo(fields: ["postId"])
-  content: String
-  subComment: Boolean
-  parentComment: String
-  likes: Int
-  
 }
 
 type Audio @model {
   id: ID!
+  duration: String
+  filePath: String
   blogId: ID!
   @index(
       name: "byblog"
@@ -122,8 +123,4 @@ type Audio @model {
       sortKeyFields: ["id"]
     )
   post: Post @belongsTo(fields: ["postId"])
-  duration: String
-  filePath: String
-   
-
 }

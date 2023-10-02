@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { errorResponseCreator, successResponseCreator } from "../../utils/responseFormat";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   req.statusCode = 200;
 
   // vet method

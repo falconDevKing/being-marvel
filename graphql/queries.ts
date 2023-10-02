@@ -22,6 +22,7 @@ export const getUser = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -106,6 +107,7 @@ export const getBlog = /* GraphQL */ `
       comments {
         nextToken
       }
+      subscriber
       createdAt
       updatedAt
       blogAboutId
@@ -124,6 +126,7 @@ export const listBlogs = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -142,6 +145,7 @@ export const getAbout = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -192,6 +196,7 @@ export const getPost = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -262,6 +267,7 @@ export const getComment = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -325,6 +331,7 @@ export const getAudio = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
@@ -434,6 +441,7 @@ export const getBlogByUser = /* GraphQL */ `
         name
         logo
         userId
+        subscriber
         createdAt
         updatedAt
         blogAboutId
