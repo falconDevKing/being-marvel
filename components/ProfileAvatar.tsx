@@ -1,43 +1,43 @@
-import * as React from 'react'
-import Avatar from '@mui/material/Avatar'
-import { Box, Stack, SxProps, Theme } from '@mui/material'
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import { Box, Stack, SxProps, Theme } from "@mui/material";
 
 interface AvatarProps {
-  name?: string
-  bgColor?: string
-  sx?: SxProps<Theme> | undefined
-  hasIcon?: boolean
-  hasImage?: boolean
-  src?: string
-  icon?: React.ReactNode
+  name?: string;
+  bgColor?: string;
+  sx?: SxProps<Theme> | undefined;
+  hasIcon?: boolean;
+  hasImage?: boolean;
+  src?: string;
+  icon?: React.ReactNode;
 }
 
 export const stringToColor = (string: string) => {
-  let hash = 0
-  let i
+  let hash = 0;
+  let i;
   /* eslint-disable no-bitwise */
   for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash)
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
-  let color = '#'
+  let color = "#";
   for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff
-    color += `00${value.toString(16)}`.slice(-2)
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
   }
   /* eslint-enable no-bitwise */
-  return color
-}
+  return color;
+};
 
 export default function ProfileAvatar({ name, icon, hasIcon, hasImage, src, sx }: AvatarProps) {
   const stringAvatar = (name: string) => {
     const initials =
-      name?.split(' ')?.reduce((accumulator, currentValue, index) => {
+      name?.split(" ")?.reduce((accumulator, currentValue, index) => {
         if (index <= 1 && currentValue) {
-          return accumulator + currentValue[0]
+          return accumulator + currentValue[0];
         } else {
-          return accumulator
+          return accumulator;
         }
-      }, '' as string) || ''
+      }, "" as string) || "";
 
     return {
       sx: {
@@ -47,13 +47,13 @@ export default function ProfileAvatar({ name, icon, hasIcon, hasImage, src, sx }
         },
       },
       children: initials.toUpperCase(),
-    }
-  }
+    };
+  };
 
-  console.log({ src: src })
+  console.log({ src, name });
   return (
     <>
-      <Stack direction={'row'} alignItems="center" spacing={1}>
+      <Stack direction={"row"} alignItems="center" spacing={1}>
         {!hasIcon && !hasImage && name && <Avatar {...stringAvatar(name)} />}
         {hasIcon && <Avatar sx={{ ...sx }}>{icon}</Avatar>}
         {src && hasImage && <Avatar sx={{ ...sx }} alt={name} src={src} />}
@@ -62,5 +62,5 @@ export default function ProfileAvatar({ name, icon, hasIcon, hasImage, src, sx }
         </Box>
       </Stack>
     </>
-  )
+  );
 }

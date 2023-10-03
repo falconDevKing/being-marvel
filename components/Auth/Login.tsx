@@ -5,14 +5,17 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
 import { useFormik } from "formik";
 import LoginValidation from "../../utils/validations/LoginValidation";
 import { DismissHandler, ErrorHandler, LoadingHandler, SuccessHandler } from "../../utils/handlers";
-import { isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Input from "../Input";
+import { API, Auth } from "aws-amplify";
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { getUserByEmail } from "../../graphql/queries";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as string;
 
@@ -37,10 +40,8 @@ const Login = ({ setAuthMode, setOpenSignin }: LoginProps) => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
     validationSchema: LoginValidation,
     validateOnChange: true,
@@ -49,30 +50,41 @@ const Login = ({ setAuthMode, setOpenSignin }: LoginProps) => {
       LoadingHandler({ message: "Logging in..." });
       setLoading(true);
       try {
-        const result = await signIn("credentials", {
-          redirect: false,
-          email: values.email,
-          password: values.password,
-        });
+        // const authResponse = await axios.post("/api/auth/login", values);
+        // const message = authResponse?.data?.message;
+        const { email, password } = values;
 
-        if (result?.ok) {
-          DismissHandler();
-          SuccessHandler({ message: "Signed In successfully" });
-          setLoading(false);
-          setOpenSignin(false);
-          router.push(callback);
-        } else {
-          DismissHandler();
-          ErrorHandler({ message: result?.error || "Error Logging in" });
-        }
+        // const existingUserData = (await API.graphql({
+        //   query: getUserByEmail,
+        //   variables: {
+        //     email: email,
+        //   },
+        // })) as GraphQLResult<any>;
+
+        // const existingUser = existingUserData.data?.getUserByEmail?.items[0];
+
+        // if (!existingUser) {
+        //   throw new Error("No user found");
+        // }
+
+        const username = email;
+        const user = await Auth.signIn(username, password);
+
+        console.log(user);
+
+        DismissHandler();
+        SuccessHandler({ message: "Logged in successfully" });
         setLoading(false);
-      } catch (error) {
+        setOpenSignin(false);
+        setLoading(false);
+        router.push(callback);
+      } catch (error: any) {
         DismissHandler();
         if (isAxiosError(error)) {
           const message = error?.response?.data?.message;
           ErrorHandler({ message });
         } else {
-          ErrorHandler({ message: "Something went wrong" });
+          ErrorHandler({ message: error?.message || "Something went wrong" });
         }
         setLoading(false);
       }
@@ -82,7 +94,7 @@ const Login = ({ setAuthMode, setOpenSignin }: LoginProps) => {
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
 
   const loginGoogle = async () => {
-    const googleResponse = await signIn("google", { redirect: false, callbackUrl: callback });
+    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
   };
 
   return (

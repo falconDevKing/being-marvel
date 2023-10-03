@@ -1,17 +1,14 @@
-import { Box, Stack, Divider } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Modal from "./Modal";
 import { useState } from "react";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Register from "./Auth/Register";
 import Login from "./Auth/Login";
-import { useSession } from "next-auth/react";
-import { ModifiedSession } from "../utils/helper";
 import ProfileAvatar from "./ProfileAvatar";
+import { AuthUserData } from "../interfaces/auth";
+import { useAppSelector } from "../redux/hooks";
 
 type HeaderProps = {
   width: string;
@@ -19,15 +16,10 @@ type HeaderProps = {
 
 const Header = ({ width }: HeaderProps) => {
   const router = useRouter();
-
-  const { status, data: session } = useSession();
   const [loading, setLoading] = useState(false);
 
-  const userDetails = session?.user;
-  const userName = userDetails?.name as string;
-  const userEmail = userDetails?.email as string;
-  const userImage = userDetails?.image as string;
-  // const userId = userDetails?.id as string
+  const { userData, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { name, picture, email } = userData as AuthUserData;
 
   const [openSignin, setOpenSignin] = useState<boolean>(false);
   const [authMode, setAuthMode] = useState<string>("Login");
@@ -98,10 +90,10 @@ const Header = ({ width }: HeaderProps) => {
           </Link>
         </Stack>
 
-        {status === "authenticated" ? (
+        {isAuthenticated ? (
           <ProfileAvatar
-            name={userName}
-            src={userImage}
+            name={name}
+            src={picture}
             hasImage
             sx={{
               width: "3rem",

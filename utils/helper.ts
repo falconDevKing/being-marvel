@@ -36,7 +36,7 @@ export const promiseAllSettledWrapper = async (paramsArray: any[], asyncFuntionC
       helperParamsArray.map(async (params) => {
         const apiResponse = await helperAsyncFuntionCall(params);
         return apiResponse;
-      })
+      }),
     );
 
     const failedBody: any[] = [];
@@ -86,11 +86,3 @@ export const FAQs = [
     answer: "Yes, you can. Every member of the community can become a host, all you need to is agree to the terms and conditions and abide by it.",
   },
 ];
-
-export type ModifiedSession = {
-  name?: string | null | undefined;
-  email?: string | null | undefined;
-  image?: string | null | undefined;
-  id?: string | null | undefined;
-  seller?: boolean | null | undefined;
-};

@@ -14,32 +14,7 @@ import { getLoggedInUser } from "../redux/authSlice";
 import { saveAuthUser, setLogout } from "../services/auth";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
-Amplify.configure({ ...awsExports, ssr: true });
-
 const Home: NextPage = () => {
-  const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    console.log("app loaded");
-    const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
-      switch (event) {
-        case "autoSignIn":
-          saveAuthUser(data);
-          break;
-        case "signIn":
-          saveAuthUser(data);
-          break;
-        case "signOut":
-          setLogout();
-          break;
-      }
-    });
-
-    dispatch(getLoggedInUser());
-
-    return unsubscribe;
-  }, []);
-
   return (
     <Box color="#2c2c2c">
       <Head>

@@ -4,7 +4,6 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Dispatch, SetStateAction, useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { DismissHandler, ErrorHandler, LoadingHandler, SuccessHandler } from "../../utils/handlers";
 import { useFormik } from "formik";
@@ -13,6 +12,10 @@ import axios, { isAxiosError } from "axios";
 import Input from "../Input";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { API, Auth } from "aws-amplify";
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { getUserByEmail } from "../../graphql/queries";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as string;
 
@@ -49,31 +52,58 @@ const Register = ({ setAuthMode, setOpenSignin }: RegisterProps) => {
       LoadingHandler({ message: "Registering..." });
       setLoading(true);
       try {
-        try {
-          const authResponse = await axios.post("/api/auth/signup", values);
-          const message = authResponse?.data?.message;
-          DismissHandler();
-          SuccessHandler({ message });
-          SuccessHandler({ message: "Kindly Login" });
-          setLoading(false);
-          setAuthMode("Login");
-        } catch (error) {
-          console.log("error signing up", error);
-          DismissHandler();
-          if (isAxiosError(error)) {
-            const message = error?.response?.data?.message;
-            ErrorHandler({ message });
-          } else {
-            ErrorHandler({ message: "Something went wrong " });
-          }
+        // const authResponse = await axios.post("/api/auth/signup", values);
+
+        const { name, email, password, confirmPassword } = values;
+
+        if (password !== confirmPassword) {
+          throw new Error("Passwords dont match");
         }
+
+        const existingUserData = (await API.graphql({
+          query: getUserByEmail,
+          variables: {
+            email: email,
+          },
+        })) as GraphQLResult<any>;
+
+        const existingUsers = existingUserData.data?.getUserByEmail?.items;
+        console.log({ data: existingUserData.data?.getUserByEmail, existingUsers });
+
+        if (existingUsers?.length) {
+          throw new Error("User Exsits");
+        }
+
+        const { user } = await Auth.signUp({
+          username: email.trim(),
+          password,
+          attributes: {
+            email: email.trim(),
+            name: name.trim(), // optional
+            // other custom attributes
+          },
+          autoSignIn: {
+            // optional - enables auto sign in after user is confirmed
+            enabled: true,
+          },
+        });
+
+        console.log(user);
+
+        // const message = authResponse?.data?.message;
+        DismissHandler();
+        SuccessHandler({ message: "User Signed in" });
+        // SuccessHandler({ message: "Kindly Login" });
         setLoading(false);
+        setAuthMode("Login");
       } catch (error) {
+        console.log("error signing up", error);
+        DismissHandler();
         if (isAxiosError(error)) {
           const message = error?.response?.data?.message;
           ErrorHandler({ message });
         } else {
-          ErrorHandler({ message: "Something went wrong" });
+          ErrorHandler({ message: "Something went wrong " });
         }
         setLoading(false);
       }
@@ -82,7 +112,7 @@ const Register = ({ setAuthMode, setOpenSignin }: RegisterProps) => {
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
 
   const loginGoogle = async () => {
-    const googleResponse = await signIn("google", { redirect: false, callbackUrl: callback });
+    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
   };
 
   return (

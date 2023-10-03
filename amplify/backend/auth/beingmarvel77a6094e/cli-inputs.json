@@ -39,7 +39,7 @@
     "sharedId": "77a6094e",
     "resourceName": "beingmarvel77a6094e",
     "authSelections": "userPoolOnly",
-    "useDefault": "manual",
+    "useDefault": "defaultSocial",
     "usernameAttributes": [
       "email"
     ],
