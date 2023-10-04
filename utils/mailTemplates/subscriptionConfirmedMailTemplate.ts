@@ -55,7 +55,7 @@ const SubscriptionConfirmedMailTemplate = () => {
       <tr>
         <td style="padding: 4px 40px">
           <p style="padding: 40px 0px 40px 0px; line-height: 32px; font-size: 16px; color: #253858; font-style: normal; font-weight: 400">
-            Best, <br />
+            Love you, <br />
             Marvel
           </p>
         </td>

@@ -28,7 +28,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ToAddresses: [BloggerMail],
     };
     const mailSubjectBlogger = "New Contact Message";
-    const mailBodyBlogger = ContactMessageMailTemplate(name, email, content);
+    const modifiedContent = content.split("\n").join("<br/>");
+    console.log({ modifiedContent });
+    const mailBodyBlogger = ContactMessageMailTemplate(name, email, modifiedContent);
     const sendBloggerMail = await sendMail(destinationBlogger, mailSubjectBlogger, mailBodyBlogger);
 
     const successResponse = successResponseCreator(200, "Message Sent Successfully", {});

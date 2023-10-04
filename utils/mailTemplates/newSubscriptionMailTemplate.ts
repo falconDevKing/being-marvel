@@ -42,7 +42,7 @@ const NewSubscriptionMailTemplate = (email: string) => {
       <tr>
         <td style="padding: 40px; line-height: 32px; font-size: 16px; color: #253858; font-style: normal; font-weight: 400">
           <p>Hi Marvel,</p>
-          <p style="padding-top: 8px">This is a notify that a new user has subscribed to your blog has reached out to you. Below is the email of the user:</p>
+          <p style="padding-top: 8px">This is a notify that a new user has subscribed to your blog. Below is the email of the user:</p>
 
           <p>Email: <a href="mailto:${email}" target="_blank" rel="noreferrer noopener" style="color: #44cde0; text-decoration: none">${email}</a></p>
 
@@ -54,7 +54,7 @@ const NewSubscriptionMailTemplate = (email: string) => {
       <tr>
         <td style="padding: 4px 40px">
           <p style="padding: 40px 0px 40px 0px; line-height: 32px; font-size: 16px; color: #253858; font-style: normal; font-weight: 400">
-            Best, <br />
+            Love you, <br />
             Marvel
           </p>
         </td>

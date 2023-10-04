@@ -34,8 +34,8 @@ const ContactMessageMailTemplate = (name: string, email: string, message: string
           <p style="padding-top: 8px">This is a notify that fan has reached out to you. Below are the details:</p>
           <p>Name: ${name}</p>
           <p>Email: <a href="mailto:${email}" target="_blank" rel="noreferrer noopener" style="color: #44cde0; text-decoration: none">${email}</a></p>
-          <p>Message: ${message}</p>
-          <p>Kindly do well to get back to the person in due time.</p>
+          <p>Message: <span style="font-style: italic"> ${message} </span></p>
+          <p style="padding-top: 24px">Kindly do well to get back to the person in due time.</p>
 
           <p style="padding-top: 8px">Thank you.</p>
         </td>
