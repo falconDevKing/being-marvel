@@ -1,5 +1,27 @@
 {
-  "key1": "value1",
-  "key2": "value2",
-  "key3": "value3"
+  "version": "1",
+  "region": "eu-west-1",
+  "userPoolId": "eu-west-1_qL9z8Rnwd",
+  "userName": "google_103971834438580887841",
+  "callerContext": {
+    "awsSdkVersion": "aws-sdk-unknown-unknown",
+    "clientId": "q12dt2galftb0s6hc2rqft1hj"
+  },
+  "triggerSource": "PostAuthentication_Authentication",
+  "request": {
+    "userAttributes": {
+      "sub": "bb56e9d9-0cac-4ab5-83ef-2672571aff32",
+      "cognito:token_nbf": "1696423213914",
+      "email_verified": "false",
+      "identities": "[{'userId':'103971834438580887841','providerName':'Google','providerType':'Google','issuer':null,'primary':true,'dateCreated':1696406332766}]",
+      "cognito:user_status": "EXTERNAL_PROVIDER",
+      "name": "Emmanuel Oyekan",
+      "given_name": "Emmanuel",
+      "family_name": "Oyekan",
+      "picture": "https://lh3.googleusercontent.com/a/ACg8ocKb-MmsRCcDXtni6lKp0nhAHuZccgOMfKIkSEV_n9eLCLw=s96-c",
+      "email": "emmanueloyekan33@gmail.com"
+    },
+    "newDeviceUsed": false
+  },
+  "response": {}
 }

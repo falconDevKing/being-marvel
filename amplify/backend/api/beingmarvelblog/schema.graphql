@@ -6,17 +6,16 @@ type User @model {
   id: ID!
   customId: String
   name: String
+  firstName: String
+  lastName: String
   email: String
   @index(
       name: "byEmail"
       queryField: "getUserByEmail"
       sortKeyFields: ["id"]
     )
-  password: String,
   image: String
   provider: String
-  id_token: String
-  access_token: String
   postLikes: [String]
   commentLikes: [String]
   blogger: Boolean

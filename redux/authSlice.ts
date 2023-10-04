@@ -2,7 +2,8 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { Auth } from "aws-amplify";
 // import { ErrorHandler } from "helper/Handlers";
-import { updateAuthLoading } from "../services/auth";
+import { getUserDetails, updateAuthLoading } from "../services/auth";
+import { UserDetails } from "../interfaces/auth";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -12,12 +13,14 @@ interface AuthState {
   loading: boolean;
   isInitialized: boolean;
   error: any;
+  userDetails: UserDetails;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
   isInitialized: false,
   loading: false,
+  userDetails: {},
   userData: {},
   authUser: {},
   authData: {},
@@ -28,6 +31,13 @@ export const getLoggedInUser = createAsyncThunk("auth/getLoggedInUser", async ()
   try {
     updateAuthLoading(true);
     const currentUser = await Auth.currentAuthenticatedUser();
+
+    const userEmail = currentUser?.attributes?.email || "";
+
+    if (userEmail) {
+      await getUserDetails(userEmail);
+    }
+
     return currentUser;
   } catch (err: any) {
     // ErrorHandler({ message: err });
@@ -87,6 +97,14 @@ const authSlice = createSlice({
     ) => {
       state.userData = action.payload.data;
     },
+    setUserDetails: (
+      state,
+      action: PayloadAction<{
+        data: any;
+      }>,
+    ) => {
+      state.userDetails = action.payload.data;
+    },
     setUnAuthData: (
       state,
       action: PayloadAction<{
@@ -97,6 +115,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = false;
       state.authData = {};
+      state.userDetails = {};
       state.error = action.payload.data;
     },
     setLogOut: (state) => {
@@ -128,6 +147,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuthLoading, setIsAuthenticated, setAuthUser, setAuthData, setUnAuthData, setUserData, setLogOut } = authSlice.actions;
+export const { setAuthLoading, setIsAuthenticated, setAuthUser, setAuthData, setUserDetails, setUnAuthData, setUserData, setLogOut } = authSlice.actions;
 
 export default authSlice.reducer;

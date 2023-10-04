@@ -60,6 +60,15 @@
   "function": {
     "beingmarvelblog5767c27ePostAuthentication": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "beingmarvelblog"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -76,6 +85,22 @@
         {
           "category": "auth",
           "resourceName": "beingmarvelblog5767c27e"
+        }
+      ]
+    },
+    "AMPLIFY_function_beingmarvelblog5767c27ePostAuthentication_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "beingmarvelblog5767c27ePostAuthentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_beingmarvelblog5767c27ePostAuthentication_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "beingmarvelblog5767c27ePostAuthentication"
         }
       ]
     },

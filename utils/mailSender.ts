@@ -23,7 +23,6 @@ export const sendMail = async (recipients: desitinationData, mailSubject: string
     const response = (await API.graphql({
       query: genericMailSender,
       variables: variables,
-      authMode: "API_KEY",
     })) as GraphQLResult<any>;
 
     return {

@@ -13,5 +13,15 @@
   "triggerEventPath": "PostAuthentication.event.json",
   "roleName": "beingmarvelblog5767c27ePostAuthentication",
   "skipEdit": true,
-  "enableCors": false
+  "enableCors": false,
+  "permissions": {
+    "storage": {
+      "User:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
 }

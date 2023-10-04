@@ -1,7 +1,9 @@
-import { getLoggedInUser, setAuthData, setAuthLoading, setAuthUser, setLogOut, setUnAuthData, setUserData } from "../redux/authSlice";
+import { getLoggedInUser, setAuthData, setAuthLoading, setAuthUser, setLogOut, setUnAuthData, setUserData, setUserDetails } from "../redux/authSlice";
 import store from "../redux/store";
-import { Auth } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import { ErrorHandler } from "../utils/handlers";
+import { getUserByEmail } from "../graphql/queries";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 
 export const updateAuthLoading = (loading: boolean) => {
   store.dispatch(setAuthLoading({ data: loading }));
@@ -18,6 +20,7 @@ export const getLoggedInUserFunction = async () => {
     const currentUser = await Auth.currentAuthenticatedUser();
     store.dispatch(setAuthData({ data: currentUser }));
     store.dispatch(setUserData({ data: currentUser.attributes }));
+    await getUserDetails(currentUser?.attributes?.email);
     return currentUser;
   } catch (err: any) {
     console.log({ err });
@@ -34,4 +37,22 @@ export const logout = async () => {
 export const setLogout = () => {
   console.log("set Log out called");
   store.dispatch(setLogOut());
+};
+
+export const getUserDetails = async (userEmail: string) => {
+  try {
+    if (userEmail) {
+      const userData = (await API.graphql({
+        query: getUserByEmail,
+        variables: { email: userEmail },
+      })) as GraphQLResult<any>;
+
+      const user = userData?.data?.getUserByEmail?.items[0];
+      console.log({ user, main: userData?.data });
+      store.dispatch(setUserDetails(user));
+    }
+  } catch (error: any) {
+    console.log("Unable to get user details", error);
+    ErrorHandler({ message: error?.message || "Unable to get user details" });
+  }
 };
