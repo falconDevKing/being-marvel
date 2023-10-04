@@ -20,7 +20,8 @@
       "function": {
         "mailSender": {
           "deploymentBucketName": "amplify-beingmarvelblog-dev-81553-deployment",
-          "s3Key": "amplify-builds/mailSender-476f5930556358764d68-build.zip"
+          "s3Key": "amplify-builds/mailSender-476f5930556358764d68-build.zip",
+          "sesEmail": "emmanueloyekan33@gmail.com"
         },
         "beingmarvelblog5767c27ePostAuthentication": {}
       }

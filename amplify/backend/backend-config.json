@@ -94,6 +94,14 @@
           "resourceName": "mailSender"
         }
       ]
+    },
+    "AMPLIFY_function_mailSender_sesEmail": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mailSender"
+        }
+      ]
     }
   }
 }
