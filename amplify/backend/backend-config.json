@@ -46,5 +46,23 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
     }
+  },
+  "function": {
+    "mailSender": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_mailSender_sesEmail": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mailSender"
+        }
+      ]
+    }
   }
 }

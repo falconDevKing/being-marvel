@@ -50,7 +50,6 @@ export default function ProfileAvatar({ name, icon, hasIcon, hasImage, src, sx }
     };
   };
 
-  console.log({ src, name });
   return (
     <>
       <Stack direction={"row"} alignItems="center" spacing={1}>

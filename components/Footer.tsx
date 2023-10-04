@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 type FooterProps = {
   width: string;
@@ -12,6 +13,8 @@ const Footer = ({ width }: FooterProps) => {
   const navToDashboard = () => {
     router.push("/blogger/dashboard");
   };
+
+  const [subscriberMail, setSubscriberMail] = useState<string>("");
 
   return (
     <Box bgcolor={"#222"} width={"100%"} py={6} color="#fff">
@@ -31,6 +34,10 @@ const Footer = ({ width }: FooterProps) => {
               <input
                 id="subscribeEmail"
                 placeholder="Enter email here"
+                value={subscriberMail}
+                onChange={(e) => {
+                  setSubscriberMail(e.target.value);
+                }}
                 style={{
                   color: "#C0C0C0",
                   padding: "4px 8px",

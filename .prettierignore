@@ -26,3 +26,5 @@ poetry-installer-error-ecbhizvu.log
 src/graphql
 src/api
 package.json
+amplify/backend/function/**/src/node_modules
+!amplify/backend/function/**/src/*.js

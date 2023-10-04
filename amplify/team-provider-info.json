@@ -17,6 +17,11 @@
       },
       "auth": {
         "beingmarvelblog5767c27e": {}
+      },
+      "function": {
+        "mailSender": {
+          "sesEmail": "emmanueloyekan33@gmail.com"
+        }
       }
     }
   }
