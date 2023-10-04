@@ -2,6 +2,111 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      customId
+      name
+      email
+      password
+      image
+      provider
+      id_token
+      access_token
+      postLikes
+      commentLikes
+      blogger
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
+      createdAt
+      updatedAt
+      userBlogId
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      customId
+      name
+      email
+      password
+      image
+      provider
+      id_token
+      access_token
+      postLikes
+      commentLikes
+      blogger
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
+      createdAt
+      updatedAt
+      userBlogId
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      customId
+      name
+      email
+      password
+      image
+      provider
+      id_token
+      access_token
+      postLikes
+      commentLikes
+      blogger
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
+      createdAt
+      updatedAt
+      userBlogId
+    }
+  }
+`;
 export const createBlog = /* GraphQL */ `
   mutation CreateBlog(
     $input: CreateBlogInput!
@@ -10,11 +115,52 @@ export const createBlog = /* GraphQL */ `
     createBlog(input: $input, condition: $condition) {
       id
       name
+      logo
+      darkLogo
+      subscriber
+      userId
+      user {
+        id
+        customId
+        name
+        email
+        password
+        image
+        provider
+        id_token
+        access_token
+        postLikes
+        commentLikes
+        blogger
+        createdAt
+        updatedAt
+        userBlogId
+      }
+      about {
+        id
+        title
+        logo
+        content
+        email
+        linkedIn
+        instagram
+        twitter
+        blogId
+        createdAt
+        updatedAt
+      }
       posts {
+        nextToken
+      }
+      audios {
+        nextToken
+      }
+      comments {
         nextToken
       }
       createdAt
       updatedAt
+      blogAboutId
     }
   }
 `;
@@ -26,11 +172,52 @@ export const updateBlog = /* GraphQL */ `
     updateBlog(input: $input, condition: $condition) {
       id
       name
+      logo
+      darkLogo
+      subscriber
+      userId
+      user {
+        id
+        customId
+        name
+        email
+        password
+        image
+        provider
+        id_token
+        access_token
+        postLikes
+        commentLikes
+        blogger
+        createdAt
+        updatedAt
+        userBlogId
+      }
+      about {
+        id
+        title
+        logo
+        content
+        email
+        linkedIn
+        instagram
+        twitter
+        blogId
+        createdAt
+        updatedAt
+      }
       posts {
+        nextToken
+      }
+      audios {
+        nextToken
+      }
+      comments {
         nextToken
       }
       createdAt
       updatedAt
+      blogAboutId
     }
   }
 `;
@@ -42,8 +229,142 @@ export const deleteBlog = /* GraphQL */ `
     deleteBlog(input: $input, condition: $condition) {
       id
       name
+      logo
+      darkLogo
+      subscriber
+      userId
+      user {
+        id
+        customId
+        name
+        email
+        password
+        image
+        provider
+        id_token
+        access_token
+        postLikes
+        commentLikes
+        blogger
+        createdAt
+        updatedAt
+        userBlogId
+      }
+      about {
+        id
+        title
+        logo
+        content
+        email
+        linkedIn
+        instagram
+        twitter
+        blogId
+        createdAt
+        updatedAt
+      }
       posts {
         nextToken
+      }
+      audios {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      blogAboutId
+    }
+  }
+`;
+export const createAbout = /* GraphQL */ `
+  mutation CreateAbout(
+    $input: CreateAboutInput!
+    $condition: ModelAboutConditionInput
+  ) {
+    createAbout(input: $input, condition: $condition) {
+      id
+      title
+      logo
+      content
+      email
+      linkedIn
+      instagram
+      twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateAbout = /* GraphQL */ `
+  mutation UpdateAbout(
+    $input: UpdateAboutInput!
+    $condition: ModelAboutConditionInput
+  ) {
+    updateAbout(input: $input, condition: $condition) {
+      id
+      title
+      logo
+      content
+      email
+      linkedIn
+      instagram
+      twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteAbout = /* GraphQL */ `
+  mutation DeleteAbout(
+    $input: DeleteAboutInput!
+    $condition: ModelAboutConditionInput
+  ) {
+    deleteAbout(input: $input, condition: $condition) {
+      id
+      title
+      logo
+      content
+      email
+      linkedIn
+      instagram
+      twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
       }
       createdAt
       updatedAt
@@ -57,19 +378,43 @@ export const createPost = /* GraphQL */ `
   ) {
     createPost(input: $input, condition: $condition) {
       id
+      category
       title
+      description
+      captionText
+      captionImage
+      likes
+      views
+      status
+      publishedAt
+      expireAt
+      blogId
       blog {
         id
         name
+        logo
+        darkLogo
+        subscriber
+        userId
         createdAt
         updatedAt
+        blogAboutId
       }
       comments {
         nextToken
       }
+      audio {
+        id
+        duration
+        filePath
+        blogId
+        postId
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
-      blogPostsId
+      postAudioId
     }
   }
 `;
@@ -80,19 +425,43 @@ export const updatePost = /* GraphQL */ `
   ) {
     updatePost(input: $input, condition: $condition) {
       id
+      category
       title
+      description
+      captionText
+      captionImage
+      likes
+      views
+      status
+      publishedAt
+      expireAt
+      blogId
       blog {
         id
         name
+        logo
+        darkLogo
+        subscriber
+        userId
         createdAt
         updatedAt
+        blogAboutId
       }
       comments {
         nextToken
       }
+      audio {
+        id
+        duration
+        filePath
+        blogId
+        postId
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
-      blogPostsId
+      postAudioId
     }
   }
 `;
@@ -103,19 +472,43 @@ export const deletePost = /* GraphQL */ `
   ) {
     deletePost(input: $input, condition: $condition) {
       id
+      category
       title
+      description
+      captionText
+      captionImage
+      likes
+      views
+      status
+      publishedAt
+      expireAt
+      blogId
       blog {
         id
         name
+        logo
+        darkLogo
+        subscriber
+        userId
         createdAt
         updatedAt
+        blogAboutId
       }
       comments {
         nextToken
       }
+      audio {
+        id
+        duration
+        filePath
+        blogId
+        postId
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
-      blogPostsId
+      postAudioId
     }
   }
 `;
@@ -126,17 +519,42 @@ export const createComment = /* GraphQL */ `
   ) {
     createComment(input: $input, condition: $condition) {
       id
-      post {
+      content
+      subComment
+      parentComment
+      likes
+      blogId
+      blog {
         id
-        title
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
         createdAt
         updatedAt
-        blogPostsId
+        blogAboutId
       }
-      content
+      postId
+      post {
+        id
+        category
+        title
+        description
+        captionText
+        captionImage
+        likes
+        views
+        status
+        publishedAt
+        expireAt
+        blogId
+        createdAt
+        updatedAt
+        postAudioId
+      }
       createdAt
       updatedAt
-      postCommentsId
     }
   }
 `;
@@ -147,17 +565,42 @@ export const updateComment = /* GraphQL */ `
   ) {
     updateComment(input: $input, condition: $condition) {
       id
-      post {
+      content
+      subComment
+      parentComment
+      likes
+      blogId
+      blog {
         id
-        title
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
         createdAt
         updatedAt
-        blogPostsId
+        blogAboutId
       }
-      content
+      postId
+      post {
+        id
+        category
+        title
+        description
+        captionText
+        captionImage
+        likes
+        views
+        status
+        publishedAt
+        expireAt
+        blogId
+        createdAt
+        updatedAt
+        postAudioId
+      }
       createdAt
       updatedAt
-      postCommentsId
     }
   }
 `;
@@ -168,17 +611,174 @@ export const deleteComment = /* GraphQL */ `
   ) {
     deleteComment(input: $input, condition: $condition) {
       id
-      post {
+      content
+      subComment
+      parentComment
+      likes
+      blogId
+      blog {
         id
-        title
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
         createdAt
         updatedAt
-        blogPostsId
+        blogAboutId
       }
-      content
+      postId
+      post {
+        id
+        category
+        title
+        description
+        captionText
+        captionImage
+        likes
+        views
+        status
+        publishedAt
+        expireAt
+        blogId
+        createdAt
+        updatedAt
+        postAudioId
+      }
       createdAt
       updatedAt
-      postCommentsId
+    }
+  }
+`;
+export const createAudio = /* GraphQL */ `
+  mutation CreateAudio(
+    $input: CreateAudioInput!
+    $condition: ModelAudioConditionInput
+  ) {
+    createAudio(input: $input, condition: $condition) {
+      id
+      duration
+      filePath
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
+      postId
+      post {
+        id
+        category
+        title
+        description
+        captionText
+        captionImage
+        likes
+        views
+        status
+        publishedAt
+        expireAt
+        blogId
+        createdAt
+        updatedAt
+        postAudioId
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateAudio = /* GraphQL */ `
+  mutation UpdateAudio(
+    $input: UpdateAudioInput!
+    $condition: ModelAudioConditionInput
+  ) {
+    updateAudio(input: $input, condition: $condition) {
+      id
+      duration
+      filePath
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
+      postId
+      post {
+        id
+        category
+        title
+        description
+        captionText
+        captionImage
+        likes
+        views
+        status
+        publishedAt
+        expireAt
+        blogId
+        createdAt
+        updatedAt
+        postAudioId
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteAudio = /* GraphQL */ `
+  mutation DeleteAudio(
+    $input: DeleteAudioInput!
+    $condition: ModelAudioConditionInput
+  ) {
+    deleteAudio(input: $input, condition: $condition) {
+      id
+      duration
+      filePath
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
+      postId
+      post {
+        id
+        category
+        title
+        description
+        captionText
+        captionImage
+        likes
+        views
+        status
+        publishedAt
+        expireAt
+        blogId
+        createdAt
+        updatedAt
+        postAudioId
+      }
+      createdAt
+      updatedAt
     }
   }
 `;
