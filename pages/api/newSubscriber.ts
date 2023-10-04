@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { errorResponseCreator, successResponseCreator } from "../../utils/responseFormat";
 import SubscriptionConfirmedMailTemplate from "../../utils/mailTemplates/subscriptionConfirmed";
-import { sendMail } from "../../utils/ses";
+import { sendMail } from "../../utils/mailSender";
 import NewSubscriptionMailTemplate from "../../utils/mailTemplates/newSubscription";
 
-const BloggerMail = (process.env.NEXT_PUBLIC_CONTACT_MAIL || process.env.NEXT_PUBLIC_CONTACT_MAIL) as string;
+const BloggerMail = (process.env.NEXT_PUBLIC_CONTACT_MAIL || process.env.CONTACT_MAIL) as string;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   req.statusCode = 200;
@@ -40,7 +40,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const successResponse = successResponseCreator(200, "Subscribed successfully", { subscriberMail });
     return res.status(successResponse.statusCode).json(successResponse);
   } catch (err) {
-    const errorResponse = errorResponseCreator(500, "Error fetching bookings details", err);
+    console.log("err from api", err);
+    const errorResponse = errorResponseCreator(500, "Error Subscribing", err);
     return res.status(errorResponse.statusCode).json(errorResponse);
   }
 }

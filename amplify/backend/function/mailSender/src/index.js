@@ -11,6 +11,9 @@ Amplify Params - DO NOT EDIT */
 const { SendEmailCommand, SESClient } = require("@aws-sdk/client-ses");
 const senderMail = process.env.SES_EMAIL;
 
+const sesClient = new SESClient();
+
+
 exports.handler = async (event) => {
   try {
     console.log(`EVENT: ${JSON.stringify(event)}`);
@@ -43,12 +46,12 @@ exports.handler = async (event) => {
           params["ReplyToAddresses"] = replyAddresses;
         }
 
-        await SESClient.send(new SendEmailCommand(params));
+        await sesClient.send(new SendEmailCommand(params));
         console.log("Mail sent for", mailSubject);
         return "sent";
       } catch (err) {
         console.log("ses error", err);
-        throw new Error(err);
+        throw err
       }
     };
 
@@ -63,5 +66,8 @@ exports.handler = async (event) => {
       //  },
       body: JSON.stringify("Hello from Lambda!"),
     };
-  } catch (error) {}
+  } catch (error) {
+    console.log("ses2 error", err);
+        throw err
+  }
 };

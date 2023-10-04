@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { ErrorHandler, SuccessHandler } from "../utils/handlers";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 
 type FooterProps = {
   width: string;
@@ -16,10 +16,15 @@ const Footer = ({ width }: FooterProps) => {
     router.push("/blogger/dashboard");
   };
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [subscriberMail, setSubscriberMail] = useState<string>("");
 
   const subscribe = async () => {
     try {
+      if (loading) {
+        return;
+      }
+      setLoading(true);
       if (subscriberMail) {
         const subscribedResponse = await axios.post("/api/newSubscriber", { subscriberMail });
         const message = subscribedResponse.data.message;
@@ -29,8 +34,15 @@ const Footer = ({ width }: FooterProps) => {
         ErrorHandler({ message: "Kindly fill in your email" });
       }
     } catch (error: any) {
-      ErrorHandler({ message: error?.message || "Unable to subscribed, please try again later" });
+      console.log("err in footer", error);
+      if (isAxiosError(error)) {
+        const message = error?.response?.data?.message;
+        ErrorHandler({ message });
+      } else {
+        ErrorHandler({ message: error?.message || "Something went wrong, please try again later" });
+      }
     }
+    setLoading(false);
   };
 
   return (
@@ -69,7 +81,15 @@ const Footer = ({ width }: FooterProps) => {
               />
 
               <Box
-                sx={{ borderRadius: "0px 4px 4px 0px", bgcolor: "#95A8D3", height: "52px", padding: "6px 16px", display: "flex", alignItems: "center" }}
+                sx={{
+                  borderRadius: "0px 4px 4px 0px",
+                  bgcolor: loading ? "#ccc" : "#95A8D3",
+                  height: "52px",
+                  padding: "6px 16px",
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
                 onClick={subscribe}
               >
                 Subscribe

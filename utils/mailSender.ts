@@ -1,42 +1,37 @@
-import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
+import { genericMailSender } from "../graphql/queries";
+import { API } from "aws-amplify";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 
-const REGION = (process.env.REGION || process.env.NEXT_PUBLIC_REGION) as string;
-const CREDENTIALS = {
-  accessKeyId: (process.env.ACCESS_KEY || process.env.NEXT_PUBLIC_ACCESS_KEY) as string,
-  secretAccessKey: (process.env.SECRET_ACCESS_KEY || process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY) as string,
+type desitinationData = {
+  ToAddresses: string[];
+  CcAddresses?: string[];
+  BccAddresses?: string[];
 };
 
-const sesClient = new SESClient({ region: REGION, credentials: CREDENTIALS });
-
-const senderMail = "emmanueloyekan33@gmail.com";
-const recipientMail = "emisbehave@gmail.com";
-
-const MailSender = async (mailSubject: string, mailBody: string) => {
+export const sendMail = async (recipients: desitinationData, mailSubject: string, mailBody: string, replyAddresses?: string[]) => {
   try {
-    const params = {
-      Destination: {
-        ToAddresses: [recipientMail],
-      },
-      Message: {
-        Body: {
-          Html: {
-            Charset: "UTF-8",
-            Data: mailBody,
-          },
-        },
-        Subject: {
-          Charset: "UTF-8",
-          Data: mailSubject,
-        },
-      },
-      Source: senderMail,
+    const variables: Record<string, any> = {
+      destination: recipients,
+      mailSubject: mailSubject,
+      mailBody: mailBody,
     };
 
-    await sesClient.send(new SendEmailCommand(params));
+    if (replyAddresses?.length) {
+      variables["replyAddresses"] = replyAddresses;
+    }
+
+    const response = (await API.graphql({
+      query: genericMailSender,
+      variables: variables,
+      authMode: "API_KEY",
+    })) as GraphQLResult<any>;
+
+    return {
+      status: "Success",
+      data: response?.data?.customGenericMailSender as string,
+    };
   } catch (err: any) {
-    console.log(err);
-    throw new Error(err?.message);
+    console.log("Unable to send mail", err);
+    throw err;
   }
 };
-
-export default MailSender;
