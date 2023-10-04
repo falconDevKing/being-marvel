@@ -1,4 +1,4 @@
-const ContactMessage = (name: string, email: string, message: string) => {
+const ContactMessageMailTemplate = (name: string, email: string, message: string) => {
   return `<html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -54,4 +54,4 @@ const ContactMessage = (name: string, email: string, message: string) => {
 `;
 };
 
-export default ContactMessage;
+export default ContactMessageMailTemplate;

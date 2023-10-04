@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { errorResponseCreator, successResponseCreator } from "../../utils/responseFormat";
-import SubscriptionConfirmedMailTemplate from "../../utils/mailTemplates/subscriptionConfirmed";
+import SubscriptionConfirmedMailTemplate from "../../utils/mailTemplates/subscriptionConfirmedMailTemplate";
 import { sendMail } from "../../utils/mailSender";
-import NewSubscriptionMailTemplate from "../../utils/mailTemplates/newSubscription";
+import NewSubscriptionMailTemplate from "../../utils/mailTemplates/newSubscriptionMailTemplate";
 
 const BloggerMail = (process.env.NEXT_PUBLIC_CONTACT_MAIL || process.env.CONTACT_MAIL) as string;
 
