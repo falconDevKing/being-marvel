@@ -125,7 +125,7 @@ type Audio @model {
   post: Post @belongsTo(fields: ["postId"])
 }
 
-type MailDestination{
+input MailDestination {
   ToAddresses: [String]
   CcAddresses: [String]
   BccAddresses: [String]

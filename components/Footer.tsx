@@ -2,6 +2,8 @@ import { Box } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { ErrorHandler, SuccessHandler } from "../utils/handlers";
+import axios from "axios";
 
 type FooterProps = {
   width: string;
@@ -15,6 +17,21 @@ const Footer = ({ width }: FooterProps) => {
   };
 
   const [subscriberMail, setSubscriberMail] = useState<string>("");
+
+  const subscribe = async () => {
+    try {
+      if (subscriberMail) {
+        const subscribedResponse = await axios.post("/api/newSubscriber", { subscriberMail });
+        const message = subscribedResponse.data.message;
+        SuccessHandler({ message });
+        setSubscriberMail("");
+      } else {
+        ErrorHandler({ message: "Kindly fill in your email" });
+      }
+    } catch (error: any) {
+      ErrorHandler({ message: error?.message || "Unable to subscribed, please try again later" });
+    }
+  };
 
   return (
     <Box bgcolor={"#222"} width={"100%"} py={6} color="#fff">
@@ -51,7 +68,10 @@ const Footer = ({ width }: FooterProps) => {
                 }}
               />
 
-              <Box sx={{ borderRadius: "0px 4px 4px 0px", bgcolor: "#95A8D3", height: "52px", padding: "6px 16px", display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{ borderRadius: "0px 4px 4px 0px", bgcolor: "#95A8D3", height: "52px", padding: "6px 16px", display: "flex", alignItems: "center" }}
+                onClick={subscribe}
+              >
                 Subscribe
               </Box>
             </Box>

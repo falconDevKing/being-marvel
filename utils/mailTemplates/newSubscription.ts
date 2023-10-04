@@ -1,4 +1,4 @@
-const NewSubscription = (email: string) => {
+const NewSubscriptionMailTemplate = (email: string) => {
   return `<html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -65,4 +65,4 @@ const NewSubscription = (email: string) => {
 `;
 };
 
-export default NewSubscription;
+export default NewSubscriptionMailTemplate;

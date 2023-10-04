@@ -1,4 +1,4 @@
-const newTemplateName = (buyerName: string, baseUrl: string) => {
+const SubscriptionConfirmedMailTemplate = () => {
   return `<html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -66,4 +66,4 @@ const newTemplateName = (buyerName: string, baseUrl: string) => {
 `;
 };
 
-export default newTemplateName;
+export default SubscriptionConfirmedMailTemplate;
