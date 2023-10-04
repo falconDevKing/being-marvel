@@ -18,10 +18,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const { bookerId, listingId } = req.body;
 
-    const buyerData = await getFromTable(userTable, bookerId);
-    const listingData = await getFromTable(listingTable, listingId);
+    // const buyerData = await getFromTable(userTable, bookerId);
+    // const listingData = await getFromTable(listingTable, listingId);
 
-    const successResponse = successResponseCreator(200, "Bookings Details fetched successfully", { buyerData, listingData });
+    const successResponse = successResponseCreator(200, "Bookings Details fetched successfully", { bookerId, listingId });
     return res.status(successResponse.statusCode).json(successResponse);
   } catch (err) {
     const errorResponse = errorResponseCreator(500, "Error fetching bookings details", err);
