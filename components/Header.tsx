@@ -9,6 +9,8 @@ import Login from "./Auth/Login";
 import ProfileAvatar from "./ProfileAvatar";
 import { AuthUserData } from "../interfaces/auth";
 import { useAppSelector } from "../redux/hooks";
+import { Auth } from "aws-amplify";
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 
 type HeaderProps = {
   width: string;
@@ -58,6 +60,10 @@ const Header = ({ width }: HeaderProps) => {
     cursor: "pointer",
   };
 
+  const loginGoogle = async () => {
+    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
+  };
+
   return (
     <>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} width={width} mx="auto" py={2}>
@@ -102,12 +108,7 @@ const Header = ({ width }: HeaderProps) => {
             }}
           />
         ) : (
-          <Box
-            sx={selectedNav}
-            onClick={() => {
-              setOpenSignin(true);
-            }}
-          >
+          <Box sx={selectedNav} onClick={loginGoogle}>
             SIGN IN
           </Box>
         )}
