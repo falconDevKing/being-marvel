@@ -20,7 +20,17 @@
   "auth": {
     "beingmarvelblog5767c27e": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "beingmarvelblog5767c27ePostAuthentication",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -48,6 +58,11 @@
     }
   },
   "function": {
+    "beingmarvelblog5767c27ePostAuthentication": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "mailSender": {
       "build": true,
       "dependsOn": [],
@@ -56,6 +71,14 @@
     }
   },
   "parameters": {
+    "AMPLIFY_auth_beingmarvelblog5767c27e_googleClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "beingmarvelblog5767c27e"
+        }
+      ]
+    },
     "AMPLIFY_function_mailSender_deploymentBucketName": {
       "usedBy": [
         {

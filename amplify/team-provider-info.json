@@ -13,13 +13,16 @@
     },
     "categories": {
       "auth": {
-        "beingmarvelblog5767c27e": {}
+        "beingmarvelblog5767c27e": {
+          "googleClientId": "833451000346-e30lhgg3lkabqkdnk7jtc15pb071lvbt.apps.googleusercontent.com"
+        }
       },
       "function": {
         "mailSender": {
           "deploymentBucketName": "amplify-beingmarvelblog-dev-81553-deployment",
           "s3Key": "amplify-builds/mailSender-476f5930556358764d68-build.zip"
-        }
+        },
+        "beingmarvelblog5767c27ePostAuthentication": {}
       }
     }
   }
