@@ -8,12 +8,11 @@ export const onCreateUser = /* GraphQL */ `
       id
       customId
       name
+      firstName
+      lastName
       email
-      password
       image
       provider
-      id_token
-      access_token
       postLikes
       commentLikes
       blogger
@@ -40,12 +39,11 @@ export const onUpdateUser = /* GraphQL */ `
       id
       customId
       name
+      firstName
+      lastName
       email
-      password
       image
       provider
-      id_token
-      access_token
       postLikes
       commentLikes
       blogger
@@ -72,12 +70,11 @@ export const onDeleteUser = /* GraphQL */ `
       id
       customId
       name
+      firstName
+      lastName
       email
-      password
       image
       provider
-      id_token
-      access_token
       postLikes
       commentLikes
       blogger
@@ -111,12 +108,11 @@ export const onCreateBlog = /* GraphQL */ `
         id
         customId
         name
+        firstName
+        lastName
         email
-        password
         image
         provider
-        id_token
-        access_token
         postLikes
         commentLikes
         blogger
@@ -165,12 +161,11 @@ export const onUpdateBlog = /* GraphQL */ `
         id
         customId
         name
+        firstName
+        lastName
         email
-        password
         image
         provider
-        id_token
-        access_token
         postLikes
         commentLikes
         blogger
@@ -219,12 +214,11 @@ export const onDeleteBlog = /* GraphQL */ `
         id
         customId
         name
+        firstName
+        lastName
         email
-        password
         image
         provider
-        id_token
-        access_token
         postLikes
         commentLikes
         blogger

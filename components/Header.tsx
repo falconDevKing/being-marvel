@@ -67,51 +67,53 @@ const Header = ({ width }: HeaderProps) => {
   return (
     <>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} width={width} mx="auto" py={2}>
-        <Link href={"/"}>
+        <Link href={"/"} style={{ flexBasis: "30%", backgroundColor: "purple" }}>
           <a>
             <Image src="/BeingMarvelLogo.png" alt="being marvel logo" width={100} height={50} style={{ cursor: "pointer" }} />
           </a>
         </Link>
 
-        <Stack spacing={2} direction={"row"}>
-          <Link href={"/"}>
-            <a>
-              <Box sx={activePath === "home" ? selectedNav : unSelectedNav}>HOME</Box>
-            </a>
-          </Link>
-          <Link href={"/about"}>
-            <a>
-              <Box sx={activePath === "about" ? selectedNav : unSelectedNav}>ABOUT</Box>
-            </a>
-          </Link>
-          <Link href={"/blog"}>
-            <a>
-              <Box sx={activePath === "blog" ? selectedNav : unSelectedNav}>BLOG</Box>
-            </a>
-          </Link>
-          <Link href={"/contact"}>
-            <a>
-              <Box sx={activePath === "contact" ? selectedNav : unSelectedNav}>CONTACT</Box>
-            </a>
-          </Link>
-        </Stack>
+        <Box display={"flex"} flexBasis={"63%"} justifyContent={"space-between"} alignItems={"center"}>
+          <Stack spacing={2} direction={"row"}>
+            <Link href={"/"}>
+              <a>
+                <Box sx={activePath === "home" ? selectedNav : unSelectedNav}>HOME</Box>
+              </a>
+            </Link>
+            <Link href={"/about"}>
+              <a>
+                <Box sx={activePath === "about" ? selectedNav : unSelectedNav}>ABOUT</Box>
+              </a>
+            </Link>
+            <Link href={"/blog"}>
+              <a>
+                <Box sx={activePath === "blog" ? selectedNav : unSelectedNav}>BLOG</Box>
+              </a>
+            </Link>
+            <Link href={"/contact"}>
+              <a>
+                <Box sx={activePath === "contact" ? selectedNav : unSelectedNav}>CONTACT</Box>
+              </a>
+            </Link>
+          </Stack>
 
-        {isAuthenticated ? (
-          <ProfileAvatar
-            name={name}
-            src={picture}
-            hasImage
-            sx={{
-              width: "3rem",
-              height: "3rem",
-              background: "#E77A0C",
-            }}
-          />
-        ) : (
-          <Box sx={selectedNav} onClick={loginGoogle}>
-            SIGN IN
-          </Box>
-        )}
+          {isAuthenticated ? (
+            <ProfileAvatar
+              name={name}
+              src={picture}
+              hasImage
+              sx={{
+                width: "2.5rem",
+                height: "2.5rem",
+                background: "#E77A0C",
+              }}
+            />
+          ) : (
+            <Box sx={selectedNav} onClick={loginGoogle}>
+              SIGN IN
+            </Box>
+          )}
+        </Box>
       </Box>
       <Modal open={openSignin} handleClose={closeSignin} title={authMode} maxWidth="sm">
         {authMode === "Register" ? (

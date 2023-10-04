@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ErrorHandler, SuccessHandler } from "../utils/handlers";
 import axios, { isAxiosError } from "axios";
 import { createBlogHandler } from "../services/blog";
+import { useAppSelector } from "../redux/hooks";
 
 type FooterProps = {
   width: string;
@@ -16,6 +17,8 @@ const Footer = ({ width }: FooterProps) => {
   const navToDashboard = () => {
     router.push("/blogger/dashboard");
   };
+
+  const { id } = useAppSelector((state) => state.auth.userDetails);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [subscriberMail, setSubscriberMail] = useState<string>("");
@@ -46,6 +49,11 @@ const Footer = ({ width }: FooterProps) => {
     setLoading(false);
   };
 
+  const createBlogFunction = async () => {
+    await createBlogHandler(id);
+    navToDashboard();
+  };
+
   return (
     <Box bgcolor={"#222"} width={"100%"} py={6} color="#fff">
       <Box bgcolor={"#222"} width={width} mx={"auto"} fontSize={"1.25rem"}>
@@ -55,6 +63,9 @@ const Footer = ({ width }: FooterProps) => {
             <Box py={2}>
               <Box py={1}>Lagos, Nigeria</Box>
               <Box py={1}>beingmarvelblog@gmail.com</Box>
+              <Box py={1} onClick={createBlogFunction}>
+                Become a blogger
+              </Box>
             </Box>
           </Box>
           <Box width={"30%"}>
@@ -98,7 +109,7 @@ const Footer = ({ width }: FooterProps) => {
             </Box>
           </Box>
         </Box>
-        <Box textAlign={"center"} pt={12} pb={2} onClick={createBlogHandler}>
+        <Box textAlign={"center"} pt={12} pb={2}>
           © 2023 beingMarvel. All Rights Reserved
         </Box>
       </Box>

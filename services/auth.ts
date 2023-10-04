@@ -49,7 +49,7 @@ export const getUserDetails = async (userEmail: string) => {
 
       const user = userData?.data?.getUserByEmail?.items[0];
       console.log({ user, main: userData?.data });
-      store.dispatch(setUserDetails(user));
+      store.dispatch(setUserDetails({ data: user }));
     }
   } catch (error: any) {
     console.log("Unable to get user details", error);
