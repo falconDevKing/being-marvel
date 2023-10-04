@@ -50,7 +50,7 @@ const Footer = ({ width }: FooterProps) => {
   };
 
   const createBlogFunction = async () => {
-    await createBlogHandler(id);
+    // await createBlogHandler(id as string);
     navToDashboard();
   };
 

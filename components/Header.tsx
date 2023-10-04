@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Modal from "./Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Register from "./Auth/Register";
 import Login from "./Auth/Login";
 import ProfileAvatar from "./ProfileAvatar";
@@ -11,6 +11,7 @@ import { AuthUserData } from "../interfaces/auth";
 import { useAppSelector } from "../redux/hooks";
 import { Auth } from "aws-amplify";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { getBlogDetails } from "../services/blog";
 
 type HeaderProps = {
   width: string;
@@ -63,6 +64,16 @@ const Header = ({ width }: HeaderProps) => {
   const loginGoogle = async () => {
     Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
   };
+
+  useEffect(() => {
+    getBlogDetails("7a197560-7f01-4baa-a84a-6423a0f2f536");
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated && !userData?.name) {
+      router.reload();
+    }
+  }, [isAuthenticated]);
 
   return (
     <>

@@ -86,3 +86,6 @@ export const FAQs = [
     answer: "Yes, you can. Every member of the community can become a host, all you need to is agree to the terms and conditions and abide by it.",
   },
 ];
+
+export const sampleText =
+  '<p style="text-align: center">If this is your first time here... WELCOME TO THE TRIBE!</p><div style="text-align: center">I\'m not certain what brought you here, but every word that this blog is made up of was written with you in mind. Many say there is not so much to life. Nothing extraordinary. No greater force. Nothing spiritual. But my life, which I have given in to share with you, is evidence of the character of the Extraordinary; the character of God.</div><div style="text-align: center"><br></div><div style="text-align: center">Yes. I said it.&nbsp;GOD!</div><div style="text-align: center"><br></div><div style="text-align: center">I am his RISK and His CHARACTER. And trust me, I\'ve put Him at risk a lot. This might all sound confusing and gibberish-y. But if you\'d dare to hold my hand and come with me, you\'d unravel this mystery really quickly.</div><div style="text-align: center"><br></div><div style="text-align: center">May every word that you read here illuminate your life with joy, peace and hope in Jesus\' name.</div><div style="text-align: center"><br></div><div style="text-align: right"><b>I love you,<br>Marvel</b></div>';

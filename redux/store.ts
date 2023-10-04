@@ -1,5 +1,6 @@
 import { type AnyAction, combineReducers, configureStore, type Reducer } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
+import blogSlice from "./blogSlice";
 import storage from "redux-persist/lib/storage";
 
 import {
@@ -19,13 +20,14 @@ import {
 //   whitelist: [],
 // }
 
-// const authPersistConfig = {
-//   key: "auth",
+// const blogPersistConfig = {
+//   key: "blog",
 //   storage,
 // };
 
 const allReducers = combineReducers({
   auth: authSlice,
+  blog: blogSlice,
   // auth: persistReducer(authPersistConfig, authSlice),
 });
 

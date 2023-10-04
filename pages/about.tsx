@@ -8,6 +8,7 @@ import { SiInstagram, SiTwitter } from "react-icons/si";
 import { RiLinkedinFill } from "react-icons/ri";
 import { AiOutlineMail } from "react-icons/ai";
 import SocialMediaHandles from "../components/About/SocialMediaHandles";
+import { sampleText } from "../utils/helper";
 
 const About: NextPage = () => {
   return (
@@ -29,6 +30,9 @@ const About: NextPage = () => {
       </Box>
 
       <Box px={8} textAlign={"center"} py={4} width={"60%"} mx={"auto"} fontSize={"1.25rem"}>
+        <p dangerouslySetInnerHTML={{ __html: sampleText }}></p>
+      </Box>
+      {/* <Box px={8} textAlign={"center"} py={4} width={"60%"} mx={"auto"} fontSize={"1.25rem"}>
         <Box py={1}>If this is your first time here... WELCOME TO THE TRIBE!</Box>
         <Box>
           I'm not certain what brought you here, but every word that this blog is made up of was written with you in mind. Many say there is not so much to
@@ -45,7 +49,7 @@ const About: NextPage = () => {
           I love you,
           <br /> Marvel
         </Box>
-      </Box>
+      </Box> */}
 
       <SocialMediaHandles />
 

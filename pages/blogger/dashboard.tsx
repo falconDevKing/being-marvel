@@ -74,7 +74,7 @@ const Dashboard = () => {
           {stats.map((stat, index) => {
             const { Icon, figure, metric } = stat;
             return (
-              <Box display="flex" bgcolor={"#fff"} width="48%" my={1} p={2}>
+              <Box display="flex" bgcolor={"#fff"} width="48%" my={1} p={2} key={index}>
                 <Box width="40%">
                   <Icon color="primary" sx={{ fontSize: "108px", bgcolor: "#F4F7FD", borderRadius: "50%", p: 2 }} />
                 </Box>

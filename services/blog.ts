@@ -4,6 +4,9 @@ import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { createBlog } from "../graphql/mutations";
 import { API } from "aws-amplify";
 import { ErrorHandler, SuccessHandler } from "../utils/handlers";
+import { getAboutByBlog, getBlog } from "../graphql/queries";
+import { setAbout, setBlog, setPostSummary } from "../redux/blogSlice";
+import { customFetchPostsByBlog } from "../graphql/customQueries";
 
 export const createBlogHandler = async (userId: string) => {
   try {
@@ -35,4 +38,36 @@ export const createBlogHandler = async (userId: string) => {
     console.log("graphql err", error?.data);
     ErrorHandler({ message: error?.message || "Something went wrong" });
   }
+};
+
+export const getBlogDetails = async (blogId: string) => {
+  // get blog
+  const blog = (await API.graphql({
+    query: getBlog,
+    variables: { id: blogId },
+  })) as GraphQLResult<any>;
+
+  const blogData = blog.data?.getBlog;
+  console.log({ data: blog.data?.createBlog, blog });
+  store.dispatch(setBlog({ data: blogData }));
+
+  // get about
+  const about = (await API.graphql({
+    query: getAboutByBlog,
+    variables: { blogId: blogId },
+  })) as GraphQLResult<any>;
+
+  const aboutData = about?.data?.getAboutByBlog?.items[0];
+  console.log({ data: about?.data?.createBlog, about });
+  store.dispatch(setAbout({ data: aboutData }));
+
+  // get posts
+  const posts = (await API.graphql({
+    query: customFetchPostsByBlog,
+    variables: { blogId: blogId },
+  })) as GraphQLResult<any>;
+
+  const postsData = posts?.data?.fetchPostsByBlog?.items;
+  console.log({ data: posts?.data?.createBlog, posts });
+  store.dispatch(setPostSummary({ data: postsData }));
 };

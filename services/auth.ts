@@ -48,7 +48,6 @@ export const getUserDetails = async (userEmail: string) => {
       })) as GraphQLResult<any>;
 
       const user = userData?.data?.getUserByEmail?.items[0];
-      console.log({ user, main: userData?.data });
       store.dispatch(setUserDetails({ data: user }));
     }
   } catch (error: any) {
