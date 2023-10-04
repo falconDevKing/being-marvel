@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { ErrorHandler, SuccessHandler } from "../utils/handlers";
 import axios, { isAxiosError } from "axios";
+import { createBlogHandler } from "../services/blog";
 
 type FooterProps = {
   width: string;
@@ -43,10 +44,6 @@ const Footer = ({ width }: FooterProps) => {
       }
     }
     setLoading(false);
-  };
-
-  const createBlog = async () => {
-    SuccessHandler({ message: "Create Blog" });
   };
 
   return (
@@ -101,7 +98,7 @@ const Footer = ({ width }: FooterProps) => {
             </Box>
           </Box>
         </Box>
-        <Box textAlign={"center"} pt={12} pb={2} onClick={createBlog}>
+        <Box textAlign={"center"} pt={12} pb={2} onClick={createBlogHandler}>
           © 2023 beingMarvel. All Rights Reserved
         </Box>
       </Box>
