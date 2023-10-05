@@ -63,6 +63,7 @@ type Post @model {
   id: ID!
   category: String
   title: String
+  image: String
   description: String
   captionText: String
   captionImage: String
