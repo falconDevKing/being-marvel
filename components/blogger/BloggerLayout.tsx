@@ -1,6 +1,6 @@
 import { Box, Divider } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -20,8 +20,8 @@ type BloggerLayoutProps = {
 const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   const router = useRouter();
 
-  const userData: AuthUserData = useAppSelector((state) => state.auth.userData);
-  const { name, picture, email } = userData;
+  const { userData, isAuthenticated, isInitialized } = useAppSelector((state) => state.auth);
+  const { name, picture, email } = userData as AuthUserData;
 
   const navToBlogger = (section: string) => {
     router.push("/blogger/" + section);
@@ -30,10 +30,10 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   const activePath: string =
     router.pathname === "/blogger/dashboard"
       ? "dashboard"
-      : router.pathname === "/blogger/new-blog"
-      ? "new-blog"
-      : router.pathname === "/blogger/blogs"
-      ? "blogs"
+      : router.pathname === "/blogger/new-post"
+      ? "new-post"
+      : router.pathname === "/blogger/posts"
+      ? "posts"
       : router.pathname === "/blogger/profile"
       ? "profile"
       : "";
@@ -61,6 +61,12 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
       bgcolor: "#F9FBFE",
     },
   };
+
+  useEffect(() => {
+    if (isAuthenticated && isInitialized && email !== "emmanueloyekan33@gmail.com") {
+      router.push("/blog");
+    }
+  }, []);
 
   return (
     <Box display="flex">
@@ -93,24 +99,24 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
                   display={"flex"}
                   alignItems={"center"}
                   p={1}
-                  sx={activePath === "new-blog" ? selectedNav : unSelectedNav}
-                  onClick={() => navToBlogger("new-blog")}
+                  sx={activePath === "new-post" ? selectedNav : unSelectedNav}
+                  onClick={() => navToBlogger("new-post")}
                 >
                   <AddCircleOutlineIcon color="primary" />
                   <Box component="span" px={1}>
-                    New Blog
+                    New Post
                   </Box>
                 </Box>
                 <Box
                   display={"flex"}
                   alignItems={"center"}
                   p={1}
-                  sx={activePath === "blogs" ? selectedNav : unSelectedNav}
-                  onClick={() => navToBlogger("blogs")}
+                  sx={activePath === "posts" ? selectedNav : unSelectedNav}
+                  onClick={() => navToBlogger("posts")}
                 >
                   <ListAltIcon color="primary" />
                   <Box component="span" px={1}>
-                    Blogs
+                    Posts
                   </Box>
                 </Box>
               </Box>

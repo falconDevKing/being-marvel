@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
 
 export const editorOptions = {
-  height: 200,
   defaultTag: "",
   textTags: {
     bold: "b",

@@ -18,8 +18,8 @@ const Footer = ({ width }: FooterProps) => {
     router.push("/blogger/dashboard");
   };
 
-  const { id } = useAppSelector((state) => state.auth.userDetails);
-
+  const { id, email } = useAppSelector((state) => state.auth.userDetails);
+  const { name: blogName, logo, darkLogo, id: blogId } = useAppSelector((state) => state.blog.blog);
   const [loading, setLoading] = useState<boolean>(false);
   const [subscriberMail, setSubscriberMail] = useState<string>("");
 
@@ -30,7 +30,7 @@ const Footer = ({ width }: FooterProps) => {
       }
       setLoading(true);
       if (subscriberMail) {
-        const subscribedResponse = await axios.post("/api/newSubscriber", { subscriberMail });
+        const subscribedResponse = await axios.post("/api/newSubscriber", { subscriberMail, blogId });
         const message = subscribedResponse.data.message;
         SuccessHandler({ message });
         setSubscriberMail("");
@@ -59,13 +59,15 @@ const Footer = ({ width }: FooterProps) => {
       <Box bgcolor={"#222"} width={width} mx={"auto"} fontSize={"1.25rem"}>
         <Box justifyContent={"space-between"} display={"flex"}>
           <Box>
-            <Image src="/BeingMarvelLogoPurple.png" alt="being marvel logo" width={100} height={50} onClick={navToDashboard} style={{ cursor: "pointer" }} />
+            <Image src={darkLogo as string} alt={`${blogName} logo`} width={100} height={50} onClick={navToDashboard} style={{ cursor: "pointer" }} />
             <Box py={2}>
               <Box py={1}>Lagos, Nigeria</Box>
               <Box py={1}>beingmarvelblog@gmail.com</Box>
-              <Box py={1} onClick={createBlogFunction}>
-                Become a blogger
-              </Box>
+              {email === "emmanueloyekan33@gmail.com" && (
+                <Box py={1} onClick={createBlogFunction}>
+                  Become a blogger
+                </Box>
+              )}
             </Box>
           </Box>
           <Box width={"30%"}>

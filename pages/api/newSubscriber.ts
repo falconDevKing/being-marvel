@@ -3,6 +3,10 @@ import { errorResponseCreator, successResponseCreator } from "../../utils/respon
 import SubscriptionConfirmedMailTemplate from "../../utils/mailTemplates/subscriptionConfirmedMailTemplate";
 import { sendMail } from "../../utils/mailSender";
 import NewSubscriptionMailTemplate from "../../utils/mailTemplates/newSubscriptionMailTemplate";
+import { API } from "aws-amplify";
+import { updateBlog } from "../../graphql/mutations";
+import { getBlog } from "../../graphql/queries";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 
 const BloggerMail = (process.env.NEXT_PUBLIC_CONTACT_MAIL || process.env.CONTACT_MAIL) as string;
 
@@ -21,7 +25,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { subscriberMail } = req.body;
+    const { subscriberMail, blogId } = req.body;
+
+    // get blog
+    const blog = (await API.graphql({
+      query: getBlog,
+      variables: { id: blogId },
+    })) as GraphQLResult<any>;
+
+    const blogData = blog.data?.getBlog;
+
+    // update blog
+    const updatedBlog = (await API.graphql({
+      query: updateBlog,
+      variables: { input: { id: blogId, subscriber: [...blogData?.subscriber, subscriberMail] } },
+    })) as GraphQLResult<any>;
 
     const destinationUser = {
       ToAddresses: [subscriberMail],

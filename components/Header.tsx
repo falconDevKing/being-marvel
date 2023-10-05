@@ -21,6 +21,7 @@ const Header = ({ width }: HeaderProps) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  const { name: blogName, logo, darkLogo } = useAppSelector((state) => state.blog.blog);
   const { userData, isAuthenticated } = useAppSelector((state) => state.auth);
   const { name, picture, email } = userData as AuthUserData;
 
@@ -80,7 +81,7 @@ const Header = ({ width }: HeaderProps) => {
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} width={width} mx="auto" py={2}>
         <Link href={"/"} style={{ flexBasis: "30%", backgroundColor: "purple" }}>
           <a>
-            <Image src="/BeingMarvelLogo.png" alt="being marvel logo" width={100} height={50} style={{ cursor: "pointer" }} />
+            <Image src={logo as string} alt={`${blogName} logo`} width={100} height={50} style={{ cursor: "pointer" }} />
           </a>
         </Link>
 

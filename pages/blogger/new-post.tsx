@@ -14,25 +14,79 @@ import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import { useEffect, useRef, useState } from "react";
 import { buttonList } from "suneditor-react";
 import Editor, { editorOptions } from "../../components/Editor";
+import { useFormik } from "formik";
+import { DismissHandler, ErrorHandler, LoadingHandler, SuccessHandler } from "../../utils/handlers";
+import { isAxiosError } from "axios";
+import Input from "../../components/Input";
+import { useAppSelector } from "../../redux/hooks";
+import { v4 as uuidV4 } from "uuid";
 
 const NewBlog = () => {
-  const [blogContent, setBlogContent] = useState<string>("");
+  const router = useRouter();
+
   const [value, setValue] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [seePassword, SetSeePassword] = useState(false);
 
-  // let editorRef = useRef<any>()
-  // const { CKEditor, ClassicEditor } = editorRef.current || {} // if it don't find any document then it will be an empty object
+  const navToPosts = () => {
+    router.push("/blogger/posts");
+  };
 
-  // let [loaded, setLoaded] = useState(false)
+  const { id: blogId } = useAppSelector((state) => state.blog.blog);
 
-  // useEffect(() => {
-  //   editorRef.current = {
-  //     CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, // v3+
-  //     ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
-  //   }
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      category: "",
+      description: "",
+      captionText: "",
+      status: false,
+    },
+    // validationSchema: LoginValidation,
+    validateOnChange: true,
+    validateOnBlur: true,
+    onSubmit: async (values, { resetForm }) => {
+      if (!value) {
+        return;
+      }
 
-  //   setLoaded(true)
-  // }, []) // run on mounting
-  // // run on mounting
+      const { category, title, description, captionText } = values;
+
+      LoadingHandler({ message: "Posting..." });
+      setLoading(true);
+      try {
+        const postData = {
+          id: uuidV4(),
+          category,
+          title,
+          description,
+          content: value,
+          captionText,
+          // captionImage: "String",
+          likes: 0,
+          views: 0,
+          status: false,
+          blogId: blogId,
+        };
+
+        DismissHandler();
+        SuccessHandler({ message: "Logged in successfully" });
+        setLoading(false);
+        navToPosts();
+      } catch (error: any) {
+        DismissHandler();
+        if (isAxiosError(error)) {
+          const message = error?.response?.data?.message;
+          ErrorHandler({ message });
+        } else {
+          ErrorHandler({ message: error?.message || "Something went wrong" });
+        }
+        setLoading(false);
+      }
+    },
+  });
+
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
 
   return (
     <BloggerLayout>
@@ -56,77 +110,58 @@ const NewBlog = () => {
               <Box>
                 <Box>Lorem ipsum dolor sit</Box>
                 <Box display={"flex"} pb={1}>
-                  <input
+                  <Input
                     id="title"
+                    type="text"
                     placeholder="Title"
-                    style={{
-                      color: "#302F2F",
-                      backgroundColor: "#F4F7FD",
-                      padding: "8px",
-                      height: "52px",
-                      borderRadius: "4px 0px 0px 4px",
-                      outline: "none",
-                      border: "none",
-                      width: "100%",
-                      fontSize: "1.25rem",
-                      fontFamily: "Cormorant Garamond",
-                    }}
+                    name="title"
+                    value={values?.title}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    errors={errors}
+                    touched={touched}
                   />
                 </Box>
               </Box>
               <Box>
                 <Box>Lorem ipsum dolor sit</Box>
                 <Box display={"flex"} pb={1}>
-                  <input
+                  <Input
                     id="description"
+                    name="description"
+                    type="text"
                     placeholder="Description"
-                    style={{
-                      color: "#302F2F",
-                      backgroundColor: "#F4F7FD",
-                      padding: "8px",
-                      height: "52px",
-                      borderRadius: "4px 0px 0px 4px",
-                      outline: "none",
-                      border: "none",
-                      width: "100%",
-                      fontSize: "1.25rem",
-                      fontFamily: "Cormorant Garamond",
-                    }}
+                    value={values?.description}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    errors={errors}
+                    touched={touched}
                   />
                 </Box>
               </Box>
               <Box>
                 <Box>Lorem ipsum dolor sit</Box>
                 <Box display={"flex"} pb={1}>
-                  <input
+                  <Input
                     id="category"
+                    name="category"
+                    type="text"
                     placeholder="Category"
-                    style={{
-                      color: "#302F2F",
-                      backgroundColor: "#F4F7FD",
-                      padding: "8px",
-                      height: "52px",
-                      borderRadius: "4px 0px 0px 4px",
-                      outline: "none",
-                      border: "none",
-                      width: "100%",
-                      fontSize: "1.25rem",
-                      fontFamily: "Cormorant Garamond",
-                    }}
+                    value={values?.category}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    errors={errors}
+                    touched={touched}
                   />
                 </Box>
               </Box>
 
               <Box>
                 <Editor
-                  // defaultValue={value}
-                  // readOnly={true}
-                  // value={value}
-                  // setAllPlugins={false}
-                  // buttonList={buttonList.formatting}
+                  name="content"
                   defaultValue={value}
                   setOptions={editorOptions as any}
-                  height="350px"
+                  height="250px"
                   onChange={setValue}
                   placeholder={"Create your blog post here..."}
                 />
@@ -144,21 +179,16 @@ const NewBlog = () => {
               <Box pt={1}>
                 <Box>Lorem ipsum dolor sit</Box>
                 <Box display={"flex"} pb={1}>
-                  <input
+                  <Input
+                    type="text"
                     id="captionText"
+                    name="captionText"
                     placeholder="Caption Text"
-                    style={{
-                      color: "#302F2F",
-                      backgroundColor: "#F4F7FD",
-                      padding: "8px",
-                      height: "52px",
-                      borderRadius: "4px 0px 0px 4px",
-                      outline: "none",
-                      border: "none",
-                      width: "100%",
-                      fontSize: "1.25rem",
-                      fontFamily: "Cormorant Garamond",
-                    }}
+                    value={values?.captionText}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    errors={errors}
+                    touched={touched}
                   />
                 </Box>
               </Box>
