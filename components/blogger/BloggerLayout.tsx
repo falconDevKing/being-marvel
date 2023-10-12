@@ -12,6 +12,7 @@ import ProfileAvatar from "../ProfileAvatar";
 import { AuthUserData } from "../../interfaces/auth";
 import { useAppSelector } from "../../redux/hooks";
 import { logout } from "../../services/auth";
+import { getBlogDetails } from "../../services/blog";
 
 type BloggerLayoutProps = {
   children: React.ReactNode;
@@ -66,6 +67,10 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
     if (isAuthenticated && isInitialized && email !== "emmanueloyekan33@gmail.com") {
       router.push("/blog");
     }
+  }, []);
+
+  useEffect(() => {
+    getBlogDetails("7a197560-7f01-4baa-a84a-6423a0f2f536");
   }, []);
 
   return (

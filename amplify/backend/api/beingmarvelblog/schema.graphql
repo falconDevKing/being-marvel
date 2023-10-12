@@ -66,6 +66,7 @@ type Post @model {
   image: String
   description: String
   captionText: String
+  descriptionImage: String
   captionImage: String
   likes: Int
   views: Int

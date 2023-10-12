@@ -18,3 +18,19 @@ export interface AboutInterface {
   twitter?: string;
   blogId?: string;
 }
+
+export interface IBlogPost {
+  id?: string;
+  category?: string;
+  title?: string;
+  image?: string;
+  description?: string;
+  captionText?: string;
+  captionImage?: string;
+  likes?: number;
+  views?: number;
+  status?: Boolean;
+  publishedAt?: string;
+  expireAt?: number;
+  blogId?: string;
+}

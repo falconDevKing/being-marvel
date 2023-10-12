@@ -20,13 +20,19 @@ import { isAxiosError } from "axios";
 import Input from "../../components/Input";
 import { useAppSelector } from "../../redux/hooks";
 import { v4 as uuidV4 } from "uuid";
+import { ConfigurationSetAlreadyExistsException } from "@aws-sdk/client-ses";
+import { StorageApi } from "../../services/storage";
+import { createBlogPost } from "../../services/post";
+
+const s3baseurl = process.env.NEXT_PUBLIC_S3_BASE_URL || "";
 
 const NewBlog = () => {
   const router = useRouter();
 
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [seePassword, SetSeePassword] = useState(false);
+  const [descriptionFile, setdescriptionFile] = useState<File>();
+  const [captionFile, setCaptionFile] = useState<File>();
 
   const navToPosts = () => {
     router.push("/blogger/posts");
@@ -46,14 +52,18 @@ const NewBlog = () => {
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values, { resetForm }) => {
+      setLoading(true);
       if (!value) {
         return;
       }
 
       const { category, title, description, captionText } = values;
 
+      // save file to s3 and return link
+      const descriptionFileLink = await StorageApi.putItem(`${blogId}/${descriptionFile?.name}`, descriptionFile as File);
+      const captionFileLink = await StorageApi.putItem(`${blogId}/${captionFile?.name}`, captionFile as File);
+
       LoadingHandler({ message: "Posting..." });
-      setLoading(true);
       try {
         const postData = {
           id: uuidV4(),
@@ -62,17 +72,20 @@ const NewBlog = () => {
           description,
           content: value,
           captionText,
-          // captionImage: "String",
+          descriptionImage: s3baseurl + descriptionFileLink,
+          captionImage: s3baseurl + captionFileLink,
           likes: 0,
           views: 0,
           status: false,
           blogId: blogId,
         };
 
+        await createBlogPost(postData);
+
         DismissHandler();
-        SuccessHandler({ message: "Logged in successfully" });
+        SuccessHandler({ message: "Post created successfully" });
         setLoading(false);
-        navToPosts();
+        // navToPosts();
       } catch (error: any) {
         DismissHandler();
         if (isAxiosError(error)) {
@@ -87,6 +100,81 @@ const NewBlog = () => {
   });
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
+
+  const hiddendescriptionFileInput = useRef<HTMLInputElement>(null);
+  const hiddenCaptionFileInput = useRef<HTMLInputElement>(null);
+  const handledescriptionClick = () => {
+    hiddendescriptionFileInput?.current?.click();
+  };
+  const handleCaptionClick = () => {
+    hiddenCaptionFileInput?.current?.click();
+  };
+
+  const handledescriptionFilesAdd = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    const filesArray = Array.from(files as FileList);
+
+    if (!filesArray.length) {
+      DismissHandler();
+      ErrorHandler({ message: "Kindly select a file" });
+      return;
+    }
+
+    const fileContent = filesArray[0];
+
+    const fileName = fileContent.name;
+    const fileSize = fileContent.size;
+    const fileFormat = fileContent.type;
+    const fileType = fileFormat.split("image/")[1];
+
+    const maxFileSize = 1024 * 1024 * 20;
+
+    if (fileSize > maxFileSize) {
+      ErrorHandler({ message: fileName + " size too large" });
+      return;
+    }
+
+    if (!fileFormat.includes("image/")) {
+      ErrorHandler({ message: "Wrong File Format for " + fileName });
+      return;
+    }
+
+    console.log({ sumaryFile: fileContent });
+
+    setdescriptionFile(fileContent);
+  };
+
+  const handleCaptionFilesAdd = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    const filesArray = Array.from(files as FileList);
+
+    if (!filesArray.length) {
+      DismissHandler();
+      ErrorHandler({ message: "Kindly select a file" });
+      return;
+    }
+
+    const fileContent = filesArray[0];
+
+    const fileName = fileContent.name;
+    const fileSize = fileContent.size;
+    const fileFormat = fileContent.type;
+    const fileType = fileFormat.split("image/")[1];
+
+    const maxFileSize = 1024 * 1024 * 20;
+
+    if (fileSize > maxFileSize) {
+      ErrorHandler({ message: fileName + " size too large" });
+      return;
+    }
+
+    if (!fileFormat.includes("image/")) {
+      ErrorHandler({ message: "Wrong File Format for " + fileName });
+      return;
+    }
+
+    setCaptionFile(fileContent);
+  };
 
   return (
     <BloggerLayout>
@@ -105,10 +193,10 @@ const NewBlog = () => {
           <Box width="63%">
             <Box bgcolor="#fff" p={4} pb={2} mb={2}>
               <Box fontWeight={700} fontSize="1.5rem" pb={2}>
-                Blog Content
+                Post Content
               </Box>
               <Box>
-                <Box>Lorem ipsum dolor sit</Box>
+                <Box>Title</Box>
                 <Box display={"flex"} pb={1}>
                   <Input
                     id="title"
@@ -124,7 +212,7 @@ const NewBlog = () => {
                 </Box>
               </Box>
               <Box>
-                <Box>Lorem ipsum dolor sit</Box>
+                <Box>Description</Box>
                 <Box display={"flex"} pb={1}>
                   <Input
                     id="description"
@@ -140,7 +228,23 @@ const NewBlog = () => {
                 </Box>
               </Box>
               <Box>
-                <Box>Lorem ipsum dolor sit</Box>
+                <Box>Caption Text</Box>
+                <Box display={"flex"} pb={1}>
+                  <Input
+                    id="captionText"
+                    name="captionText"
+                    type="text"
+                    placeholder="Caption Text"
+                    value={values?.captionText}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    errors={errors}
+                    touched={touched}
+                  />
+                </Box>
+              </Box>
+              <Box>
+                <Box>Category</Box>
                 <Box display={"flex"} pb={1}>
                   <Input
                     id="category"
@@ -172,49 +276,108 @@ const NewBlog = () => {
           <Box width="35%" height="100%">
             <Box bgcolor="#fff" p={4}>
               <Box fontSize="1.4rem" fontWeight={700}>
-                Blog Caption Image
+                Post Images
               </Box>
-              <Box fontSize="0.8rem">Lorem ipsum dolor sit</Box>
+              <Box fontStyle={"italic"} fontWeight={700}>
+                description Image (portrait)
+              </Box>
 
-              <Box pt={1}>
-                <Box>Lorem ipsum dolor sit</Box>
-                <Box display={"flex"} pb={1}>
-                  <Input
-                    type="text"
-                    id="captionText"
-                    name="captionText"
-                    placeholder="Caption Text"
-                    value={values?.captionText}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    errors={errors}
-                    touched={touched}
-                  />
-                </Box>
+              <Box
+                px={4}
+                py={2}
+                display={"flex"}
+                flexDirection={"column"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                bgcolor={"#F4F7FD"}
+                my={1}
+                onClick={() => {
+                  handledescriptionClick();
+                }}
+                sx={{ cursor: "pointer" }}
+              >
+                <input type="file" ref={hiddendescriptionFileInput} onChange={handledescriptionFilesAdd} style={{ display: "none" }} accept="image/*" />
+                <CloudUploadOutlinedIcon sx={{ fontSize: "80px" }} />
+                {descriptionFile ? (
+                  <>{`${descriptionFile?.name} (${(descriptionFile?.size / 1000).toFixed(2)} kb)`}</>
+                ) : (
+                  <>
+                    <Box
+                      bgcolor="#6E87DC88"
+                      my={1}
+                      p={1}
+                      display="flex"
+                      color="#fff"
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                      fontWeight={700}
+                      fontSize="1.2rem"
+                    >
+                      Browse Files
+                    </Box>
+                    <Box fontSize="0.9rem" textAlign={"center"} py={1}>
+                      Photos must be JPEG or PNG format and should be portrait orientation
+                    </Box>
+                  </>
+                )}
               </Box>
-              <Box px={4} py={4} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} bgcolor={"#F4F7FD"} my={2}>
-                <CloudUploadOutlinedIcon sx={{ fontSize: "120px" }} />
-                <Box
-                  bgcolor="#6E87DC88"
-                  my={1}
-                  p={1}
-                  display="flex"
-                  color="#fff"
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  fontWeight={700}
-                  fontSize="1.2rem"
-                >
-                  Browse File
-                </Box>
-                <Box fontSize="0.9rem" textAlign={"center"} py={2}>
-                  Photos must be JPEG or PNG format and should be landscape orientation
-                </Box>
+              <Box fontStyle={"italic"} fontWeight={700}>
+                Caption Image (landscape)
+              </Box>
+              <Box
+                px={4}
+                py={2}
+                display={"flex"}
+                flexDirection={"column"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                bgcolor={"#F4F7FD"}
+                my={1}
+                onClick={() => {
+                  handleCaptionClick();
+                }}
+                sx={{ cursor: "pointer" }}
+              >
+                <input type="file" ref={hiddenCaptionFileInput} onChange={handleCaptionFilesAdd} style={{ display: "none" }} accept="image/*" />
+                <CloudUploadOutlinedIcon sx={{ fontSize: "80px" }} />
+                {captionFile ? (
+                  <>{`${captionFile?.name} (${(captionFile?.size / 1000).toFixed(2)} kb)`}</>
+                ) : (
+                  <>
+                    <Box
+                      bgcolor="#6E87DC88"
+                      my={1}
+                      p={1}
+                      display="flex"
+                      color="#fff"
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                      fontWeight={700}
+                      fontSize="1.2rem"
+                    >
+                      Browse Files
+                    </Box>
+
+                    <Box fontSize="0.9rem" textAlign={"center"} py={1}>
+                      Photos must be JPEG or PNG format and should be landscape orientation
+                    </Box>
+                  </>
+                )}
               </Box>
             </Box>
             <Box display={"flex"} justifyContent={"flex-end"} fontWeight={700}>
-              <Box bgcolor="#6E87DC88" color="#fff" p={2} width="max-content" my={2}>
-                Submit Post
+              <Box
+                bgcolor={loading ? "#ccc" : "#6E87DC88"}
+                color="#fff"
+                p={2}
+                width="max-content"
+                my={2}
+                onClick={() => {
+                  handleSubmit();
+                }}
+                sx={{ cursor: "pointer" }}
+              >
+                {loading ? "Submitting Post" : "Submit Post"}
               </Box>
             </Box>
           </Box>

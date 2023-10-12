@@ -4,6 +4,7 @@
   "bucketName": "beingmarvelblogs3",
   "storageAccess": "authAndGuest",
   "guestAccess": [
+    "CREATE_AND_UPDATE",
     "READ"
   ],
   "authAccess": [
@@ -11,6 +12,5 @@
     "READ",
     "DELETE"
   ],
-  "triggerFunction": "NONE",
   "groupAccess": {}
 }
