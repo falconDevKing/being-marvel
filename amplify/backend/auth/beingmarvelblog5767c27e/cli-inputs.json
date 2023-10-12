@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "beingmarvelblog5767c27e_identitypool_5767c27e",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "beingm5767c27e",
     "userPoolName": "beingmarvelblog5767c27e_userpool_5767c27e",
     "autoVerifiedAttributes": [
@@ -89,7 +89,9 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"beingmarvelblog5767c27ePostAuthentication\"\n  }\n]",
+    "authTriggerConnections": [
+      "{\"triggerType\":\"PostAuthentication\",\"lambdaFunctionName\":\"beingmarvelblog5767c27ePostAuthentication\"}"
+    ],
     "permissions": []
   }
 }

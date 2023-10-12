@@ -35,5 +35,11 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     }
+  },
+  "storage": {
+    "beingmarvels3": {
+      "BucketName": "string",
+      "Region": "string"
+    }
   }
 }

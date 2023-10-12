@@ -374,6 +374,7 @@ export const createPost = /* GraphQL */ `
       id
       category
       title
+      image
       description
       captionText
       captionImage
@@ -421,6 +422,7 @@ export const updatePost = /* GraphQL */ `
       id
       category
       title
+      image
       description
       captionText
       captionImage
@@ -468,6 +470,7 @@ export const deletePost = /* GraphQL */ `
       id
       category
       title
+      image
       description
       captionText
       captionImage
@@ -534,6 +537,7 @@ export const createComment = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -580,6 +584,7 @@ export const updateComment = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -626,6 +631,7 @@ export const deleteComment = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -670,6 +676,7 @@ export const createAudio = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -714,6 +721,7 @@ export const updateAudio = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -758,6 +766,7 @@ export const deleteAudio = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage

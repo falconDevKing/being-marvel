@@ -48,7 +48,6 @@ export const getBlogDetails = async (blogId: string) => {
   })) as GraphQLResult<any>;
 
   const blogData = blog.data?.getBlog;
-  console.log({ data: blog.data?.createBlog, blog });
   store.dispatch(setBlog({ data: blogData }));
 
   // get about
@@ -58,7 +57,6 @@ export const getBlogDetails = async (blogId: string) => {
   })) as GraphQLResult<any>;
 
   const aboutData = about?.data?.getAboutByBlog?.items[0];
-  console.log({ data: about?.data?.createBlog, about });
   store.dispatch(setAbout({ data: aboutData }));
 
   // get posts
@@ -68,6 +66,5 @@ export const getBlogDetails = async (blogId: string) => {
   })) as GraphQLResult<any>;
 
   const postsData = posts?.data?.fetchPostsByBlog?.items;
-  console.log({ data: posts?.data?.createBlog, posts });
   store.dispatch(setPostSummary({ data: postsData }));
 };

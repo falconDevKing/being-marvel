@@ -28,6 +28,12 @@
           "deploymentBucketName": "amplify-beingmarvelblog-dev-81553-deployment",
           "s3Key": "amplify-builds/beingmarvelblog5767c27ePostAuthentication-2b6c626e4e48776c436e-build.zip"
         }
+      },
+      "api": {
+        "beingmarvelblog": {}
+      },
+      "storage": {
+        "beingmarvels3": {}
       }
     }
   }

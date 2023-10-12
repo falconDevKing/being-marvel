@@ -18,7 +18,10 @@ const Footer = ({ width }: FooterProps) => {
     router.push("/blogger/dashboard");
   };
 
-  const { id, email } = useAppSelector((state) => state.auth.userDetails);
+  const { userDetails } = useAppSelector((state) => state.auth);
+  const id = userDetails?.id;
+  const email = userDetails?.email;
+
   const { name: blogName, logo, darkLogo, id: blogId } = useAppSelector((state) => state.blog.blog);
   const [loading, setLoading] = useState<boolean>(false);
   const [subscriberMail, setSubscriberMail] = useState<string>("");

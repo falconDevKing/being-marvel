@@ -344,6 +344,7 @@ export const onCreatePost = /* GraphQL */ `
       id
       category
       title
+      image
       description
       captionText
       captionImage
@@ -388,6 +389,7 @@ export const onUpdatePost = /* GraphQL */ `
       id
       category
       title
+      image
       description
       captionText
       captionImage
@@ -432,6 +434,7 @@ export const onDeletePost = /* GraphQL */ `
       id
       category
       title
+      image
       description
       captionText
       captionImage
@@ -495,6 +498,7 @@ export const onCreateComment = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -538,6 +542,7 @@ export const onUpdateComment = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -581,6 +586,7 @@ export const onDeleteComment = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -622,6 +628,7 @@ export const onCreateAudio = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -663,6 +670,7 @@ export const onUpdateAudio = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
@@ -704,6 +712,7 @@ export const onDeleteAudio = /* GraphQL */ `
         id
         category
         title
+        image
         description
         captionText
         captionImage
