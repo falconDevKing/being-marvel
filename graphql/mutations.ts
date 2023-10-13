@@ -374,9 +374,9 @@ export const createPost = /* GraphQL */ `
       id
       category
       title
-      image
       description
       captionText
+      content
       descriptionImage
       captionImage
       likes
@@ -423,9 +423,9 @@ export const updatePost = /* GraphQL */ `
       id
       category
       title
-      image
       description
       captionText
+      content
       descriptionImage
       captionImage
       likes
@@ -472,9 +472,9 @@ export const deletePost = /* GraphQL */ `
       id
       category
       title
-      image
       description
       captionText
+      content
       descriptionImage
       captionImage
       likes
@@ -540,9 +540,9 @@ export const createComment = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes
@@ -588,9 +588,9 @@ export const updateComment = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes
@@ -636,9 +636,9 @@ export const deleteComment = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes
@@ -682,9 +682,9 @@ export const createAudio = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes
@@ -728,9 +728,9 @@ export const updateAudio = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes
@@ -774,9 +774,9 @@ export const deleteAudio = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes

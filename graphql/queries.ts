@@ -208,9 +208,9 @@ export const getPost = /* GraphQL */ `
       id
       category
       title
-      image
       description
       captionText
+      content
       descriptionImage
       captionImage
       likes
@@ -259,9 +259,9 @@ export const listPosts = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes
@@ -303,9 +303,9 @@ export const getComment = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes
@@ -368,9 +368,9 @@ export const getAudio = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes
@@ -532,9 +532,9 @@ export const fetchPostsByBlog = /* GraphQL */ `
         id
         category
         title
-        image
         description
         captionText
+        content
         descriptionImage
         captionImage
         likes
