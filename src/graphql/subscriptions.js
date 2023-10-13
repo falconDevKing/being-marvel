@@ -276,6 +276,7 @@ export const onCreateBlog = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -389,6 +390,7 @@ export const onUpdateBlog = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -502,6 +504,7 @@ export const onDeleteBlog = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -754,6 +757,7 @@ export const onCreatePost = /* GraphQL */ `
       image
       description
       captionText
+      descriptionImage
       captionImage
       likes
       views
@@ -848,6 +852,7 @@ export const onCreatePost = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -877,6 +882,7 @@ export const onUpdatePost = /* GraphQL */ `
       image
       description
       captionText
+      descriptionImage
       captionImage
       likes
       views
@@ -971,6 +977,7 @@ export const onUpdatePost = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -1000,6 +1007,7 @@ export const onDeletePost = /* GraphQL */ `
       image
       description
       captionText
+      descriptionImage
       captionImage
       likes
       views
@@ -1094,6 +1102,7 @@ export const onDeletePost = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -1180,6 +1189,7 @@ export const onCreateComment = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -1285,6 +1295,7 @@ export const onUpdateComment = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -1390,6 +1401,7 @@ export const onDeleteComment = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -1493,6 +1505,7 @@ export const onCreateAudio = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -1596,6 +1609,7 @@ export const onUpdateAudio = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -1699,6 +1713,7 @@ export const onDeleteAudio = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views

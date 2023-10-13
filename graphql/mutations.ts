@@ -377,6 +377,7 @@ export const createPost = /* GraphQL */ `
       image
       description
       captionText
+      descriptionImage
       captionImage
       likes
       views
@@ -425,6 +426,7 @@ export const updatePost = /* GraphQL */ `
       image
       description
       captionText
+      descriptionImage
       captionImage
       likes
       views
@@ -473,6 +475,7 @@ export const deletePost = /* GraphQL */ `
       image
       description
       captionText
+      descriptionImage
       captionImage
       likes
       views
@@ -540,6 +543,7 @@ export const createComment = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -587,6 +591,7 @@ export const updateComment = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -634,6 +639,7 @@ export const deleteComment = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -679,6 +685,7 @@ export const createAudio = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -724,6 +731,7 @@ export const updateAudio = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -769,6 +777,7 @@ export const deleteAudio = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views

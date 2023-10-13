@@ -191,6 +191,7 @@ export const getBlog = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -406,6 +407,7 @@ export const getPost = /* GraphQL */ `
       image
       description
       captionText
+      descriptionImage
       captionImage
       likes
       views
@@ -500,6 +502,7 @@ export const getPost = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -534,6 +537,7 @@ export const listPosts = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -638,6 +642,7 @@ export const getComment = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -710,6 +715,7 @@ export const listComments = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -792,6 +798,7 @@ export const getAudio = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -862,6 +869,7 @@ export const listAudio = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -1067,6 +1075,7 @@ export const fetchPostsByBlog = /* GraphQL */ `
         image
         description
         captionText
+        descriptionImage
         captionImage
         likes
         views
@@ -1148,6 +1157,7 @@ export const fetchCommentsByBlog = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -1209,6 +1219,7 @@ export const fetchCommentsByPost = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -1268,6 +1279,7 @@ export const fetchAudiosByBlog = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
@@ -1327,6 +1339,7 @@ export const getAudioByPost = /* GraphQL */ `
           image
           description
           captionText
+          descriptionImage
           captionImage
           likes
           views
