@@ -9,7 +9,7 @@ export interface IPostData {
   captionImage: string;
   likes: number;
   views: number;
-  status: string;
+  status: boolean;
   publishedAt: string;
   expireAt: string;
   blogId: string;

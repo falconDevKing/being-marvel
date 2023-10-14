@@ -15,9 +15,32 @@ export const customFetchPostsByBlog = /* GraphQL */ `
         description
         descriptionImage
         status
+        publishedAt
+        expireAt
         blogId
         createdAt
         updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+
+export const customFetchPostsStatsByBlog = /* GraphQL */ `
+  query customFetchPostsStatsByBlog(
+    $blogId: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    fetchPostsByBlog(blogId: $blogId, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        blogId
+        likes
+        views
       }
       nextToken
     }

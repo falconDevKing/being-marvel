@@ -6,7 +6,7 @@ import { useAppSelector } from "../../redux/hooks";
 const HomeBlogSamples = () => {
   const { postsSummary } = useAppSelector((state) => state.blog);
 
-  const latest3PostsSummary = postsSummary.slice(0, 3);
+  const latest3PostsSummary = postsSummary.filter((postSummary) => postSummary.status).slice(0, 3);
 
   return (
     <Box display={"flex"} flexDirection={"column"} alignItems={"center"} p={8}>

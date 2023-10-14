@@ -41,8 +41,17 @@ export interface IPostSummary {
   title: string;
   description: string;
   descriptionImage: string;
-  status: string;
+  status: boolean;
   blogId: string;
+  publishedAt: string;
+  expireAt: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IPostStats {
+  id: string;
+  blogId: string;
+  likes: number;
+  views: number;
 }

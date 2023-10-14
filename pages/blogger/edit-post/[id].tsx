@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import BloggerLayout from "../../components/blogger/BloggerLayout";
+import BloggerLayout from "../../../components/blogger/BloggerLayout";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useRouter } from "next/router";
 import TimelineRoundedIcon from "@mui/icons-material/TimelineRounded";
@@ -13,21 +13,22 @@ import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 // import { Image, ImageCaption, ImageResize, ImageStyle, ImageToolbar } from '@ckeditor/ckeditor5-image'
 import { useEffect, useRef, useState } from "react";
 import { buttonList } from "suneditor-react";
-import Editor, { editorOptions } from "../../components/Editor";
+import Editor, { editorOptions } from "../../../components/Editor";
 import { useFormik } from "formik";
-import { DismissHandler, ErrorHandler, LoadingHandler, SuccessHandler } from "../../utils/handlers";
+import { DismissHandler, ErrorHandler, LoadingHandler, SuccessHandler } from "../../../utils/handlers";
 import { isAxiosError } from "axios";
-import Input from "../../components/Input";
-import { useAppSelector } from "../../redux/hooks";
+import Input from "../../../components/Input";
+import { useAppSelector } from "../../../redux/hooks";
 import { v4 as uuidV4 } from "uuid";
-import { ConfigurationSetAlreadyExistsException } from "@aws-sdk/client-ses";
-import { StorageApi } from "../../services/storage";
-import { createBlogPost } from "../../services/post";
+import { StorageApi } from "../../../services/storage";
+import { createBlogPost, getBlogPost, updateBlogPost } from "../../../services/post";
 
 const s3baseurl = process.env.NEXT_PUBLIC_S3_BASE_URL || "";
 
-const NewPost = () => {
+const EditPost = () => {
   const router = useRouter();
+
+  const postId = router.query.id;
 
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,11 +43,17 @@ const NewPost = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: "",
+      id: "",
       category: "",
+      title: "",
       description: "",
       captionText: "",
-      status: false,
+      content: "",
+      descriptionImage: "",
+      captionImage: "",
+      publishedAt: "",
+      expireAt: "",
+      blogId: "",
     },
     // validationSchema: LoginValidation,
     validateOnChange: true,
@@ -64,33 +71,30 @@ const NewPost = () => {
         return;
       }
 
-      const { category, title, description, captionText } = values;
+      const { category, title, description, captionText, descriptionImage, captionImage, id, blogId } = values;
 
       // save file to s3 and return link
-      const descriptionFileLink = await StorageApi.putItem(`${blogId}/${descriptionFile?.name}`, descriptionFile as File);
-      const captionFileLink = await StorageApi.putItem(`${blogId}/${captionFile?.name}`, captionFile as File);
+      const descriptionFileLink = descriptionFile && (await StorageApi.putItem(`${blogId}/${descriptionFile?.name}`, descriptionFile as File));
+      const captionFileLink = captionFile && (await StorageApi.putItem(`${blogId}/${captionFile?.name}`, captionFile as File));
 
       LoadingHandler({ message: "Posting..." });
       try {
         const postData = {
-          id: uuidV4(),
-          category,
+          id,
+          blogId,
           title,
           description,
-          content: value,
           captionText,
-          descriptionImage: s3baseurl + descriptionFileLink,
-          captionImage: s3baseurl + captionFileLink,
-          likes: 0,
-          views: 0,
-          status: false,
-          blogId: blogId,
+          category,
+          content: value,
+          descriptionImage: descriptionFile ? s3baseurl + descriptionFileLink : descriptionImage,
+          captionImage: captionFile ? s3baseurl + captionFileLink : captionImage,
         };
 
-        await createBlogPost(postData);
+        await updateBlogPost(postData);
 
         DismissHandler();
-        SuccessHandler({ message: "Post created successfully" });
+        SuccessHandler({ message: "Post updated successfully" });
         setLoading(false);
         navToPosts();
       } catch (error: any) {
@@ -106,7 +110,7 @@ const NewPost = () => {
     },
   });
 
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit, setValues } = formik;
 
   const hiddendescriptionFileInput = useRef<HTMLInputElement>(null);
   const hiddenCaptionFileInput = useRef<HTMLInputElement>(null);
@@ -182,6 +186,24 @@ const NewPost = () => {
 
     setCaptionFile(fileContent);
   };
+
+  useEffect(() => {
+    const getPostDetails = async (postId: string) => {
+      try {
+        const postDetails = await getBlogPost(postId);
+
+        setValues(postDetails);
+        setValue(postDetails?.content);
+      } catch (error: any) {
+        ErrorHandler({ message: error?.message || "Unable to get post" });
+        console.log("error getting post", error);
+      }
+    };
+
+    if (postId) {
+      getPostDetails(postId as string);
+    }
+  }, [postId]);
 
   return (
     <BloggerLayout>
@@ -271,6 +293,7 @@ const NewPost = () => {
                 <Editor
                   name="content"
                   defaultValue={value}
+                  setContents={value}
                   setOptions={editorOptions as any}
                   height="250px"
                   onChange={setValue}
@@ -394,4 +417,4 @@ const NewPost = () => {
   );
 };
 
-export default NewPost;
+export default EditPost;

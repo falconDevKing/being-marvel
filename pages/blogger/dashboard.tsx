@@ -8,10 +8,16 @@ import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
 import { useAppSelector } from "../../redux/hooks";
 import { AuthUserData } from "../../interfaces/auth";
+import { useEffect, useState } from "react";
+import { fetchBlogPostsStats } from "../../services/post";
+
+// TODO:  Work on comments
+// TODO:  Work on dynamic blog content, home page about contact etc
 
 const Dashboard = () => {
   const router = useRouter();
 
+  const { id: blogId } = useAppSelector((state) => state.blog.blog);
   const userData: AuthUserData = useAppSelector((state) => state.auth.userData);
   const { name, picture, email } = userData;
 
@@ -19,28 +25,53 @@ const Dashboard = () => {
     router.push("/blogger/" + section);
   };
 
+  const [numberOfPosts, setNumberOfPosts] = useState<number>(1);
+  const [numberOfLikes, setNumberOfLikes] = useState<number>(0);
+  const [numberOfViews, setNumberOfViews] = useState<number>(0);
+  const [numberOfComments, setNumberOfComments] = useState<number>(0);
+
   const stats = [
     {
       Icon: TimelineRoundedIcon,
-      figure: 70,
+      figure: numberOfPosts,
       metric: "Number of Blog Posts",
     },
     {
       Icon: FavoriteRoundedIcon,
-      figure: 15.6,
+      figure: numberOfLikes / numberOfPosts,
       metric: "Average like per post",
     },
     {
       Icon: ForumRoundedIcon,
-      figure: 70,
+      figure: numberOfComments / numberOfPosts,
       metric: "Average comment per post",
     },
     {
       Icon: VisibilityRoundedIcon,
-      figure: 70,
+      figure: numberOfViews / numberOfPosts,
       metric: "Average views per post",
     },
   ];
+
+  useEffect(() => {
+    const getBlogStats = async (blogId: string) => {
+      const blogPostsStats = await fetchBlogPostsStats(blogId);
+
+      setNumberOfPosts(blogPostsStats.length);
+
+      let views = 0;
+      let likes = 0;
+
+      blogPostsStats.forEach((blogPost) => {
+        views += blogPost?.views || 0;
+        likes += blogPost?.likes || 0;
+      });
+      setNumberOfLikes(likes);
+      setNumberOfViews(views);
+    };
+
+    getBlogStats(blogId as string);
+  }, []);
 
   return (
     <Layout>
