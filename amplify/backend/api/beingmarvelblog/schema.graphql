@@ -86,6 +86,8 @@ type Post @model {
 
 type Comment @model {
   id: ID!
+  name: String
+  picture: String
   content: String
   subComment: Boolean
   parentComment: String

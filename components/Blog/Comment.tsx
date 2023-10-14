@@ -1,40 +1,77 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button } from "@mui/material";
+import { useAppSelector } from "../../redux/hooks";
+import { Auth } from "aws-amplify";
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import TextArea from "../TextArea";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-const Comment = () => {
+interface CommentProps {
+  postId: string;
+  blogId: string;
+}
+
+const Comment = ({ postId, blogId }: CommentProps) => {
+  const { userData, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { name, picture, email } = userData;
+
+  const [comment, setComment] = useState<string>("");
+
+  const commentHandler = async () => {
+    if (isAuthenticated) {
+      const commentData = {
+        id: uuidv4(),
+        name,
+        picture,
+        content: comment,
+        subComment: false,
+        likes: 0,
+        blogId,
+        postId,
+      };
+
+      console.log({ commentData });
+    } else {
+      Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
+    }
+  };
+
   return (
-    <Box bgcolor="#F4F7FD" width={'100%'} py={4} my={4}>
-      <Box width={'85%'} mx="auto" my={2} display={'flex'} flexDirection={'column'} justifyContent={'center'}>
-        <textarea
-          id="contactMessage"
+    <Box bgcolor="#F4F7FD" width={"100%"} py={4} my={4}>
+      <Box width={"85%"} mx="auto" my={2} display={"flex"} flexDirection={"column"} justifyContent={"center"}>
+        <TextArea
+          id="comment"
+          name="comment"
+          value={comment}
+          onChange={(e) => {
+            setComment(e?.target?.value);
+          }}
           placeholder="Write a comment"
           rows={6}
           style={{
-            color: '#302F2F',
-            backgroundColor: '#fff',
-            padding: '16px',
-            borderRadius: '4px 0px 0px 4px',
-            outline: 'none',
-            border: 'none',
-            width: '100%',
-            fontSize: '1.25rem',
-            fontFamily: 'Cormorant Garamond',
+            color: "#302F2F",
+            backgroundColor: "#fff",
+            padding: "16px",
           }}
         />
         <Button
           sx={{
-            color: '#fff',
-            bgcolor: '#3367DC',
-            p: '8px 16px',
-            mx: 'auto',
+            color: "#fff",
+            bgcolor: "#3367DC",
+            p: "8px 16px",
+            mx: "auto",
             my: 2,
-            width: 'max-content',
+            width: "max-content",
+          }}
+          onClick={() => {
+            commentHandler();
           }}
         >
-          Submit
+          {isAuthenticated ? "Submit" : "Login to comment"}
         </Button>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default Comment
+export default Comment;

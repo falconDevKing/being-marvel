@@ -12,13 +12,16 @@ import { useEffect, useState } from "react";
 import { fetchBlogCommentsStats, fetchBlogPostsStats } from "../../services/post";
 
 // TODO:  Work on comments
+// TODO:  Add pagination to blogger posts
+// TODO:  Update deleted draft status.
+// TODO:  Add next token to fetches
 // TODO:  Work on dynamic blog content, home page about contact etc
 
 const Dashboard = () => {
   const router = useRouter();
 
   const { id: blogId } = useAppSelector((state) => state.blog.blog);
-  const userData: AuthUserData = useAppSelector((state) => state.auth.userData);
+  const userData = useAppSelector((state) => state.auth.userData);
   const { name, picture, email } = userData;
 
   const navToBlogger = (section: string) => {

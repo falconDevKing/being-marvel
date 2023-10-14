@@ -3,13 +3,13 @@ import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/tool
 import { Auth } from "aws-amplify";
 // import { ErrorHandler } from "helper/Handlers";
 import { getUserDetails, updateAuthLoading } from "../services/auth";
-import { UserDetails } from "../interfaces/auth";
+import { AuthUserData, UserDetails } from "../interfaces/auth";
 
 interface AuthState {
   isAuthenticated: boolean;
   authUser: any;
   authData: any;
-  userData: any;
+  userData: AuthUserData;
   loading: boolean;
   isInitialized: boolean;
   error: any;

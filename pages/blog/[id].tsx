@@ -98,7 +98,7 @@ const BlogPost = () => {
         </Box>
       </Box>
 
-      <Comment />
+      <Comment postId={postData?.id as string} blogId={postData?.blogId as string} />
 
       <Comments />
 
