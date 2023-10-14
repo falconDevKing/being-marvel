@@ -46,3 +46,24 @@ export const customFetchPostsStatsByBlog = /* GraphQL */ `
     }
   }
 `;
+
+export const customFetchCommentsStatsByBlog = /* GraphQL */ `
+  query customFetchCommentsStatsByBlog(
+    $blogId: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    fetchCommentsByBlog(blogId: $blogId, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        blogId
+        postId
+        likes
+      }
+      nextToken
+    }
+  }
+`;

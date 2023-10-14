@@ -6,13 +6,10 @@ import { API } from "aws-amplify";
 import { ErrorHandler, SuccessHandler } from "../utils/handlers";
 import { getAboutByBlog, getBlog, getPost } from "../graphql/queries";
 import { setAbout, setBlog, setPostSummary } from "../redux/blogSlice";
-import { customFetchPostsByBlog, customFetchPostsStatsByBlog } from "../graphql/customQueries";
-import { IBlogPost, IPostStats } from "../interfaces/blog";
+import { customFetchCommentsStatsByBlog, customFetchPostsByBlog, customFetchPostsStatsByBlog } from "../graphql/customQueries";
+import { IBlogPost, IPostCommentStats, IPostStats } from "../interfaces/blog";
 import { IPostData } from "../interfaces/post";
 import dayjs from "dayjs";
-
-// TODO:  work on edit post
-// TODO: Work on preview post
 
 export const createBlogPost = async (postData: IBlogPost) => {
   try {
@@ -142,23 +139,77 @@ export const deletePost = async (id: string, blogId: string) => {
 };
 
 export const updatedBlogPostData = async (blogId: string) => {
-  // get posts
-  const posts = (await API.graphql({
-    query: customFetchPostsByBlog,
-    variables: { blogId: blogId },
-  })) as GraphQLResult<any>;
+  let totalPosts = [] as IPostData[];
 
-  const postsData = posts?.data?.fetchPostsByBlog?.items;
-  store.dispatch(setPostSummary({ data: postsData }));
+  // get posts
+  const getPosts = async (nextToken?: string) => {
+    const posts = (await API.graphql({
+      query: customFetchPostsByBlog,
+      variables: { blogId: blogId, nextToken },
+    })) as GraphQLResult<any>;
+
+    const postsData = posts?.data?.fetchPostsByBlog?.items as IPostStats[];
+    const modifiedPostsData = postsData.filter((postData) => !!postData);
+    totalPosts = [...totalPosts, ...(modifiedPostsData as unknown as IPostData[])];
+
+    const next = posts?.data?.fetchPostsByBlog?.nextToken as string | null;
+    if (next) {
+      await getPosts(next);
+    }
+  };
+
+  await getPosts();
+
+  store.dispatch(setPostSummary({ data: totalPosts }));
 };
 
 export const fetchBlogPostsStats = async (blogId: string) => {
-  // get posts
-  const posts = (await API.graphql({
-    query: customFetchPostsStatsByBlog,
-    variables: { blogId: blogId },
-  })) as GraphQLResult<any>;
+  let totalPostStats = [] as IPostStats[];
 
-  const postsData = posts?.data?.fetchPostsByBlog?.items as IPostStats[];
-  return postsData;
+  // get posts
+  const getPostStats = async (nextToken?: string) => {
+    const posts = (await API.graphql({
+      query: customFetchPostsStatsByBlog,
+      variables: { blogId: blogId, nextToken },
+    })) as GraphQLResult<any>;
+
+    const postsData = posts?.data?.fetchPostsByBlog?.items as IPostStats[];
+    const modifiedPostsData = postsData.filter((postData) => !!postData);
+    totalPostStats = [...totalPostStats, ...(modifiedPostsData as unknown as IPostStats[])];
+
+    const next = posts?.data?.fetchPostsByBlog?.nextToken as string | null;
+    if (next) {
+      await getPostStats(next);
+    }
+  };
+
+  await getPostStats();
+
+  return totalPostStats;
+};
+
+export const fetchBlogCommentsStats = async (blogId: string) => {
+  let totalCommentStats = [] as IPostCommentStats[];
+
+  // get posts
+
+  const getCommentsStats = async (nextToken?: string) => {
+    const comments = (await API.graphql({
+      query: customFetchCommentsStatsByBlog,
+      variables: { blogId: blogId, nextToken },
+    })) as GraphQLResult<any>;
+
+    const commentsData = comments?.data?.fetchCommentsByBlog?.items as IPostCommentStats[];
+    const modifiedCommentsData = commentsData.filter((commentData) => !!commentData);
+    totalCommentStats = [...totalCommentStats, ...(modifiedCommentsData as unknown as IPostCommentStats[])];
+
+    const next = comments?.data?.fetchCommentsByBlog?.nextToken as string | null;
+    if (next) {
+      await getCommentsStats(next);
+    }
+  };
+
+  await getCommentsStats();
+
+  return totalCommentStats;
 };

@@ -9,7 +9,7 @@ import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
 import { useAppSelector } from "../../redux/hooks";
 import { AuthUserData } from "../../interfaces/auth";
 import { useEffect, useState } from "react";
-import { fetchBlogPostsStats } from "../../services/post";
+import { fetchBlogCommentsStats, fetchBlogPostsStats } from "../../services/post";
 
 // TODO:  Work on comments
 // TODO:  Work on dynamic blog content, home page about contact etc
@@ -38,17 +38,17 @@ const Dashboard = () => {
     },
     {
       Icon: FavoriteRoundedIcon,
-      figure: numberOfLikes / numberOfPosts,
+      figure: numberOfLikes / (numberOfPosts || 1),
       metric: "Average like per post",
     },
     {
       Icon: ForumRoundedIcon,
-      figure: numberOfComments / numberOfPosts,
+      figure: numberOfComments / (numberOfPosts || 1),
       metric: "Average comment per post",
     },
     {
       Icon: VisibilityRoundedIcon,
-      figure: numberOfViews / numberOfPosts,
+      figure: numberOfViews / (numberOfPosts || 1),
       metric: "Average views per post",
     },
   ];
@@ -56,6 +56,7 @@ const Dashboard = () => {
   useEffect(() => {
     const getBlogStats = async (blogId: string) => {
       const blogPostsStats = await fetchBlogPostsStats(blogId);
+      const blogPostsCommentsStats = await fetchBlogCommentsStats(blogId);
 
       setNumberOfPosts(blogPostsStats.length);
 
@@ -66,6 +67,12 @@ const Dashboard = () => {
         views += blogPost?.views || 0;
         likes += blogPost?.likes || 0;
       });
+
+      setNumberOfComments(blogPostsCommentsStats.length);
+      blogPostsCommentsStats.forEach((blogPostsComment) => {
+        likes += blogPostsComment.likes;
+      });
+
       setNumberOfLikes(likes);
       setNumberOfViews(views);
     };

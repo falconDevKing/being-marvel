@@ -55,3 +55,10 @@ export interface IPostStats {
   likes: number;
   views: number;
 }
+
+export interface IPostCommentStats {
+  id: string;
+  blogId: string;
+  postId: string;
+  likes: number;
+}
