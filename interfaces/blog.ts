@@ -34,3 +34,15 @@ export interface IBlogPost {
   expireAt?: number;
   blogId?: string;
 }
+
+export interface IPostSummary {
+  id: string;
+  category: string;
+  title: string;
+  description: string;
+  descriptionImage: string;
+  status: string;
+  blogId: string;
+  createdAt: string;
+  updatedAt: string;
+}

@@ -1,7 +1,12 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
 
-const BlogCaption = () => {
+interface BlogCaptionProps {
+  captionText: string;
+  captionImage: string;
+}
+
+const BlogCaption = ({ captionText, captionImage }: BlogCaptionProps) => {
   return (
     <Box
       width={"100%"}
@@ -9,16 +14,13 @@ const BlogCaption = () => {
       display={"flex"}
       justifyContent={"space-between"}
       mx="auto"
-      // sx={{ backgroundImage: `url('/ContactPicture1.png')`, backgroundSize: 'cover' }}
       sx={{
-        backgroundImage: `url('https://beingmarvelblogs381553-dev.s3.eu-west-1.amazonaws.com/public/7a197560-7f01-4baa-a84a-6423a0f2f536/Dummy.PNG')`,
+        backgroundImage: `url(${captionImage})`,
         backgroundSize: "cover",
       }}
     >
       <Box width={"80%"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} mx="auto" color={"#fff"} fontSize={"2.8rem"}>
-        <Box>Lorem ipsum dolor sit, amet consectetur</Box>
-        <Box>adipisicing elit. Obcaecati adipisci ipsa tenetur,</Box>
-        <Box>aliquam excepturi impedit fugit </Box>
+        {captionText}
       </Box>
     </Box>
   );

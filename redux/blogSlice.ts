@@ -4,19 +4,19 @@ import { Auth } from "aws-amplify";
 // import { ErrorHandler } from "helper/Handlers";
 import { getUserDetails, updateAuthLoading } from "../services/auth";
 import { UserDetails } from "../interfaces/auth";
-import { AboutInterface, BlogInterface } from "../interfaces/blog";
+import { AboutInterface, BlogInterface, IPostSummary } from "../interfaces/blog";
 
 interface BlogState {
   blog: BlogInterface;
   about: AboutInterface;
-  postsSummary: any;
+  postsSummary: IPostSummary[];
   loading: boolean;
 }
 
 const initialState: BlogState = {
   blog: {},
   about: {},
-  postsSummary: {},
+  postsSummary: [],
   loading: false,
 };
 

@@ -13,7 +13,9 @@ export const customFetchPostsByBlog = /* GraphQL */ `
         category
         title
         description
-        image
+        descriptionImage
+        status
+        blogId
         createdAt
         updatedAt
       }
