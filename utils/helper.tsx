@@ -103,8 +103,6 @@ export const organiseComments = (comments: IPostCommentData[]) => {
     return accum;
   }, Object.create(null));
 
-  console.log({ groupedSubcomments });
-
   const organisedComments = parentComments
     ?.sort((a, b) => (dayjs(a?.createdAt).isAfter(b?.createdAt) ? 1 : -1))
     ?.map((parentComment) => {
