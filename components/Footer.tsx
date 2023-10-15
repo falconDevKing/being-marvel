@@ -62,12 +62,12 @@ const Footer = ({ width }: FooterProps) => {
       <Box bgcolor={"#222"} width={width} mx={"auto"} fontSize={"1.25rem"}>
         <Box justifyContent={"space-between"} display={"flex"}>
           <Box>
-            <Image src={darkLogo as string} alt={`${blogName} logo`} width={100} height={50} style={{ cursor: "pointer" }} />
+            <Image src={darkLogo as string} alt={`${blogName} logo`} width={100} height={50} />
             <Box py={2}>
               <Box py={1}>Lagos, Nigeria</Box>
               <Box py={1}>beingmarvelblog@gmail.com</Box>
               {interimBloggers?.includes(email as string) && (
-                <Box py={1} onClick={createBlogFunction}>
+                <Box py={1} onClick={createBlogFunction} style={{ cursor: "pointer" }}>
                   Become a blogger
                 </Box>
               )}

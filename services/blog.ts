@@ -7,6 +7,8 @@ import { ErrorHandler, SuccessHandler } from "../utils/handlers";
 import { getAboutByBlog, getBlog } from "../graphql/queries";
 import { setAbout, setBlog, setPostSummary } from "../redux/blogSlice";
 import { customFetchPostsByBlog } from "../graphql/customQueries";
+import { IPostData } from "../interfaces/post";
+import { IPostStats } from "../interfaces/blog";
 
 export const createBlogHandler = async (userId: string) => {
   try {
@@ -59,12 +61,26 @@ export const getBlogDetails = async (blogId: string) => {
   const aboutData = about?.data?.getAboutByBlog?.items[0];
   store.dispatch(setAbout({ data: aboutData }));
 
-  // get posts
-  const posts = (await API.graphql({
-    query: customFetchPostsByBlog,
-    variables: { blogId: blogId },
-  })) as GraphQLResult<any>;
+  let totalPosts = [] as IPostData[];
 
-  const postsData = posts?.data?.fetchPostsByBlog?.items;
-  store.dispatch(setPostSummary({ data: postsData }));
+  // get posts
+  const getPosts = async (nextToken?: string) => {
+    const posts = (await API.graphql({
+      query: customFetchPostsByBlog,
+      variables: { blogId: blogId, nextToken },
+    })) as GraphQLResult<any>;
+
+    const postsData = posts?.data?.fetchPostsByBlog?.items as IPostData[];
+    const modifiedPostsData = postsData.filter((postData) => !!postData);
+    totalPosts = [...totalPosts, ...(modifiedPostsData as unknown as IPostData[])];
+
+    const next = posts?.data?.fetchPostsByBlog?.nextToken as string | null;
+    if (next) {
+      await getPosts(next);
+    }
+  };
+
+  await getPosts();
+
+  store.dispatch(setPostSummary({ data: totalPosts }));
 };

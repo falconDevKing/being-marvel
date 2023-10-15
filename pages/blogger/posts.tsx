@@ -1,4 +1,4 @@
-import { Box, Stack, Tooltip } from "@mui/material";
+import { Box, Pagination, Stack, Tooltip } from "@mui/material";
 import Layout from "../../components/blogger/BloggerLayout";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useRouter } from "next/router";
@@ -18,10 +18,10 @@ import { useAppSelector } from "../../redux/hooks";
 import { IPostSummary } from "../../interfaces/blog";
 import dayjs from "dayjs";
 import { deletePost, publishPost, unPublishPost } from "../../services/post";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const Dashboard = () => {
+const Posts = () => {
   const router = useRouter();
 
   const userData: AuthUserData = useAppSelector((state) => state.auth.userData);
@@ -29,6 +29,14 @@ const Dashboard = () => {
   const { name, picture, email } = userData;
 
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [paginationCount, setPaginationCount] = useState(1);
+  const [ItemsPerPage, setItemsPerPage] = useState(12);
+  const [postsToShow, setPostsToShow] = useState<IPostSummary[]>([]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   const previewPostHandler = (id: string) => {
     router.push("/blog/" + id);
@@ -61,6 +69,17 @@ const Dashboard = () => {
     await deletePost(id, blogId);
     setLoading(false);
   };
+
+  const selectPosts = useCallback(() => {
+    setPaginationCount(Math.ceil(postsSummary.length / ItemsPerPage));
+
+    const toDisplay = [...postsSummary]?.slice((page - 1) * ItemsPerPage, page * ItemsPerPage);
+    setPostsToShow(toDisplay);
+  }, [page, ItemsPerPage, postsSummary]);
+
+  useEffect(() => {
+    selectPosts();
+  }, [selectPosts]);
 
   return (
     <Layout>
@@ -107,7 +126,7 @@ const Dashboard = () => {
               Action
             </Box>
           </Box>
-          {postsSummary.map((postSummary) => {
+          {postsToShow.map((postSummary) => {
             const { id, title, publishedAt, description, status, descriptionImage, expireAt, blogId } = postSummary;
 
             return (
@@ -135,7 +154,7 @@ const Dashboard = () => {
                 </Box>
                 <Box width="15%" display="flex" justifyContent={"center"}>
                   <Box bgcolor={"#F4F7FD"} p={1} width={"max-content"}>
-                    {status ? "Published" : "Draft"}
+                    {status ? "Published" : expireAt && expireAt != 1171734022 ? "Expiring" : "Draft"}
                   </Box>
                 </Box>
                 <Stack width="15%" direction={"row"} justifyContent={"center"} spacing={1}>
@@ -211,10 +230,13 @@ const Dashboard = () => {
               </Box>
             );
           })}
+          <Box justifyContent={"center"} display={"flex"} py={2}>
+            <Pagination count={paginationCount} page={page} onChange={handlePageChange} color="primary" showFirstButton showLastButton />
+          </Box>
         </Box>
       </Box>
     </Layout>
   );
 };
 
-export default Dashboard;
+export default Posts;

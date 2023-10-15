@@ -169,7 +169,7 @@ export const updatedBlogPostData = async (blogId: string) => {
       variables: { blogId: blogId, nextToken },
     })) as GraphQLResult<any>;
 
-    const postsData = posts?.data?.fetchPostsByBlog?.items as IPostStats[];
+    const postsData = posts?.data?.fetchPostsByBlog?.items as IPostData[];
     const modifiedPostsData = postsData.filter((postData) => !!postData);
     totalPosts = [...totalPosts, ...(modifiedPostsData as unknown as IPostData[])];
 

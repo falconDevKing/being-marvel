@@ -11,10 +11,6 @@ import { AuthUserData } from "../../interfaces/auth";
 import { useEffect, useState } from "react";
 import { fetchBlogCommentsStats, fetchBlogPostsStats } from "../../services/post";
 
-// TODO:  Work on comments
-// TODO:  Add pagination to blogger posts
-// TODO:  Update deleted draft status.
-// TODO:  Add next token to fetches
 // TODO:  Work on dynamic blog content, home page about contact etc
 
 const Dashboard = () => {
@@ -28,7 +24,7 @@ const Dashboard = () => {
     router.push("/blogger/" + section);
   };
 
-  const [numberOfPosts, setNumberOfPosts] = useState<number>(1);
+  const [numberOfPosts, setNumberOfPosts] = useState<number>(0);
   const [numberOfLikes, setNumberOfLikes] = useState<number>(0);
   const [numberOfViews, setNumberOfViews] = useState<number>(0);
   const [numberOfComments, setNumberOfComments] = useState<number>(0);

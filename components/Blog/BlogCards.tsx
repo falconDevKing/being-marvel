@@ -2,21 +2,34 @@ import { Box, Pagination, Stack } from "@mui/material";
 import BlogCard from "./BlogCard";
 import SearchIcon from "@mui/icons-material/Search";
 import SortIcon from "@mui/icons-material/Sort";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
+import { IPostSummary } from "../../interfaces/blog";
 
 const BlogCards = () => {
   const [page, setPage] = useState(1);
   const [paginationCount, setPaginationCount] = useState(1);
   const [ItemsPerPage, setItemsPerPage] = useState(12);
+  const [postsToShow, setPostsToShow] = useState<IPostSummary[]>([]);
 
-  const { postsSummary } = useAppSelector((state) => state.blog);
-
-  const publishedPosts = postsSummary.filter((postSummary) => postSummary.status);
+  const postsSummary = useAppSelector((state) => state.blog.postsSummary);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
+
+  const selectPosts = useCallback(() => {
+    setPaginationCount(Math.ceil(postsSummary.length / ItemsPerPage));
+
+    const publishedPosts = postsSummary.filter((postSummary) => postSummary.status);
+
+    const toDisplay = [...publishedPosts]?.slice((page - 1) * ItemsPerPage, page * ItemsPerPage);
+    setPostsToShow(toDisplay);
+  }, [page, ItemsPerPage, postsSummary]);
+
+  useEffect(() => {
+    selectPosts();
+  }, [selectPosts]);
 
   return (
     <Box width={"85%"} mx="auto" my={2}>
@@ -85,7 +98,7 @@ const BlogCards = () => {
       </Box>
 
       <Box display={"flex"} flexDirection={"row"} py={4} flexWrap="wrap">
-        {publishedPosts.map((post, index) => {
+        {postsToShow.map((post, index) => {
           return <BlogCard key={index} postData={post} />;
         })}
       </Box>
