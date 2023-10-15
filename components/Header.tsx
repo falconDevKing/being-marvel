@@ -72,11 +72,11 @@ const Header = ({ width }: HeaderProps) => {
     getBlogDetails(marvelBlogId);
   }, []);
 
-  useEffect(() => {
-    if (isAuthenticated && !userData?.name) {
-      router.reload();
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated && !userData?.name) {
+  //     router.reload();
+  //   }
+  // }, [isAuthenticated]);
 
   return (
     <>
