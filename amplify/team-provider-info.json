@@ -70,7 +70,8 @@
       "UnauthRoleName": "amplify-beingmarvelblog-production-15259-unauthRole",
       "StackName": "amplify-beingmarvelblog-production-15259",
       "StackId": "arn:aws:cloudformation:eu-west-1:013882496498:stack/amplify-beingmarvelblog-production-15259/3179ed30-6af5-11ee-a181-0ea5a33e88a9",
-      "AmplifyAppId": "d22ojjetioaog3"
+      "AmplifyAppId": "d22ojjetioaog3",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-beingmarvelblog-production-15259-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
@@ -79,9 +80,22 @@
         }
       },
       "function": {
-        "beingmarvelblog5767c27ePostAuthentication": {},
-        "mailSender": {},
+        "beingmarvelblog5767c27ePostAuthentication": {
+          "deploymentBucketName": "amplify-beingmarvelblog-production-15259-deployment",
+          "s3Key": "amplify-builds/beingmarvelblog5767c27ePostAuthentication-4c7a47697a7854475031-build.zip"
+        },
+        "mailSender": {
+          "sesEmail": "emmanueloyekan33@gmail.com",
+          "deploymentBucketName": "amplify-beingmarvelblog-production-15259-deployment",
+          "s3Key": "amplify-builds/mailSender-356279472b58702b5074-build.zip"
+        },
         "beingmarvelblog": {}
+      },
+      "api": {
+        "beingmarvelblog": {}
+      },
+      "storage": {
+        "beingmarvels3": {}
       }
     }
   }
