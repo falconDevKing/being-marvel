@@ -19,8 +19,8 @@ const Footer = ({ width }: FooterProps) => {
   };
 
   const { userDetails } = useAppSelector((state) => state.auth);
-  const id = userDetails?.id;
-  const email = userDetails?.email;
+  const id = userDetails?.id || "";
+  const email = userDetails?.email || "";
 
   const { name: blogName, logo, darkLogo, id: blogId, interimBloggers } = useAppSelector((state) => state.blog.blog);
   const [loading, setLoading] = useState<boolean>(false);

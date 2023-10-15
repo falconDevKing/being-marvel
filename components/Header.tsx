@@ -24,8 +24,11 @@ const Header = ({ width }: HeaderProps) => {
   const [loading, setLoading] = useState(false);
 
   const { name: blogName, logo, darkLogo } = useAppSelector((state) => state.blog.blog);
-  const { userData, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { userData, isAuthenticated, userDetails } = useAppSelector((state) => state.auth);
   const { name, picture, email } = userData as AuthUserData;
+
+  const userDetailsName = userDetails?.name || "";
+  const userDetailsImage = userDetails?.image || "";
 
   const [openSignin, setOpenSignin] = useState<boolean>(false);
   const [authMode, setAuthMode] = useState<string>("Login");
@@ -72,12 +75,6 @@ const Header = ({ width }: HeaderProps) => {
     getBlogDetails(marvelBlogId);
   }, []);
 
-  // useEffect(() => {
-  //   if (isAuthenticated && !userData?.name) {
-  //     router.reload();
-  //   }
-  // }, [isAuthenticated]);
-
   return (
     <>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} width={width} mx="auto" py={2}>
@@ -113,8 +110,8 @@ const Header = ({ width }: HeaderProps) => {
 
           {isAuthenticated ? (
             <ProfileAvatar
-              name={name}
-              src={picture}
+              name={name || userDetailsName}
+              src={picture || userDetailsImage}
               hasImage
               sx={{
                 width: "2.5rem",
