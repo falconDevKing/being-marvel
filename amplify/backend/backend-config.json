@@ -87,46 +87,6 @@
           "resourceName": "beingmarvelblog5767c27e"
         }
       ]
-    },
-    "AMPLIFY_function_beingmarvelblog5767c27ePostAuthentication_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "beingmarvelblog5767c27ePostAuthentication"
-        }
-      ]
-    },
-    "AMPLIFY_function_beingmarvelblog5767c27ePostAuthentication_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "beingmarvelblog5767c27ePostAuthentication"
-        }
-      ]
-    },
-    "AMPLIFY_function_mailSender_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "mailSender"
-        }
-      ]
-    },
-    "AMPLIFY_function_mailSender_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "mailSender"
-        }
-      ]
-    },
-    "AMPLIFY_function_mailSender_sesEmail": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "mailSender"
-        }
-      ]
     }
   },
   "storage": {

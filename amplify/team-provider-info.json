@@ -52,6 +52,36 @@
     "categories": {
       "api": {
         "beingmarvel": {}
+      },
+      "function": {
+        "beingmarvelblog5767c27ePostAuthentication": {},
+        "mailSender": {},
+        "beingmarvelblog": {}
+      }
+    }
+  },
+  "production": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-beingmarvelblog-production-15259-authRole",
+      "UnauthRoleArn": "arn:aws:iam::013882496498:role/amplify-beingmarvelblog-production-15259-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::013882496498:role/amplify-beingmarvelblog-production-15259-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-beingmarvelblog-production-15259-deployment",
+      "UnauthRoleName": "amplify-beingmarvelblog-production-15259-unauthRole",
+      "StackName": "amplify-beingmarvelblog-production-15259",
+      "StackId": "arn:aws:cloudformation:eu-west-1:013882496498:stack/amplify-beingmarvelblog-production-15259/3179ed30-6af5-11ee-a181-0ea5a33e88a9",
+      "AmplifyAppId": "d22ojjetioaog3"
+    },
+    "categories": {
+      "auth": {
+        "beingmarvelblog5767c27e": {
+          "googleClientId": "833451000346-e30lhgg3lkabqkdnk7jtc15pb071lvbt.apps.googleusercontent.com"
+        }
+      },
+      "function": {
+        "beingmarvelblog5767c27ePostAuthentication": {},
+        "mailSender": {},
+        "beingmarvelblog": {}
       }
     }
   }
