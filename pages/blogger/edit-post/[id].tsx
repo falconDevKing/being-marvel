@@ -48,11 +48,8 @@ const EditPost = () => {
       title: "",
       description: "",
       captionText: "",
-      content: "",
       descriptionImage: "",
       captionImage: "",
-      publishedAt: "",
-      expireAt: "",
       blogId: "",
     },
     // validationSchema: LoginValidation,
@@ -68,10 +65,16 @@ const EditPost = () => {
 
       if (!value) {
         ErrorHandler({ message: "Kindly fill in content" });
+        setLoading(false);
         return;
       }
-
       const { category, title, description, captionText, descriptionImage, captionImage, id, blogId } = values;
+
+      if (!id && !blogId) {
+        ErrorHandler({ message: "Something is wrong, Kindly refresh the page" });
+        setLoading(false);
+        return;
+      }
 
       // save file to s3 and return link
       const descriptionFileLink = descriptionFile && (await StorageApi.putItem(`${blogId}/${descriptionFile?.name}`, descriptionFile as File));
@@ -91,7 +94,7 @@ const EditPost = () => {
           captionImage: captionFile ? s3baseurl + captionFileLink : captionImage,
         };
 
-        await updateBlogPost(postData);
+        blogId && (await updateBlogPost(postData));
 
         DismissHandler();
         SuccessHandler({ message: "Post updated successfully" });
@@ -191,9 +194,20 @@ const EditPost = () => {
     const getPostDetails = async (postId: string) => {
       try {
         const postDetails = await getBlogPost(postId);
+        const { id, category, title, description, captionText, descriptionImage, captionImage, blogId } = postDetails;
+        const fallBackPostData = {
+          id: id || "",
+          category: category || "",
+          title: title || "",
+          description: description || "",
+          captionText: captionText || "",
+          descriptionImage: descriptionImage || "",
+          captionImage: captionImage || "",
+          blogId: blogId || "",
+        };
 
-        setValues(postDetails);
-        setValue(postDetails?.content);
+        setValues(fallBackPostData);
+        setValue(postDetails?.content as string);
       } catch (error: any) {
         ErrorHandler({ message: error?.message || "Unable to get post" });
         console.log("error getting post", error);
