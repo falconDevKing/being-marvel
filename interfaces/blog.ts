@@ -5,6 +5,7 @@ export interface BlogInterface {
   darkLogo?: string;
   subscriber?: string[];
   userId?: string;
+  interimBloggers?: string[];
 }
 
 export interface AboutInterface {

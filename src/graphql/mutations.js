@@ -63,6 +63,7 @@ export const createUser = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -135,6 +136,7 @@ export const updateUser = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -207,6 +209,7 @@ export const deleteUser = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -248,6 +251,7 @@ export const createBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -273,6 +277,7 @@ export const createBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -330,6 +335,7 @@ export const createBlog = /* GraphQL */ `
         }
         nextToken
       }
+      interimBloggers
       createdAt
       updatedAt
       blogAboutId
@@ -367,6 +373,7 @@ export const updateBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -392,6 +399,7 @@ export const updateBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -449,6 +457,7 @@ export const updateBlog = /* GraphQL */ `
         }
         nextToken
       }
+      interimBloggers
       createdAt
       updatedAt
       blogAboutId
@@ -486,6 +495,7 @@ export const deleteBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -511,6 +521,7 @@ export const deleteBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -568,6 +579,7 @@ export const deleteBlog = /* GraphQL */ `
         }
         nextToken
       }
+      interimBloggers
       createdAt
       updatedAt
       blogAboutId
@@ -634,6 +646,7 @@ export const createAbout = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -703,6 +716,7 @@ export const updateAbout = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -772,6 +786,7 @@ export const deleteAbout = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -846,6 +861,7 @@ export const createPost = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -878,6 +894,7 @@ export const createPost = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -976,6 +993,7 @@ export const updatePost = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -1008,6 +1026,7 @@ export const updatePost = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1106,6 +1125,7 @@ export const deletePost = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -1138,6 +1158,7 @@ export const deletePost = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1230,6 +1251,7 @@ export const createComment = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -1257,6 +1279,7 @@ export const createComment = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1341,6 +1364,7 @@ export const updateComment = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -1368,6 +1392,7 @@ export const updateComment = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1452,6 +1477,7 @@ export const deleteComment = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -1479,6 +1505,7 @@ export const deleteComment = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1559,6 +1586,7 @@ export const createAudio = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -1586,6 +1614,7 @@ export const createAudio = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1666,6 +1695,7 @@ export const updateAudio = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -1693,6 +1723,7 @@ export const updateAudio = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1773,6 +1804,7 @@ export const deleteAudio = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -1800,6 +1832,7 @@ export const deleteAudio = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId

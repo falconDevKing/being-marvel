@@ -14,6 +14,8 @@ import { useAppSelector } from "../../redux/hooks";
 import { logout } from "../../services/auth";
 import { getBlogDetails } from "../../services/blog";
 
+const marvelBlogId = process.env.NEXT_PUBLIC_MARVEL_BLOG_ID as string;
+
 type BloggerLayoutProps = {
   children: React.ReactNode;
 };
@@ -70,7 +72,7 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   }, []);
 
   useEffect(() => {
-    getBlogDetails("7a197560-7f01-4baa-a84a-6423a0f2f536");
+    getBlogDetails(marvelBlogId);
   }, []);
 
   return (

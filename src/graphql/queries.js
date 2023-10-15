@@ -75,6 +75,7 @@ export const getUser = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -111,6 +112,7 @@ export const listUsers = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -151,6 +153,7 @@ export const getBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -176,6 +179,7 @@ export const getBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -233,6 +237,7 @@ export const getBlog = /* GraphQL */ `
         }
         nextToken
       }
+      interimBloggers
       createdAt
       updatedAt
       blogAboutId
@@ -291,6 +296,7 @@ export const listBlogs = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -356,6 +362,7 @@ export const getAbout = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -389,6 +396,7 @@ export const listAbouts = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -462,6 +470,7 @@ export const getPost = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -494,6 +503,7 @@ export const getPost = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -556,6 +566,7 @@ export const listPosts = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -636,6 +647,7 @@ export const getComment = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -663,6 +675,7 @@ export const getComment = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -711,6 +724,7 @@ export const listComments = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -794,6 +808,7 @@ export const getAudio = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -821,6 +836,7 @@ export const getAudio = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -865,6 +881,7 @@ export const listAudio = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -932,6 +949,7 @@ export const getUserByEmail = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1006,6 +1024,7 @@ export const getBlogByUser = /* GraphQL */ `
         comments {
           nextToken
         }
+        interimBloggers
         createdAt
         updatedAt
         blogAboutId
@@ -1048,6 +1067,7 @@ export const getAboutByBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1098,6 +1118,7 @@ export const fetchPostsByBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1155,6 +1176,7 @@ export const fetchCommentsByBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1219,6 +1241,7 @@ export const fetchCommentsByPost = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1279,6 +1302,7 @@ export const fetchAudiosByBlog = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId
@@ -1339,6 +1363,7 @@ export const getAudioByPost = /* GraphQL */ `
           darkLogo
           subscriber
           userId
+          interimBloggers
           createdAt
           updatedAt
           blogAboutId

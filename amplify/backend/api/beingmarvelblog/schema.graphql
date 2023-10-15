@@ -39,6 +39,7 @@ type Blog @model {
   posts: [Post] @hasMany(indexName: "byblog", fields: ["id"])
   audios: [Audio] @hasMany(indexName: "byblog", fields: ["id"])
   comments: [Comment] @hasMany(indexName: "byblog", fields: ["id"])
+  interimBloggers:  [String]
 }
 
 type About @model {
