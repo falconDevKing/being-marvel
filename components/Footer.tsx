@@ -22,7 +22,7 @@ const Footer = ({ width }: FooterProps) => {
   const id = userDetails?.id;
   const email = userDetails?.email;
 
-  const { name: blogName, logo, darkLogo, id: blogId } = useAppSelector((state) => state.blog.blog);
+  const { name: blogName, logo, darkLogo, id: blogId, interimBloggers } = useAppSelector((state) => state.blog.blog);
   const [loading, setLoading] = useState<boolean>(false);
   const [subscriberMail, setSubscriberMail] = useState<string>("");
 
@@ -66,7 +66,7 @@ const Footer = ({ width }: FooterProps) => {
             <Box py={2}>
               <Box py={1}>Lagos, Nigeria</Box>
               <Box py={1}>beingmarvelblog@gmail.com</Box>
-              {email === "emmanueloyekan33@gmail.com" && (
+              {interimBloggers?.includes(email as string) && (
                 <Box py={1} onClick={createBlogFunction}>
                   Become a blogger
                 </Box>
