@@ -96,9 +96,9 @@ const BlogPost = () => {
           <Box>
             <TrendingBlog />
           </Box>
-          <Box>
+          {/* <Box>
             <FeaturedBlog />
-          </Box>
+          </Box> */}
         </Box>
       </Box>
 
