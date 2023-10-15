@@ -1,6 +1,6 @@
 {
   "api": {
-    "beingmarvel": {
+    "beingmarvelblog": {
       "dependsOn": [],
       "output": {
         "authConfig": {
@@ -15,6 +15,125 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    }
+  },
+  "auth": {
+    "beingmarvelblog5767c27e": {
+      "customAuth": false,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "beingmarvelblog5767c27ePostAuthentication",
+          "triggerProvider": "Cognito"
+        }
+      ],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [
+          "GOOGLE"
+        ],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    }
+  },
+  "function": {
+    "beingmarvelblog5767c27ePostAuthentication": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "beingmarvelblog"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "mailSender": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_beingmarvelblog5767c27e_googleClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "beingmarvelblog5767c27e"
+        }
+      ]
+    },
+    "AMPLIFY_function_beingmarvelblog5767c27ePostAuthentication_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "beingmarvelblog5767c27ePostAuthentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_beingmarvelblog5767c27ePostAuthentication_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "beingmarvelblog5767c27ePostAuthentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_mailSender_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mailSender"
+        }
+      ]
+    },
+    "AMPLIFY_function_mailSender_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mailSender"
+        }
+      ]
+    },
+    "AMPLIFY_function_mailSender_sesEmail": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mailSender"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "beingmarvels3": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }

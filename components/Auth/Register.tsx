@@ -3,20 +3,31 @@ import Image from "next/image";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Dispatch, SetStateAction } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/router";
+import { DismissHandler, ErrorHandler, LoadingHandler, SuccessHandler } from "../../utils/handlers";
+import { useFormik } from "formik";
+import SignUpValidation from "../../utils/validations/SignupValidation";
+import axios, { isAxiosError } from "axios";
+import Input from "../Input";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { API, Auth } from "aws-amplify";
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { getUserByEmail } from "../../graphql/queries";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as string;
 
 type RegisterProps = {
   setAuthMode: Dispatch<SetStateAction<string>>;
+  setOpenSignin: Dispatch<SetStateAction<boolean>>;
 };
 
-const Register = ({ setAuthMode }: RegisterProps) => {
+const Register = ({ setAuthMode, setOpenSignin }: RegisterProps) => {
   const router = useRouter();
 
-  const { email, mode: defaultMode, message } = router.query;
+  // const { email, mode: defaultMode, message } = router.query;
 
   let callback = "/blog";
   const { callbackUrl } = router.query;
@@ -24,8 +35,84 @@ const Register = ({ setAuthMode }: RegisterProps) => {
     callback = callbackUrl.split(baseUrl as string)[1];
   }
 
+  const [loading, setLoading] = useState(false);
+  const [seePassword, SetSeePassword] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: SignUpValidation,
+    validateOnChange: true,
+    validateOnBlur: true,
+    onSubmit: async (values, { resetForm }) => {
+      LoadingHandler({ message: "Registering..." });
+      setLoading(true);
+      try {
+        // const authResponse = await axios.post("/api/auth/signup", values);
+
+        const { name, email, password, confirmPassword } = values;
+
+        if (password !== confirmPassword) {
+          throw new Error("Passwords dont match");
+        }
+
+        const existingUserData = (await API.graphql({
+          query: getUserByEmail,
+          variables: {
+            email: email,
+          },
+        })) as GraphQLResult<any>;
+
+        const existingUsers = existingUserData.data?.getUserByEmail?.items;
+        console.log({ data: existingUserData.data?.getUserByEmail, existingUsers });
+
+        if (existingUsers?.length) {
+          throw new Error("User Exsits");
+        }
+
+        const { user } = await Auth.signUp({
+          username: email.trim(),
+          password,
+          attributes: {
+            email: email.trim(),
+            name: name.trim(), // optional
+            // other custom attributes
+          },
+          autoSignIn: {
+            // optional - enables auto sign in after user is confirmed
+            enabled: true,
+          },
+        });
+
+        console.log(user);
+
+        // const message = authResponse?.data?.message;
+        DismissHandler();
+        SuccessHandler({ message: "User Signed in" });
+        // SuccessHandler({ message: "Kindly Login" });
+        setLoading(false);
+        setAuthMode("Login");
+      } catch (error) {
+        console.log("error signing up", error);
+        DismissHandler();
+        if (isAxiosError(error)) {
+          const message = error?.response?.data?.message;
+          ErrorHandler({ message });
+        } else {
+          ErrorHandler({ message: "Something went wrong " });
+        }
+        setLoading(false);
+      }
+    },
+  });
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
+
   const loginGoogle = async () => {
-    const googleResponse = await signIn("google", { redirect: false, callbackUrl: callback });
+    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
   };
 
   return (
@@ -42,66 +129,112 @@ const Register = ({ setAuthMode }: RegisterProps) => {
           Click to login
         </Box>
       </Box>
-      <Box display={"flex"} alignItems={"center"} py={1} px={2} bgcolor={"#f4f7fd"} my={1} borderRadius={"4px"}>
+      <Box display={"flex"} alignItems={"center"} py={0.5} px={2} bgcolor={"#f4f7fd"} my={0.5} borderRadius={"4px"}>
         <PersonOutlineOutlinedIcon />
-        <input
+        <Input
+          type="text"
           id="name"
           placeholder="Name"
-          style={{
-            color: "#302F2F",
-            padding: "8px 24px",
-            height: "52px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
+          name="name"
+          value={values?.name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
+          autoFocus
         />
       </Box>
-      <Box display={"flex"} alignItems={"center"} py={1} px={2} bgcolor={"#f4f7fd"} my={1} borderRadius={"4px"}>
+
+      <Box display={"flex"} alignItems={"center"} py={0.5} px={2} bgcolor={"#f4f7fd"} my={0.5} borderRadius={"4px"}>
         <EmailOutlinedIcon />
-        <input
+        <Input
           id="email"
+          type="email"
           placeholder="Email"
-          style={{
-            color: "#302F2F",
-            padding: "8px 24px",
-            height: "52px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
+          name="email"
+          value={values?.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
         />
       </Box>
-      <Box display={"flex"} alignItems={"center"} py={1} px={2} bgcolor={"#f4f7fd"} my={1} borderRadius={"4px"}>
-        <LockOutlinedIcon />
-        <input
-          id="password"
-          type="password"
-          placeholder="Password"
-          style={{
-            color: "#302F2F",
-            padding: "8px 24px",
-            height: "52px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
-        />
+      <Box display={"flex"} alignItems={"center"} py={0.5} px={2} bgcolor={"#f4f7fd"} my={0.5} borderRadius={"4px"}>
+        <Box display={"flex"} alignItems={"center"} width="100%">
+          <LockOutlinedIcon />
+          <Input
+            id="password"
+            type={seePassword ? "text" : "password"}
+            placeholder="Password"
+            name="password"
+            value={values?.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
+        </Box>
+        {values?.password &&
+          (seePassword ? (
+            <VisibilityOffIcon
+              onClick={() => {
+                SetSeePassword((prev) => !prev);
+              }}
+            />
+          ) : (
+            <VisibilityIcon
+              onClick={() => {
+                SetSeePassword((prev) => !prev);
+              }}
+            />
+          ))}
       </Box>
+
+      <Box display={"flex"} alignItems={"center"} py={0.5} px={2} bgcolor={"#f4f7fd"} my={0.5} borderRadius={"4px"}>
+        <Box display={"flex"} alignItems={"center"} width="100%">
+          <LockOutlinedIcon />
+          <Input
+            id="confirmPassword"
+            type={seePassword ? "text" : "password"}
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            value={values?.confirmPassword}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
+        </Box>
+        {values?.confirmPassword &&
+          (seePassword ? (
+            <VisibilityOffIcon
+              onClick={() => {
+                SetSeePassword((prev) => !prev);
+              }}
+            />
+          ) : (
+            <VisibilityIcon
+              onClick={() => {
+                SetSeePassword((prev) => !prev);
+              }}
+            />
+          ))}
+      </Box>
+
+      {/* </Box> */}
       <Box>Minimum 8 characters with 1 number and 1 letter</Box>
-      <Box bgcolor={"#3367DC"} color={"#fff"} p={2} textAlign={"center"} borderRadius={"4px"} my={2} sx={{ cursor: "pointer" }}>
+      <Box
+        bgcolor={loading ? "#f4f7fd" : "#3367DC"}
+        onClick={() => {
+          handleSubmit();
+        }}
+        color={"#fff"}
+        p={2}
+        textAlign={"center"}
+        borderRadius={"4px"}
+        my={2}
+        sx={{ cursor: "pointer" }}
+      >
         Sign Up
       </Box>
       <Box>

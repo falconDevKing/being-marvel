@@ -3,17 +3,28 @@ import Image from "next/image";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
+import { useFormik } from "formik";
+import LoginValidation from "../../utils/validations/LoginValidation";
+import { DismissHandler, ErrorHandler, LoadingHandler, SuccessHandler } from "../../utils/handlers";
+import axios, { isAxiosError } from "axios";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import Input from "../Input";
+import { API, Auth } from "aws-amplify";
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { getUserByEmail } from "../../graphql/queries";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as string;
 
 type LoginProps = {
   setAuthMode: Dispatch<SetStateAction<string>>;
+  setOpenSignin: Dispatch<SetStateAction<boolean>>;
 };
 
-const Login = ({ setAuthMode }: LoginProps) => {
+const Login = ({ setAuthMode, setOpenSignin }: LoginProps) => {
   const router = useRouter();
 
   const { email, mode: defaultMode, message } = router.query;
@@ -24,8 +35,66 @@ const Login = ({ setAuthMode }: LoginProps) => {
     callback = callbackUrl.split(baseUrl as string)[1];
   }
 
+  const [loading, setLoading] = useState(false);
+  const [seePassword, SetSeePassword] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: LoginValidation,
+    validateOnChange: true,
+    validateOnBlur: true,
+    onSubmit: async (values, { resetForm }) => {
+      LoadingHandler({ message: "Logging in..." });
+      setLoading(true);
+      try {
+        // const authResponse = await axios.post("/api/auth/login", values);
+        // const message = authResponse?.data?.message;
+        const { email, password } = values;
+
+        // const existingUserData = (await API.graphql({
+        //   query: getUserByEmail,
+        //   variables: {
+        //     email: email,
+        //   },
+        // })) as GraphQLResult<any>;
+
+        // const existingUser = existingUserData.data?.getUserByEmail?.items[0];
+
+        // if (!existingUser) {
+        //   throw new Error("No user found");
+        // }
+
+        const username = email;
+        const user = await Auth.signIn(username, password);
+
+        console.log(user);
+
+        DismissHandler();
+        SuccessHandler({ message: "Logged in successfully" });
+        setLoading(false);
+        setOpenSignin(false);
+        setLoading(false);
+        router.push(callback);
+      } catch (error: any) {
+        DismissHandler();
+        if (isAxiosError(error)) {
+          const message = error?.response?.data?.message;
+          ErrorHandler({ message });
+        } else {
+          ErrorHandler({ message: error?.message || "Something went wrong" });
+        }
+        setLoading(false);
+      }
+    },
+  });
+
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
+
   const loginGoogle = async () => {
-    const googleResponse = await signIn("google", { redirect: false, callbackUrl: callback });
+    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
   };
 
   return (
@@ -42,49 +111,76 @@ const Login = ({ setAuthMode }: LoginProps) => {
           Click to Sign up
         </Box>
       </Box>
-      <Box display={"flex"} alignItems={"center"} py={1} px={2} bgcolor={"#f4f7fd"} my={1} borderRadius={"4px"}>
+      <Box display={"flex"} alignItems={"center"} py={0.5} px={2} bgcolor={"#f4f7fd"} my={0.5} borderRadius={"4px"}>
         <EmailOutlinedIcon />
-        <input
+        <Input
           id="email"
+          type="email"
           placeholder="Email"
-          style={{
-            color: "#302F2F",
-            padding: "8px 24px",
-            height: "52px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
+          name="email"
+          value={values?.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
         />
       </Box>
-      <Box display={"flex"} alignItems={"center"} py={1} px={2} bgcolor={"#f4f7fd"} my={1} borderRadius={"4px"}>
-        <LockOutlinedIcon />
-        <input
-          id="password"
-          type="password"
-          placeholder="Password"
-          style={{
-            color: "#302F2F",
-            padding: "8px 24px",
-            height: "52px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
-        />
+
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        py={0.5}
+        px={2}
+        bgcolor={"#f4f7fd"}
+        my={0.5}
+        borderRadius={"4px"}
+        width="100%"
+      >
+        <Box display={"flex"} alignItems={"center"}>
+          <LockOutlinedIcon />
+          <Input
+            id="password"
+            type={seePassword ? "text" : "password"}
+            placeholder="Password"
+            name="password"
+            value={values?.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
+        </Box>
+        {values?.password &&
+          (seePassword ? (
+            <VisibilityOffIcon
+              onClick={() => {
+                SetSeePassword((prev) => !prev);
+              }}
+            />
+          ) : (
+            <VisibilityIcon
+              onClick={() => {
+                SetSeePassword((prev) => !prev);
+              }}
+            />
+          ))}
       </Box>
       <Box color={"#FF4100"} textAlign={"right"} sx={{ cursor: "pointer" }}>
         Forgot password?
       </Box>
-      <Box bgcolor={"#3367DC"} color={"#fff"} p={2} textAlign={"center"} borderRadius={"4px"} my={2} sx={{ cursor: "pointer" }}>
+      <Box
+        bgcolor={"#3367DC"}
+        color={"#fff"}
+        p={2}
+        textAlign={"center"}
+        borderRadius={"4px"}
+        my={2}
+        sx={{ cursor: "pointer" }}
+        onClick={() => {
+          handleSubmit();
+        }}
+      >
         Sign In
       </Box>
       <Box>

@@ -1,23 +1,29 @@
-import { Box } from '@mui/material'
-import Image from 'next/image'
+import { Box } from "@mui/material";
+import Image from "next/image";
 
-const BlogCaption = () => {
-  return (
-    <Box
-      width={'100%'}
-      height={'60vh'}
-      display={'flex'}
-      justifyContent={'space-between'}
-      mx="auto"
-      sx={{ backgroundImage: `url('/ContactPicture1.png')`, backgroundSize: 'cover' }}
-    >
-      <Box width={'80%'} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} mx="auto" color={'#fff'} fontSize={'2.8rem'}>
-        <Box>Lorem ipsum dolor sit, amet consectetur</Box>
-        <Box>adipisicing elit. Obcaecati adipisci ipsa tenetur,</Box>
-        <Box>aliquam excepturi impedit fugit </Box>
-      </Box>
-    </Box>
-  )
+interface BlogCaptionProps {
+  captionText: string;
+  captionImage: string;
 }
 
-export default BlogCaption
+const BlogCaption = ({ captionText, captionImage }: BlogCaptionProps) => {
+  return (
+    <Box
+      width={"100%"}
+      height={"60vh"}
+      display={"flex"}
+      justifyContent={"space-between"}
+      mx="auto"
+      sx={{
+        backgroundImage: `url(${captionImage})`,
+        backgroundSize: "cover",
+      }}
+    >
+      <Box width={"80%"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} mx="auto" color={"#fff"} fontSize={"2.8rem"}>
+        {captionText}
+      </Box>
+    </Box>
+  );
+};
+
+export default BlogCaption;

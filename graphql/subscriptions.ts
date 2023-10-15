@@ -8,12 +8,11 @@ export const onCreateUser = /* GraphQL */ `
       id
       customId
       name
+      firstName
+      lastName
       email
-      password
       image
       provider
-      id_token
-      access_token
       postLikes
       commentLikes
       blogger
@@ -21,6 +20,8 @@ export const onCreateUser = /* GraphQL */ `
         id
         name
         logo
+        darkLogo
+        subscriber
         userId
         createdAt
         updatedAt
@@ -38,12 +39,11 @@ export const onUpdateUser = /* GraphQL */ `
       id
       customId
       name
+      firstName
+      lastName
       email
-      password
       image
       provider
-      id_token
-      access_token
       postLikes
       commentLikes
       blogger
@@ -51,6 +51,8 @@ export const onUpdateUser = /* GraphQL */ `
         id
         name
         logo
+        darkLogo
+        subscriber
         userId
         createdAt
         updatedAt
@@ -68,12 +70,11 @@ export const onDeleteUser = /* GraphQL */ `
       id
       customId
       name
+      firstName
+      lastName
       email
-      password
       image
       provider
-      id_token
-      access_token
       postLikes
       commentLikes
       blogger
@@ -81,6 +82,8 @@ export const onDeleteUser = /* GraphQL */ `
         id
         name
         logo
+        darkLogo
+        subscriber
         userId
         createdAt
         updatedAt
@@ -98,17 +101,18 @@ export const onCreateBlog = /* GraphQL */ `
       id
       name
       logo
+      darkLogo
+      subscriber
       userId
       user {
         id
         customId
         name
+        firstName
+        lastName
         email
-        password
         image
         provider
-        id_token
-        access_token
         postLikes
         commentLikes
         blogger
@@ -118,7 +122,6 @@ export const onCreateBlog = /* GraphQL */ `
       }
       about {
         id
-        blogId
         title
         logo
         content
@@ -126,6 +129,7 @@ export const onCreateBlog = /* GraphQL */ `
         linkedIn
         instagram
         twitter
+        blogId
         createdAt
         updatedAt
       }
@@ -150,17 +154,18 @@ export const onUpdateBlog = /* GraphQL */ `
       id
       name
       logo
+      darkLogo
+      subscriber
       userId
       user {
         id
         customId
         name
+        firstName
+        lastName
         email
-        password
         image
         provider
-        id_token
-        access_token
         postLikes
         commentLikes
         blogger
@@ -170,7 +175,6 @@ export const onUpdateBlog = /* GraphQL */ `
       }
       about {
         id
-        blogId
         title
         logo
         content
@@ -178,6 +182,7 @@ export const onUpdateBlog = /* GraphQL */ `
         linkedIn
         instagram
         twitter
+        blogId
         createdAt
         updatedAt
       }
@@ -202,17 +207,18 @@ export const onDeleteBlog = /* GraphQL */ `
       id
       name
       logo
+      darkLogo
+      subscriber
       userId
       user {
         id
         customId
         name
+        firstName
+        lastName
         email
-        password
         image
         provider
-        id_token
-        access_token
         postLikes
         commentLikes
         blogger
@@ -222,7 +228,6 @@ export const onDeleteBlog = /* GraphQL */ `
       }
       about {
         id
-        blogId
         title
         logo
         content
@@ -230,6 +235,7 @@ export const onDeleteBlog = /* GraphQL */ `
         linkedIn
         instagram
         twitter
+        blogId
         createdAt
         updatedAt
       }
@@ -252,16 +258,6 @@ export const onCreateAbout = /* GraphQL */ `
   subscription OnCreateAbout($filter: ModelSubscriptionAboutFilterInput) {
     onCreateAbout(filter: $filter) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       title
       logo
       content
@@ -269,6 +265,18 @@ export const onCreateAbout = /* GraphQL */ `
       linkedIn
       instagram
       twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       createdAt
       updatedAt
     }
@@ -278,16 +286,6 @@ export const onUpdateAbout = /* GraphQL */ `
   subscription OnUpdateAbout($filter: ModelSubscriptionAboutFilterInput) {
     onUpdateAbout(filter: $filter) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       title
       logo
       content
@@ -295,6 +293,18 @@ export const onUpdateAbout = /* GraphQL */ `
       linkedIn
       instagram
       twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       createdAt
       updatedAt
     }
@@ -304,16 +314,6 @@ export const onDeleteAbout = /* GraphQL */ `
   subscription OnDeleteAbout($filter: ModelSubscriptionAboutFilterInput) {
     onDeleteAbout(filter: $filter) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       title
       logo
       content
@@ -321,6 +321,18 @@ export const onDeleteAbout = /* GraphQL */ `
       linkedIn
       instagram
       twitter
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       createdAt
       updatedAt
     }
@@ -330,35 +342,39 @@ export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost($filter: ModelSubscriptionPostFilterInput) {
     onCreatePost(filter: $filter) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       category
       title
       description
       captionText
+      content
+      descriptionImage
       captionImage
       likes
       views
       status
       publishedAt
       expireAt
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       comments {
         nextToken
       }
       audio {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -372,35 +388,39 @@ export const onUpdatePost = /* GraphQL */ `
   subscription OnUpdatePost($filter: ModelSubscriptionPostFilterInput) {
     onUpdatePost(filter: $filter) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       category
       title
       description
       captionText
+      content
+      descriptionImage
       captionImage
       likes
       views
       status
       publishedAt
       expireAt
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       comments {
         nextToken
       }
       audio {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -414,35 +434,39 @@ export const onDeletePost = /* GraphQL */ `
   subscription OnDeletePost($filter: ModelSubscriptionPostFilterInput) {
     onDeletePost(filter: $filter) {
       id
-      blogId
-      blog {
-        id
-        name
-        logo
-        userId
-        createdAt
-        updatedAt
-        blogAboutId
-      }
       category
       title
       description
       captionText
+      content
+      descriptionImage
       captionImage
       likes
       views
       status
       publishedAt
       expireAt
+      blogId
+      blog {
+        id
+        name
+        logo
+        darkLogo
+        subscriber
+        userId
+        createdAt
+        updatedAt
+        blogAboutId
+      }
       comments {
         nextToken
       }
       audio {
         id
-        blogId
-        postId
         duration
         filePath
+        blogId
+        postId
         createdAt
         updatedAt
       }
@@ -456,11 +480,19 @@ export const onCreateComment = /* GraphQL */ `
   subscription OnCreateComment($filter: ModelSubscriptionCommentFilterInput) {
     onCreateComment(filter: $filter) {
       id
+      name
+      picture
+      content
+      subComment
+      parentComment
+      likes
       blogId
       blog {
         id
         name
         logo
+        darkLogo
+        subscriber
         userId
         createdAt
         updatedAt
@@ -469,25 +501,23 @@ export const onCreateComment = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
         captionText
+        content
+        descriptionImage
         captionImage
         likes
         views
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      content
-      subComment
-      parentComment
-      likes
       createdAt
       updatedAt
     }
@@ -497,11 +527,19 @@ export const onUpdateComment = /* GraphQL */ `
   subscription OnUpdateComment($filter: ModelSubscriptionCommentFilterInput) {
     onUpdateComment(filter: $filter) {
       id
+      name
+      picture
+      content
+      subComment
+      parentComment
+      likes
       blogId
       blog {
         id
         name
         logo
+        darkLogo
+        subscriber
         userId
         createdAt
         updatedAt
@@ -510,25 +548,23 @@ export const onUpdateComment = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
         captionText
+        content
+        descriptionImage
         captionImage
         likes
         views
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      content
-      subComment
-      parentComment
-      likes
       createdAt
       updatedAt
     }
@@ -538,11 +574,19 @@ export const onDeleteComment = /* GraphQL */ `
   subscription OnDeleteComment($filter: ModelSubscriptionCommentFilterInput) {
     onDeleteComment(filter: $filter) {
       id
+      name
+      picture
+      content
+      subComment
+      parentComment
+      likes
       blogId
       blog {
         id
         name
         logo
+        darkLogo
+        subscriber
         userId
         createdAt
         updatedAt
@@ -551,25 +595,23 @@ export const onDeleteComment = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
         captionText
+        content
+        descriptionImage
         captionImage
         likes
         views
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      content
-      subComment
-      parentComment
-      likes
       createdAt
       updatedAt
     }
@@ -579,11 +621,15 @@ export const onCreateAudio = /* GraphQL */ `
   subscription OnCreateAudio($filter: ModelSubscriptionAudioFilterInput) {
     onCreateAudio(filter: $filter) {
       id
+      duration
+      filePath
       blogId
       blog {
         id
         name
         logo
+        darkLogo
+        subscriber
         userId
         createdAt
         updatedAt
@@ -592,23 +638,23 @@ export const onCreateAudio = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
         captionText
+        content
+        descriptionImage
         captionImage
         likes
         views
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      duration
-      filePath
       createdAt
       updatedAt
     }
@@ -618,11 +664,15 @@ export const onUpdateAudio = /* GraphQL */ `
   subscription OnUpdateAudio($filter: ModelSubscriptionAudioFilterInput) {
     onUpdateAudio(filter: $filter) {
       id
+      duration
+      filePath
       blogId
       blog {
         id
         name
         logo
+        darkLogo
+        subscriber
         userId
         createdAt
         updatedAt
@@ -631,23 +681,23 @@ export const onUpdateAudio = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
         captionText
+        content
+        descriptionImage
         captionImage
         likes
         views
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      duration
-      filePath
       createdAt
       updatedAt
     }
@@ -657,11 +707,15 @@ export const onDeleteAudio = /* GraphQL */ `
   subscription OnDeleteAudio($filter: ModelSubscriptionAudioFilterInput) {
     onDeleteAudio(filter: $filter) {
       id
+      duration
+      filePath
       blogId
       blog {
         id
         name
         logo
+        darkLogo
+        subscriber
         userId
         createdAt
         updatedAt
@@ -670,23 +724,23 @@ export const onDeleteAudio = /* GraphQL */ `
       postId
       post {
         id
-        blogId
         category
         title
         description
         captionText
+        content
+        descriptionImage
         captionImage
         likes
         views
         status
         publishedAt
         expireAt
+        blogId
         createdAt
         updatedAt
         postAudioId
       }
-      duration
-      filePath
       createdAt
       updatedAt
     }

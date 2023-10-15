@@ -1,12 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 import { errorResponseCreator, successResponseCreator } from "./responseFormat";
-import { getUserByEmail } from "../graphql/queries";
-
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { Amplify, API, withSSRContext } from "aws-amplify";
 import awsExports from "../aws-exports";
 import { createUser, updateUser } from "../graphql/mutations";
+import { getUserByEmail } from "../graphql/queries";
 
 type userDataType = {
   id?: string | null;
@@ -17,8 +16,6 @@ type userDataType = {
 };
 
 const userTable = (process.env.NEXT_PUBLIC_USERS_TABLE || process.env.USERS_TABLE) as string;
-
-Amplify.configure({ ...awsExports });
 
 const SaveOAuth = async (userData: userDataType, account: any) => {
   try {
@@ -32,7 +29,8 @@ const SaveOAuth = async (userData: userDataType, account: any) => {
       },
     })) as GraphQLResult<any>;
 
-    const existingUser = existingUserData.data?.userByEmail;
+    const existingUser = existingUserData.data?.getUserByEmail?.items[0];
+    console.log({ data: existingUserData.data?.getUserByEmail, existingUser });
 
     if (!existingUser) {
       console.log("newUserPath");
@@ -63,6 +61,7 @@ const SaveOAuth = async (userData: userDataType, account: any) => {
 
     if (existingUser) {
       if (existingUser?.provider) {
+        console.log("exsiting provider");
         return { id: existingUser.id, name: name, image: image, blogger: existingUser.blogger };
       }
 
