@@ -50,7 +50,7 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  devTools: process.env.NODE_ENV !== "production",
+  devTools: true,
 });
 
 export type RootState = ReturnType<typeof allReducers>;
