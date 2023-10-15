@@ -1,4 +1,7 @@
+import { Box } from "@mui/material";
+import { IPostCommentData } from "../interfaces/post";
 import { getS3Image } from "./s3Utils";
+import dayjs from "dayjs";
 
 const privateBucket = (process.env.PRIVATE_BUCKET || process.env.NEXT_PUBLIC_PRIVATE_BUCKET) as string;
 
@@ -89,3 +92,33 @@ export const FAQs = [
 
 export const sampleText =
   '<p style="text-align: center">If this is your first time here... WELCOME TO THE TRIBE!</p><div style="text-align: center">I\'m not certain what brought you here, but every word that this blog is made up of was written with you in mind. Many say there is not so much to life. Nothing extraordinary. No greater force. Nothing spiritual. But my life, which I have given in to share with you, is evidence of the character of the Extraordinary; the character of God.</div><div style="text-align: center"><br></div><div style="text-align: center">Yes. I said it.&nbsp;GOD!</div><div style="text-align: center"><br></div><div style="text-align: center">I am his RISK and His CHARACTER. And trust me, I\'ve put Him at risk a lot. This might all sound confusing and gibberish-y. But if you\'d dare to hold my hand and come with me, you\'d unravel this mystery really quickly.</div><div style="text-align: center"><br></div><div style="text-align: center">May every word that you read here illuminate your life with joy, peace and hope in Jesus\' name.</div><div style="text-align: center"><br></div><div style="text-align: right"><b>I love you,<br>Marvel</b></div>';
+
+export const organiseComments = (comments: IPostCommentData[]) => {
+  const parentComments = [...comments].filter((comment) => !comment?.subComment);
+  const subCommentsData = [...comments].filter((comment) => comment?.subComment);
+
+  const groupedSubcomments: Record<string, IPostCommentData[]> = subCommentsData?.reduce((accum, curVal) => {
+    accum[curVal.parentComment as string] = accum[curVal.parentComment as string] || [];
+    accum[curVal.parentComment as string].push(curVal);
+    return accum;
+  }, Object.create(null));
+
+  console.log({ groupedSubcomments });
+
+  const organisedComments = parentComments
+    ?.sort((a, b) => (dayjs(a?.createdAt).isAfter(b?.createdAt) ? 1 : -1))
+    ?.map((parentComment) => {
+      const comment: IPostCommentData = { ...parentComment };
+      const subComments = groupedSubcomments[parentComment?.id as string]?.sort((a, b) => (dayjs(a?.createdAt).isAfter(b?.createdAt) ? 1 : -1));
+
+      return { comment, subComments };
+    });
+
+  return organisedComments;
+};
+
+export const transformText = (str: string) => {
+  const textLine = str.split("\n").map((text, index) => <Box key={index}> {text}</Box>);
+
+  return <Box>{textLine}</Box>;
+};

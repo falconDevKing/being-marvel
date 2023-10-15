@@ -16,8 +16,8 @@ export interface UserDetails {
   provider?: string;
   firstName?: string;
   lastName?: string;
-  postLikes?: string;
-  commentLikes?: string;
+  postLikes?: string[];
+  commentLikes?: string[];
   blogger?: string;
   userBlogId?: string;
   createdAt?: string;

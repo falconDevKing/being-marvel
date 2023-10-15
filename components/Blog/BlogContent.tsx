@@ -2,8 +2,9 @@ import { Box, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useEffect, useState } from "react";
-import { addBlogPostLike } from "../../services/post";
+import { addBlogPostLike, removeBlogPostLike } from "../../services/post";
 import { SuccessHandler } from "../../utils/handlers";
+import { useAppSelector } from "../../redux/hooks";
 
 interface BlogPostProps {
   postId: string;
@@ -12,13 +13,25 @@ interface BlogPostProps {
 }
 
 const BlogPost = ({ postId, postLikes, content }: BlogPostProps) => {
-  const [liked, setLiked] = useState(false);
+  const { userData, isAuthenticated, userDetails } = useAppSelector((state) => state.auth);
+
+  const userId = userDetails?.id;
+  const userPostLikes = userDetails?.postLikes;
+
+  const [liked, setLiked] = useState(userPostLikes?.includes(postId) || false);
 
   const handleLike = async () => {
-    if (!liked) {
-      await addBlogPostLike(postId, +postLikes + 1);
-    }
-    setLiked((prev) => !prev);
+    await addBlogPostLike(postId, +postLikes + 1, userId as string, userPostLikes as string[]);
+
+    setLiked(true);
+  };
+
+  const handleUnLike = async () => {
+    const removedLike = [...(userPostLikes || [])].filter((postLike) => postLike !== postId);
+
+    await removeBlogPostLike(userId as string, removedLike as string[]);
+
+    setLiked(false);
   };
 
   return (
@@ -30,9 +43,9 @@ const BlogPost = ({ postId, postLikes, content }: BlogPostProps) => {
           Like this Post
         </Box>
         {liked ? (
-          <FavoriteIcon sx={{ color: "red", borderRadius: "50%", p: "2px" }} onClick={handleLike} />
+          <FavoriteIcon sx={{ color: "red", borderRadius: "50%", p: "2px", cursor: "pointer" }} onClick={handleUnLike} />
         ) : (
-          <FavoriteBorderIcon sx={{ color: "#6289E0", backgroundColor: "#fff", borderRadius: "50%", p: "2px" }} onClick={handleLike} />
+          <FavoriteBorderIcon sx={{ color: "#6289E0", backgroundColor: "#fff", borderRadius: "50%", p: "2px", cursor: "pointer" }} onClick={handleLike} />
         )}
       </Box>
     </Box>

@@ -1,4 +1,3 @@
-/* tslint:disable */
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
@@ -38,6 +37,44 @@ export const getUser = /* GraphQL */ `
         darkLogo
         subscriber
         userId
+        user {
+          id
+          customId
+          name
+          firstName
+          lastName
+          email
+          image
+          provider
+          postLikes
+          commentLikes
+          blogger
+          createdAt
+          updatedAt
+          userBlogId
+        }
+        about {
+          id
+          title
+          logo
+          content
+          email
+          linkedIn
+          instagram
+          twitter
+          blogId
+          createdAt
+          updatedAt
+        }
+        posts {
+          nextToken
+        }
+        audios {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         blogAboutId
@@ -67,6 +104,17 @@ export const listUsers = /* GraphQL */ `
         postLikes
         commentLikes
         blogger
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         createdAt
         updatedAt
         userBlogId
@@ -96,6 +144,17 @@ export const getBlog = /* GraphQL */ `
         postLikes
         commentLikes
         blogger
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         createdAt
         updatedAt
         userBlogId
@@ -110,16 +169,68 @@ export const getBlog = /* GraphQL */ `
         instagram
         twitter
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         createdAt
         updatedAt
       }
       posts {
+        items {
+          id
+          category
+          title
+          description
+          captionText
+          content
+          descriptionImage
+          captionImage
+          likes
+          views
+          status
+          publishedAt
+          expireAt
+          blogId
+          createdAt
+          updatedAt
+          postAudioId
+        }
         nextToken
       }
       audios {
+        items {
+          id
+          duration
+          filePath
+          blogId
+          postId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       comments {
+        items {
+          id
+          name
+          picture
+          content
+          subComment
+          parentComment
+          likes
+          blogId
+          postId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -142,6 +253,44 @@ export const listBlogs = /* GraphQL */ `
         darkLogo
         subscriber
         userId
+        user {
+          id
+          customId
+          name
+          firstName
+          lastName
+          email
+          image
+          provider
+          postLikes
+          commentLikes
+          blogger
+          createdAt
+          updatedAt
+          userBlogId
+        }
+        about {
+          id
+          title
+          logo
+          content
+          email
+          linkedIn
+          instagram
+          twitter
+          blogId
+          createdAt
+          updatedAt
+        }
+        posts {
+          nextToken
+        }
+        audios {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         blogAboutId
@@ -169,6 +318,44 @@ export const getAbout = /* GraphQL */ `
         darkLogo
         subscriber
         userId
+        user {
+          id
+          customId
+          name
+          firstName
+          lastName
+          email
+          image
+          provider
+          postLikes
+          commentLikes
+          blogger
+          createdAt
+          updatedAt
+          userBlogId
+        }
+        about {
+          id
+          title
+          logo
+          content
+          email
+          linkedIn
+          instagram
+          twitter
+          blogId
+          createdAt
+          updatedAt
+        }
+        posts {
+          nextToken
+        }
+        audios {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         blogAboutId
@@ -195,6 +382,17 @@ export const listAbouts = /* GraphQL */ `
         instagram
         twitter
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         createdAt
         updatedAt
       }
@@ -226,11 +424,62 @@ export const getPost = /* GraphQL */ `
         darkLogo
         subscriber
         userId
+        user {
+          id
+          customId
+          name
+          firstName
+          lastName
+          email
+          image
+          provider
+          postLikes
+          commentLikes
+          blogger
+          createdAt
+          updatedAt
+          userBlogId
+        }
+        about {
+          id
+          title
+          logo
+          content
+          email
+          linkedIn
+          instagram
+          twitter
+          blogId
+          createdAt
+          updatedAt
+        }
+        posts {
+          nextToken
+        }
+        audios {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         blogAboutId
       }
       comments {
+        items {
+          id
+          name
+          picture
+          content
+          subComment
+          parentComment
+          likes
+          blogId
+          postId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       audio {
@@ -238,7 +487,37 @@ export const getPost = /* GraphQL */ `
         duration
         filePath
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         postId
+        post {
+          id
+          category
+          title
+          description
+          captionText
+          content
+          descriptionImage
+          captionImage
+          likes
+          views
+          status
+          publishedAt
+          expireAt
+          blogId
+          createdAt
+          updatedAt
+          postAudioId
+        }
         createdAt
         updatedAt
       }
@@ -270,6 +549,29 @@ export const listPosts = /* GraphQL */ `
         publishedAt
         expireAt
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
+        comments {
+          nextToken
+        }
+        audio {
+          id
+          duration
+          filePath
+          blogId
+          postId
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
         postAudioId
@@ -296,6 +598,44 @@ export const getComment = /* GraphQL */ `
         darkLogo
         subscriber
         userId
+        user {
+          id
+          customId
+          name
+          firstName
+          lastName
+          email
+          image
+          provider
+          postLikes
+          commentLikes
+          blogger
+          createdAt
+          updatedAt
+          userBlogId
+        }
+        about {
+          id
+          title
+          logo
+          content
+          email
+          linkedIn
+          instagram
+          twitter
+          blogId
+          createdAt
+          updatedAt
+        }
+        posts {
+          nextToken
+        }
+        audios {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         blogAboutId
@@ -316,6 +656,29 @@ export const getComment = /* GraphQL */ `
         publishedAt
         expireAt
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
+        comments {
+          nextToken
+        }
+        audio {
+          id
+          duration
+          filePath
+          blogId
+          postId
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
         postAudioId
@@ -341,7 +704,37 @@ export const listComments = /* GraphQL */ `
         parentComment
         likes
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         postId
+        post {
+          id
+          category
+          title
+          description
+          captionText
+          content
+          descriptionImage
+          captionImage
+          likes
+          views
+          status
+          publishedAt
+          expireAt
+          blogId
+          createdAt
+          updatedAt
+          postAudioId
+        }
         createdAt
         updatedAt
       }
@@ -363,6 +756,44 @@ export const getAudio = /* GraphQL */ `
         darkLogo
         subscriber
         userId
+        user {
+          id
+          customId
+          name
+          firstName
+          lastName
+          email
+          image
+          provider
+          postLikes
+          commentLikes
+          blogger
+          createdAt
+          updatedAt
+          userBlogId
+        }
+        about {
+          id
+          title
+          logo
+          content
+          email
+          linkedIn
+          instagram
+          twitter
+          blogId
+          createdAt
+          updatedAt
+        }
+        posts {
+          nextToken
+        }
+        audios {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         blogAboutId
@@ -383,6 +814,29 @@ export const getAudio = /* GraphQL */ `
         publishedAt
         expireAt
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
+        comments {
+          nextToken
+        }
+        audio {
+          id
+          duration
+          filePath
+          blogId
+          postId
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
         postAudioId
@@ -404,7 +858,37 @@ export const listAudio = /* GraphQL */ `
         duration
         filePath
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         postId
+        post {
+          id
+          category
+          title
+          description
+          captionText
+          content
+          descriptionImage
+          captionImage
+          likes
+          views
+          status
+          publishedAt
+          expireAt
+          blogId
+          createdAt
+          updatedAt
+          postAudioId
+        }
         createdAt
         updatedAt
       }
@@ -441,6 +925,17 @@ export const getUserByEmail = /* GraphQL */ `
         postLikes
         commentLikes
         blogger
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         createdAt
         updatedAt
         userBlogId
@@ -473,6 +968,44 @@ export const getBlogByUser = /* GraphQL */ `
         darkLogo
         subscriber
         userId
+        user {
+          id
+          customId
+          name
+          firstName
+          lastName
+          email
+          image
+          provider
+          postLikes
+          commentLikes
+          blogger
+          createdAt
+          updatedAt
+          userBlogId
+        }
+        about {
+          id
+          title
+          logo
+          content
+          email
+          linkedIn
+          instagram
+          twitter
+          blogId
+          createdAt
+          updatedAt
+        }
+        posts {
+          nextToken
+        }
+        audios {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         blogAboutId
@@ -508,6 +1041,17 @@ export const getAboutByBlog = /* GraphQL */ `
         instagram
         twitter
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         createdAt
         updatedAt
       }
@@ -547,6 +1091,29 @@ export const fetchPostsByBlog = /* GraphQL */ `
         publishedAt
         expireAt
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
+        comments {
+          nextToken
+        }
+        audio {
+          id
+          duration
+          filePath
+          blogId
+          postId
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
         postAudioId
@@ -581,7 +1148,37 @@ export const fetchCommentsByBlog = /* GraphQL */ `
         parentComment
         likes
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         postId
+        post {
+          id
+          category
+          title
+          description
+          captionText
+          content
+          descriptionImage
+          captionImage
+          likes
+          views
+          status
+          publishedAt
+          expireAt
+          blogId
+          createdAt
+          updatedAt
+          postAudioId
+        }
         createdAt
         updatedAt
       }
@@ -615,7 +1212,37 @@ export const fetchCommentsByPost = /* GraphQL */ `
         parentComment
         likes
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         postId
+        post {
+          id
+          category
+          title
+          description
+          captionText
+          content
+          descriptionImage
+          captionImage
+          likes
+          views
+          status
+          publishedAt
+          expireAt
+          blogId
+          createdAt
+          updatedAt
+          postAudioId
+        }
         createdAt
         updatedAt
       }
@@ -645,7 +1272,37 @@ export const fetchAudiosByBlog = /* GraphQL */ `
         duration
         filePath
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         postId
+        post {
+          id
+          category
+          title
+          description
+          captionText
+          content
+          descriptionImage
+          captionImage
+          likes
+          views
+          status
+          publishedAt
+          expireAt
+          blogId
+          createdAt
+          updatedAt
+          postAudioId
+        }
         createdAt
         updatedAt
       }
@@ -675,7 +1332,37 @@ export const getAudioByPost = /* GraphQL */ `
         duration
         filePath
         blogId
+        blog {
+          id
+          name
+          logo
+          darkLogo
+          subscriber
+          userId
+          createdAt
+          updatedAt
+          blogAboutId
+        }
         postId
+        post {
+          id
+          category
+          title
+          description
+          captionText
+          content
+          descriptionImage
+          captionImage
+          likes
+          views
+          status
+          publishedAt
+          expireAt
+          blogId
+          createdAt
+          updatedAt
+          postAudioId
+        }
         createdAt
         updatedAt
       }

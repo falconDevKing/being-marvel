@@ -519,6 +519,8 @@ export const createComment = /* GraphQL */ `
   ) {
     createComment(input: $input, condition: $condition) {
       id
+      name
+      picture
       content
       subComment
       parentComment
@@ -567,6 +569,8 @@ export const updateComment = /* GraphQL */ `
   ) {
     updateComment(input: $input, condition: $condition) {
       id
+      name
+      picture
       content
       subComment
       parentComment
@@ -615,6 +619,8 @@ export const deleteComment = /* GraphQL */ `
   ) {
     deleteComment(input: $input, condition: $condition) {
       id
+      name
+      picture
       content
       subComment
       parentComment

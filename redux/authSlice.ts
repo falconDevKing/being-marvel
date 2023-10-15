@@ -40,7 +40,6 @@ export const getLoggedInUser = createAsyncThunk("auth/getLoggedInUser", async ()
 
     return currentUser;
   } catch (err: any) {
-    // ErrorHandler({ message: err });
     console.log("error", err);
     throw err;
   }

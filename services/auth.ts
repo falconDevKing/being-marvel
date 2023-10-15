@@ -24,7 +24,6 @@ export const getLoggedInUserFunction = async () => {
     return currentUser;
   } catch (err: any) {
     console.log({ err });
-    ErrorHandler({ message: err });
     store.dispatch(setUnAuthData({ data: err }));
   }
 };

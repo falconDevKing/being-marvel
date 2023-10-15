@@ -15,14 +15,17 @@ import Comment from "../../components/Blog/Comment";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { addBlogPostViews, getBlogPost } from "../../services/post";
-import { IPostData } from "../../interfaces/post";
+import { addBlogPostViews, fetchPostComments, getBlogPost, getPostComments } from "../../services/post";
+import { IPostCommentData, IPostData } from "../../interfaces/post";
 import { ErrorHandler } from "../../utils/handlers";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useAppSelector } from "../../redux/hooks";
 dayjs.extend(relativeTime);
 
 const BlogPost = () => {
+  const commentsData = useAppSelector((state) => state.post.comments);
+
   const [openSignin, setOpenSignin] = useState<boolean>(false);
   const [postData, setPostData] = useState<IPostData>();
 
@@ -36,7 +39,7 @@ const BlogPost = () => {
 
         setPostData(postDetails);
 
-        await addBlogPostViews(postId, +postDetails.views + 1);
+        await addBlogPostViews(postId, +(postDetails.views || 0) + 1);
       } catch (error: any) {
         ErrorHandler({ message: error?.message || "Unable to get post" });
         console.log("error getting post", error);
@@ -45,6 +48,7 @@ const BlogPost = () => {
 
     if (postId) {
       getPostDetails(postId as string);
+      getPostComments(postId as string);
     }
   }, [postId]);
 
@@ -100,7 +104,7 @@ const BlogPost = () => {
 
       <Comment postId={postData?.id as string} blogId={postData?.blogId as string} />
 
-      <Comments />
+      <Comments comments={commentsData} postId={postData?.id as string} blogId={postData?.blogId as string} />
 
       <Footer width={"85%"} />
     </Box>

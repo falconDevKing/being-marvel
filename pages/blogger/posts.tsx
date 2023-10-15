@@ -147,7 +147,7 @@ const Dashboard = () => {
                         <Tooltip title="Unpublish">
                           <DoDisturbOnIcon
                             fontSize="large"
-                            sx={{ color: "#FF000077", cursor: "pointer" }}
+                            sx={{ color: "#FCD436FF", cursor: "pointer" }}
                             onClick={() => {
                               unPublishPostHandler(id, blogId);
                             }}
