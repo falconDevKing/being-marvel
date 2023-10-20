@@ -6,22 +6,23 @@ import { addBlogPostLike, removeBlogPostLike } from "../../services/post";
 import { SuccessHandler } from "../../utils/handlers";
 import { useAppSelector } from "../../redux/hooks";
 
-interface BlogPostProps {
+interface BlogContentProps {
   postId: string;
   content: string;
   postLikes: number;
 }
 
-const BlogPost = ({ postId, postLikes, content }: BlogPostProps) => {
+const BlogContent = ({ postId, postLikes, content }: BlogContentProps) => {
   const { userData, isAuthenticated, userDetails } = useAppSelector((state) => state.auth);
 
   const userId = userDetails?.id;
+  const userEmail = userDetails?.email;
   const userPostLikes = userDetails?.postLikes;
-
+  console.log("pp", postId, userPostLikes, userPostLikes?.includes(postId));
   const [liked, setLiked] = useState(userPostLikes?.includes(postId) || false);
 
   const handleLike = async () => {
-    await addBlogPostLike(postId, +postLikes + 1, userId as string, userPostLikes as string[]);
+    await addBlogPostLike(userEmail as string, postId, +postLikes + 1, userId as string, userPostLikes as string[]);
 
     setLiked(true);
   };
@@ -29,10 +30,15 @@ const BlogPost = ({ postId, postLikes, content }: BlogPostProps) => {
   const handleUnLike = async () => {
     const removedLike = [...(userPostLikes || [])].filter((postLike) => postLike !== postId);
 
-    await removeBlogPostLike(userId as string, removedLike as string[]);
+    await removeBlogPostLike(userEmail as string, userId as string, removedLike as string[]);
 
     setLiked(false);
   };
+
+  useEffect(() => {
+    const userPostLikes = userDetails?.postLikes;
+    setLiked(userPostLikes?.includes(postId) || false);
+  }, [userDetails, postId]);
 
   return (
     <Box bgcolor={"#F4F7FD"} p={4} borderRadius={"16px"} fontSize={"24px"}>
@@ -52,4 +58,4 @@ const BlogPost = ({ postId, postLikes, content }: BlogPostProps) => {
   );
 };
 
-export default BlogPost;
+export default BlogContent;

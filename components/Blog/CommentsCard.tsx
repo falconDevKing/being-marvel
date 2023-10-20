@@ -37,19 +37,20 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
   const [reply, setReply] = useState<string>("");
 
   const userId = userDetails?.id;
+  const userEmail = userDetails?.email as string;
   const commentLikes = userDetails?.commentLikes;
   const [liked, setLiked] = useState(commentLikes?.includes(id) || false);
 
   const likeHandler = async () => {
     SuccessHandler({ message: "Liking" });
-    await addPostCommentLike(id, +(likes as number) + 1, userId as string, commentLikes as string[]);
+    await addPostCommentLike(userEmail, id, +(likes as number) + 1, userId as string, commentLikes as string[]);
     setLiked((prev) => !prev);
   };
 
   const unLikeHandler = async () => {
     const removedLike = [...(commentLikes || [])].filter((commentLike) => commentLike !== id);
 
-    await removePostCommentLike(userId as string, removedLike as string[]);
+    await removePostCommentLike(userEmail, userId as string, removedLike as string[]);
 
     setLiked(false);
   };

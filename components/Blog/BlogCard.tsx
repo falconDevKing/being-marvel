@@ -24,8 +24,8 @@ const PostCard = ({ postData }: PostCardProps) => {
           src={descriptionImage}
           alt={`${title} image`}
           layout="responsive"
-          width={541}
-          height={527}
+          width={454}
+          height={340}
           style={{ borderRadius: "16px 16px 0px 0px", cursor: "pointer" }}
           onClick={navToBlogPost}
         />

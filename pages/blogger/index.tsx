@@ -37,17 +37,17 @@ const Dashboard = () => {
     },
     {
       Icon: FavoriteRoundedIcon,
-      figure: numberOfLikes / (numberOfPosts || 1),
+      figure: Number(numberOfLikes / (numberOfPosts || 1)).toFixed(2),
       metric: "Average like per post",
     },
     {
       Icon: ForumRoundedIcon,
-      figure: numberOfComments / (numberOfPosts || 1),
+      figure: Number(numberOfComments / (numberOfPosts || 1)).toFixed(2),
       metric: "Average comment per post",
     },
     {
       Icon: VisibilityRoundedIcon,
-      figure: numberOfViews / (numberOfPosts || 1),
+      figure: Number(numberOfViews / (numberOfPosts || 1)).toFixed(2),
       metric: "Average views per post",
     },
   ];
@@ -95,7 +95,7 @@ const Dashboard = () => {
             display={"flex"}
             alignItems={"center"}
             p={1}
-            onClick={() => navToBlogger("new-blog")}
+            onClick={() => navToBlogger("new-post")}
             bgcolor={"#fff"}
             width="max-content"
             fontWeight={700}

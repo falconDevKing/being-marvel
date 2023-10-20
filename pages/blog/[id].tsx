@@ -72,9 +72,9 @@ const BlogPost = () => {
         </Breadcrumbs>
       </Box>
 
-      <BlogCaption captionText={postData?.captionText as string} captionImage={postData?.captionImage as string} />
+      {postData?.captionImage && <BlogCaption captionText={postData?.captionText as string} captionImage={postData?.captionImage as string} />}
 
-      <Box width={"85%"} mx={"auto"} py={4}>
+      <Box width={"85%"} mx={"auto"} pb={postData?.captionImage ? 4 : 2}>
         <Box display="flex" alignItems={"center"} color={"#C0C0C0"}>
           <Box display="flex" alignItems={"center"}>
             <AccessTimeIcon /> <Box px={1}>{dayjs(postData?.createdAt).fromNow()}</Box>

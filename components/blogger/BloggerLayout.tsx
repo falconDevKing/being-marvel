@@ -31,7 +31,7 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   };
 
   const activePath: string =
-    router.pathname === "/blogger/dashboard"
+    router.pathname === "/blogger"
       ? "dashboard"
       : router.pathname === "/blogger/new-post"
       ? "new-post"
@@ -85,13 +85,7 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
         </Link>
         <Box pt={2}>
           <Box py={3}>
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              p={1}
-              sx={activePath === "dashboard" ? selectedNav : unSelectedNav}
-              onClick={() => navToBlogger("dashboard")}
-            >
+            <Box display={"flex"} alignItems={"center"} p={1} sx={activePath === "dashboard" ? selectedNav : unSelectedNav} onClick={() => navToBlogger("")}>
               <SpaceDashboardIcon color="primary" />
               <Box component="span" px={1}>
                 Dashboard

@@ -14,12 +14,23 @@ const BlogCaption = ({ captionText, captionImage }: BlogCaptionProps) => {
       display={"flex"}
       justifyContent={"space-between"}
       mx="auto"
+      mb={4}
       sx={{
         backgroundImage: `url(${captionImage})`,
         backgroundSize: "cover",
       }}
     >
-      <Box width={"80%"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} mx="auto" color={"#fff"} fontSize={"2.8rem"}>
+      <Box
+        width={"65%"}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        textAlign={"center"}
+        mx="auto"
+        color={"#fff"}
+        fontSize={"2.8rem"}
+      >
         {captionText}
       </Box>
     </Box>
