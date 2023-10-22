@@ -20,6 +20,7 @@ import dayjs from "dayjs";
 import { deletePost, publishPost, unPublishPost } from "../../services/post";
 import { useCallback, useEffect, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import Input from "../../components/Input";
 
 const Posts = () => {
   const router = useRouter();
@@ -28,6 +29,7 @@ const Posts = () => {
   const postsSummary: IPostSummary[] = useAppSelector((state) => state.blog.postsSummary);
   const { name, picture, email } = userData;
 
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [paginationCount, setPaginationCount] = useState(1);
@@ -39,7 +41,7 @@ const Posts = () => {
   };
 
   const previewPostHandler = (id: string) => {
-    router.push("/blog/" + id);
+    router.push("/blogger/preview/" + id);
   };
 
   const editPostHandler = (id: string) => {
@@ -71,11 +73,13 @@ const Posts = () => {
   };
 
   const selectPosts = useCallback(() => {
-    setPaginationCount(Math.ceil(postsSummary.length / ItemsPerPage));
+    const searchedPosts = [...postsSummary].filter((post) => post.title.toLowerCase().includes(search.toLowerCase()));
 
-    const toDisplay = [...postsSummary]?.slice((page - 1) * ItemsPerPage, page * ItemsPerPage);
+    setPaginationCount(Math.ceil(searchedPosts.length / ItemsPerPage));
+
+    const toDisplay = [...searchedPosts]?.slice((page - 1) * ItemsPerPage, page * ItemsPerPage);
     setPostsToShow(toDisplay);
-  }, [page, ItemsPerPage, postsSummary]);
+  }, [page, ItemsPerPage, postsSummary, search]);
 
   useEffect(() => {
     selectPosts();
@@ -95,19 +99,16 @@ const Posts = () => {
           </Box>
           <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#fff"} m={1} borderRadius={"4px"}>
             <SearchIcon />
-            <input
+            <Input
+              type="text"
               id="searchBlogs"
               placeholder="Search Blogs"
+              name="searchBlogs"
+              value={search}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearch(e?.target?.value);
+              }}
               style={{
-                color: "#C0C0C0",
-                padding: "4px 8px",
-                height: "40px",
-                borderRadius: "4px 0px 0px 4px",
-                outline: "none",
-                border: "none",
-                width: "100%",
-                fontSize: "1.25rem",
-                fontFamily: "Cormorant Garamond",
                 backgroundColor: "#fff",
               }}
             />

@@ -85,3 +85,11 @@ export interface IPostCommentData {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface IPostCommentRedirect {
+  comment: string;
+  section: string;
+  postId: string;
+  blogId: string;
+  commentId: string;
+}

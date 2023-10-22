@@ -7,10 +7,10 @@ import { ErrorHandler, SuccessHandler } from "../utils/handlers";
 import { fetchCommentsByPost, getAboutByBlog, getBlog, getPost } from "../graphql/queries";
 import { setAbout, setBlog, setPostSummary } from "../redux/blogSlice";
 import { customFetchCommentsStatsByBlog, customFetchPostsByBlog, customFetchPostsStatsByBlog } from "../graphql/customQueries";
-import { IBlogPost, IPostCommentStats, IPostStats } from "../interfaces/blog";
-import { IPostCommentData, IPostData } from "../interfaces/post";
+import { IBlogPost, IPostCommentStats, IPostStats, IPostSummary } from "../interfaces/blog";
+import { IPostCommentData, IPostCommentRedirect, IPostData } from "../interfaces/post";
 import dayjs from "dayjs";
-import { setComments } from "../redux/postSlice";
+import { clearNavToComment, setComments, setNavToComment } from "../redux/postSlice";
 import { getUserDetails } from "./auth";
 
 export const createBlogPost = async (postData: IBlogPost) => {
@@ -164,7 +164,7 @@ export const deletePost = async (id: string, blogId: string) => {
 };
 
 export const updatedBlogPostData = async (blogId: string) => {
-  let totalPosts = [] as IPostData[];
+  let totalPosts = [] as IPostSummary[];
 
   // get posts
   const getPosts = async (nextToken?: string) => {
@@ -173,9 +173,9 @@ export const updatedBlogPostData = async (blogId: string) => {
       variables: { blogId: blogId, nextToken },
     })) as GraphQLResult<any>;
 
-    const postsData = posts?.data?.fetchPostsByBlog?.items as IPostData[];
+    const postsData = posts?.data?.fetchPostsByBlog?.items as IPostSummary[];
     const modifiedPostsData = postsData.filter((postData) => !!postData);
-    totalPosts = [...totalPosts, ...(modifiedPostsData as unknown as IPostData[])];
+    totalPosts = [...totalPosts, ...(modifiedPostsData as unknown as IPostSummary[])];
 
     const next = posts?.data?.fetchPostsByBlog?.nextToken as string | null;
     if (next) {
@@ -326,4 +326,12 @@ export const removePostCommentLike = async (userEmail: string, userId: string, u
     console.error("error getting blog post full", error);
     throw error;
   }
+};
+
+export const setNavToCommentData = (data: IPostCommentRedirect) => {
+  store.dispatch(setNavToComment({ data }));
+};
+
+export const clearNavToCommentData = () => {
+  store.dispatch(clearNavToComment());
 };

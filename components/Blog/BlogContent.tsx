@@ -3,31 +3,40 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useEffect, useState } from "react";
 import { addBlogPostLike, removeBlogPostLike } from "../../services/post";
-import { SuccessHandler } from "../../utils/handlers";
+import { ErrorHandler, SuccessHandler } from "../../utils/handlers";
 import { useAppSelector } from "../../redux/hooks";
 
 interface BlogContentProps {
   postId: string;
   content: string;
   postLikes: number;
+  preview: boolean;
 }
 
-const BlogContent = ({ postId, postLikes, content }: BlogContentProps) => {
+const BlogContent = ({ postId, postLikes, content, preview }: BlogContentProps) => {
   const { userData, isAuthenticated, userDetails } = useAppSelector((state) => state.auth);
 
   const userId = userDetails?.id;
   const userEmail = userDetails?.email;
   const userPostLikes = userDetails?.postLikes;
-  console.log("pp", postId, userPostLikes, userPostLikes?.includes(postId));
+
   const [liked, setLiked] = useState(userPostLikes?.includes(postId) || false);
 
   const handleLike = async () => {
+    if (preview) {
+      ErrorHandler({ message: "Preview Mode, Action Disabled" });
+      return;
+    }
     await addBlogPostLike(userEmail as string, postId, +postLikes + 1, userId as string, userPostLikes as string[]);
 
     setLiked(true);
   };
 
   const handleUnLike = async () => {
+    if (preview) {
+      ErrorHandler({ message: "Preview Mode, Action Disabled" });
+      return;
+    }
     const removedLike = [...(userPostLikes || [])].filter((postLike) => postLike !== postId);
 
     await removeBlogPostLike(userEmail as string, userId as string, removedLike as string[]);

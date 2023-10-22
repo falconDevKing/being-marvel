@@ -4,12 +4,13 @@ import { Auth } from "aws-amplify";
 // import { ErrorHandler } from "helper/Handlers";
 import { getUserDetails, updateAuthLoading } from "../services/auth";
 import { UserDetails } from "../interfaces/auth";
-import { IPostCommentData, IPostData } from "../interfaces/post";
+import { IPostCommentData, IPostCommentRedirect, IPostData } from "../interfaces/post";
 // import { AboutInterface, PostInterface } from "../interfaces/Post";
 
 interface PostState {
   Post: IPostData;
   comments: IPostCommentData[];
+  navToComment: IPostCommentRedirect;
   audio: any;
   loading: boolean;
 }
@@ -17,6 +18,13 @@ interface PostState {
 const initialState: PostState = {
   Post: {},
   comments: [],
+  navToComment: {
+    comment: "",
+    section: "",
+    postId: "",
+    blogId: "",
+    commentId: "",
+  },
   audio: {},
   loading: false,
 };
@@ -59,6 +67,23 @@ const PostSlice = createSlice({
     ) => {
       state.comments = action.payload.data;
     },
+    setNavToComment: (
+      state,
+      action: PayloadAction<{
+        data: any;
+      }>,
+    ) => {
+      state.navToComment = action.payload.data;
+    },
+    clearNavToComment: (state) => {
+      state.navToComment = {
+        comment: "",
+        section: "",
+        postId: "",
+        blogId: "",
+        commentId: "",
+      };
+    },
   },
   // extraReducers: (builder) => {
   //   builder.addCase(getLoggedInUser.pending, (state) => {
@@ -74,6 +99,6 @@ const PostSlice = createSlice({
   // },
 });
 
-export const { setPost, setAudio, setComments, setPostLoading } = PostSlice.actions;
+export const { setPost, setAudio, setComments, setPostLoading, setNavToComment, clearNavToComment } = PostSlice.actions;
 
 export default PostSlice.reducer;

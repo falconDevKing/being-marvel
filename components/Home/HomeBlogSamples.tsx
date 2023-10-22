@@ -19,8 +19,8 @@ const HomeBlogSamples = () => {
       </Box>
 
       <Stack spacing={8} direction={"row"} py={4}>
-        {latest3PostsSummary.map((postSummary) => {
-          return <HomeBlogCard postSummary={postSummary} />;
+        {latest3PostsSummary.map((postSummary, index) => {
+          return <HomeBlogCard key={index} postSummary={postSummary} />;
         })}
       </Stack>
 

@@ -6,6 +6,8 @@ import { ErrorHandler, SuccessHandler } from "../utils/handlers";
 import axios, { isAxiosError } from "axios";
 import { createBlogHandler } from "../services/blog";
 import { useAppSelector } from "../redux/hooks";
+import { logout } from "../services/auth";
+import Link from "next/link";
 
 type FooterProps = {
   width: string;
@@ -15,7 +17,7 @@ const Footer = ({ width }: FooterProps) => {
   const router = useRouter();
 
   const navToDashboard = () => {
-    router.push("/blogger/dashboard");
+    router.push("/blogger");
   };
 
   const { userDetails } = useAppSelector((state) => state.auth);
@@ -62,7 +64,9 @@ const Footer = ({ width }: FooterProps) => {
       <Box bgcolor={"#222"} width={width} mx={"auto"} fontSize={"1.25rem"}>
         <Box justifyContent={"space-between"} display={"flex"}>
           <Box>
-            <Image src={darkLogo as string} alt={`${blogName} logo`} width={100} height={50} />
+            <Link href={"/"}>
+              <Image src={darkLogo as string} alt={`${blogName} logo`} width={100} height={50} style={{ cursor: "pointer" }} />
+            </Link>
             <Box py={2}>
               <Box py={1}>Lagos, Nigeria</Box>
               <Box py={1}>beingmarvelblog@gmail.com</Box>
@@ -114,7 +118,7 @@ const Footer = ({ width }: FooterProps) => {
             </Box>
           </Box>
         </Box>
-        <Box textAlign={"center"} pt={12} pb={2}>
+        <Box textAlign={"center"} pt={12} pb={2} onClick={logout}>
           © 2023 beingMarvel. All Rights Reserved
         </Box>
       </Box>

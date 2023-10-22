@@ -43,6 +43,7 @@ export interface IPostSummary {
   description: string;
   descriptionImage: string;
   status: boolean;
+  likes: number;
   blogId: string;
   publishedAt: string;
   expireAt: number;

@@ -8,7 +8,7 @@ import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import ForumIcon from "@mui/icons-material/Forum";
 import Image from "next/image";
 import SubCommentsCard from "./SubCommentsCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IPostCommentData } from "../../interfaces/post";
 import { transformText } from "../../utils/helper";
 import dayjs from "dayjs";
@@ -16,7 +16,14 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import TextArea from "../TextArea";
 import { useAppSelector } from "../../redux/hooks";
 import { v4 as uuidv4 } from "uuid";
-import { addPostCommentLike, createBlogPostComment, getPostComments, removeBlogPostLike, removePostCommentLike } from "../../services/post";
+import {
+  addPostCommentLike,
+  clearNavToCommentData,
+  createBlogPostComment,
+  getPostComments,
+  removeBlogPostLike,
+  removePostCommentLike,
+} from "../../services/post";
 import { ErrorHandler, SuccessHandler } from "../../utils/handlers";
 dayjs.extend(relativeTime);
 
@@ -29,6 +36,7 @@ type CommentsCardProps = {
 
 const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProps) => {
   const { userData, isAuthenticated, userDetails } = useAppSelector((state) => state.auth);
+  const { navToComment } = useAppSelector((state) => state.post);
   const { name: replyName, picture: replyPicture, email } = userData;
 
   const { id, name, picture, content, createdAt, likes } = comment;
@@ -78,6 +86,7 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
           setReply("");
           setToComment(false);
           await getPostComments(postId);
+          clearNavToCommentData();
           SuccessHandler({ message: "Reply posted successfully" });
         } else {
           ErrorHandler({ message: "Kindly write a reply" });
@@ -87,12 +96,33 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
         ErrorHandler({ message: error?.message || "Unable to post reply" });
       }
     } else {
-      Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
+      Auth.federatedSignIn({
+        provider: CognitoHostedUIIdentityProvider.Google,
+        customState: JSON.stringify({ comment: reply, section: "comments", postId, blogId, commentId: id }),
+      });
     }
   };
 
+  const scrollToComment = (targetId: string) => {
+    const elem = document.getElementById(targetId);
+    elem?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    const { comment: commentText, commentId, section } = navToComment;
+    const { id } = comment;
+    if (commentText && commentId && section === "comments" && id && commentId === id) {
+      console.log({ commentText });
+      setToComment(true);
+      setReply(commentText);
+      scrollToComment(id);
+    }
+  }, [navToComment, comment]);
+
   return (
-    <Box py={1}>
+    <Box py={1} id={id}>
       <Box border="1px solid #C0C0C0" p={2} borderRadius={"16px"} display={"flex"} my={1}>
         <Box width="60px" height="60px">
           <Image src={picture as string} alt={`${name} picture`} layout="responsive" width={148} height={148} style={{ borderRadius: "50%" }} />

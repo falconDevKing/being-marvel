@@ -20,6 +20,9 @@ import awsExports from "../aws-exports";
 import AuthProvider from "../components/Auth/AuthProvider";
 import { getLoggedInUser } from "../redux/authSlice";
 import { saveAuthUser, setLogout } from "../services/auth";
+import { setNavToCommentData } from "../services/post";
+import { useRouter } from "next/router";
+import { IPostCommentRedirect } from "../interfaces/post";
 
 const authEnv = +(process.env.NEXT_PUBLIC_AUTH_ENV as string);
 
@@ -56,6 +59,11 @@ type CustomAppProps = MyAppProps & {
 
 const MyApp: React.FunctionComponent<CustomAppProps> = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const router = useRouter();
+
+  const navigateToBlogPost = (postId: string) => {
+    router.push("/blog/" + postId);
+  };
 
   React.useEffect(() => {
     console.log("app loaded");
@@ -68,6 +76,12 @@ const MyApp: React.FunctionComponent<CustomAppProps> = (props) => {
         case "signIn":
           saveAuthUser(data);
           break;
+        case "customOAuthState":
+          console.log("customState", event, data);
+          const navData = JSON.parse(data) as IPostCommentRedirect;
+          setNavToCommentData(navData);
+          console.log("hub", "comment set, about to nav");
+          navigateToBlogPost(navData?.postId);
         case "signOut":
           setLogout();
           break;

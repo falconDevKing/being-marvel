@@ -15,6 +15,7 @@ export const customFetchPostsByBlog = /* GraphQL */ `
         description
         descriptionImage
         status
+        likes
         publishedAt
         expireAt
         blogId
