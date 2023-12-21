@@ -1,38 +1,44 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { Auth } from "aws-amplify";
-// import { ErrorHandler } from "helper/Handlers";
 import { getUserDetails, updateAuthLoading } from "../services/auth";
 import { AuthUserData, UserDetails } from "../interfaces/auth";
+import { AuthUser, fetchUserAttributes, FetchUserAttributesOutput, getCurrentUser } from "aws-amplify/auth";
+import { User } from "../graphql/API";
 
 interface AuthState {
   isAuthenticated: boolean;
   authUser: any;
-  authData: any;
-  userData: AuthUserData;
+  authData: AuthUser;
+  userData: FetchUserAttributesOutput;
   loading: boolean;
   isInitialized: boolean;
   error: any;
-  userDetails: UserDetails;
+  userDetails: Omit<User, "__typename" | "createdAt" | "updatedAt">;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
   isInitialized: false,
   loading: false,
-  userDetails: {},
+  userDetails: { id: "" },
   userData: {},
   authUser: {},
-  authData: {},
+  authData: {
+    username: "",
+    userId: "",
+  },
   error: {},
 };
 
 export const getLoggedInUser = createAsyncThunk("auth/getLoggedInUser", async () => {
   try {
     updateAuthLoading(true);
-    const currentUser = await Auth.currentAuthenticatedUser();
 
-    const userEmail = currentUser?.attributes?.email || "";
+    const currentUser = await getCurrentUser();
+
+    const userAttributes = await fetchUserAttributes();
+
+    const userEmail = userAttributes?.email || "";
 
     if (userEmail) {
       await getUserDetails(userEmail);
@@ -113,15 +119,20 @@ const authSlice = createSlice({
       state.isInitialized = true;
       state.loading = false;
       state.isAuthenticated = false;
-      state.authData = {};
-      state.userDetails = {};
-      state.error = action.payload.data;
+      state.authData = {
+        username: "",
+        userId: "",
+      };
+      (state.userDetails = { id: "" }), (state.error = action.payload.data);
     },
     setLogOut: (state) => {
       state.loading = false;
       state.isAuthenticated = false;
       state.authUser = {};
-      state.authData = {};
+      state.authData = {
+        username: "",
+        userId: "",
+      };
       state.userData = {};
     },
   },
@@ -140,7 +151,10 @@ const authSlice = createSlice({
       state.isInitialized = true;
       state.loading = false;
       state.isAuthenticated = false;
-      state.authData = {};
+      state.authData = {
+        username: "",
+        userId: "",
+      };
       state.error = action.error?.code || action.error;
     });
   },

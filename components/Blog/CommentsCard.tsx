@@ -3,8 +3,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatIcon from "@mui/icons-material/Chat";
-import { Auth } from "aws-amplify";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { signInWithRedirect } from "aws-amplify/auth";
 import ForumIcon from "@mui/icons-material/Forum";
 import Image from "next/image";
 import SubCommentsCard from "./SubCommentsCard";
@@ -96,8 +95,8 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
         ErrorHandler({ message: error?.message || "Unable to post reply" });
       }
     } else {
-      Auth.federatedSignIn({
-        provider: CognitoHostedUIIdentityProvider.Google,
+      signInWithRedirect({
+        provider: "Google",
         customState: JSON.stringify({ comment: reply, section: "comments", postId, blogId, commentId: id }),
       });
     }

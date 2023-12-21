@@ -1,7 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { useAppSelector } from "../../redux/hooks";
-import { Auth } from "aws-amplify";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { signInWithRedirect } from "aws-amplify/auth";
 import TextArea from "../TextArea";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -52,7 +51,7 @@ const Comment = ({ postId, blogId }: CommentProps) => {
       }
     } else {
       console.log({ dataToPass: JSON.stringify({ comment, section: "comment", postId, blogId }) });
-      Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google, customState: JSON.stringify({ comment, section: "comment", postId, blogId }) });
+      signInWithRedirect({ provider: "Google", customState: JSON.stringify({ comment, section: "comment", postId, blogId }) });
     }
   };
 

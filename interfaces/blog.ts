@@ -21,19 +21,20 @@ export interface AboutInterface {
 }
 
 export interface IBlogPost {
-  id?: string;
+  id: string;
   category?: string;
   title?: string;
   image?: string;
   description?: string;
+  descriptionImage?: string;
   captionText?: string;
   captionImage?: string;
   likes?: number;
   views?: number;
-  status?: Boolean;
+  status?: boolean;
   publishedAt?: string;
   expireAt?: number;
-  blogId?: string;
+  blogId: string;
 }
 
 export interface IPostSummary {

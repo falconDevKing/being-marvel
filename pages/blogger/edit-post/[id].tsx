@@ -22,6 +22,7 @@ import { useAppSelector } from "../../../redux/hooks";
 import { v4 as uuidV4 } from "uuid";
 import { StorageApi } from "../../../services/storage";
 import { createBlogPost, getBlogPost, updateBlogPost } from "../../../services/post";
+import { IBlogPost } from "../../../interfaces/blog";
 
 const s3baseurl = process.env.NEXT_PUBLIC_S3_BASE_URL || "";
 
@@ -194,7 +195,7 @@ const EditPost = () => {
     const getPostDetails = async (postId: string) => {
       try {
         const postDetails = await getBlogPost(postId);
-        const { id, category, title, description, captionText, descriptionImage, captionImage, blogId } = postDetails;
+        const { id, category, title, description, captionText, descriptionImage, captionImage, blogId } = postDetails as IBlogPost;
         const fallBackPostData = {
           id: id || "",
           category: category || "",

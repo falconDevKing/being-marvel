@@ -84,7 +84,7 @@ const NewPost = () => {
           likes: 0,
           views: 0,
           status: false,
-          blogId: blogId,
+          blogId: blogId as string,
         };
 
         await createBlogPost(postData);

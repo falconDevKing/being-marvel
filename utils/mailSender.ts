@@ -1,6 +1,7 @@
 import { genericMailSender } from "../graphql/queries";
-import { API } from "aws-amplify";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { generateClient } from "aws-amplify/api";
+
+const client = generateClient();
 
 type desitinationData = {
   ToAddresses: string[];
@@ -20,14 +21,14 @@ export const sendMail = async (recipients: desitinationData, mailSubject: string
       variables["replyAddresses"] = replyAddresses;
     }
 
-    const response = (await API.graphql({
+    const response = await client.graphql({
       query: genericMailSender,
       variables: variables,
-    })) as GraphQLResult<any>;
+    });
 
     return {
       status: "Success",
-      data: response?.data?.customGenericMailSender as string,
+      data: response?.data?.genericMailSender as string,
     };
   } catch (err: any) {
     console.log("Unable to send mail", err);

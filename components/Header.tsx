@@ -9,8 +9,7 @@ import Login from "./Auth/Login";
 import ProfileAvatar from "./ProfileAvatar";
 import { AuthUserData } from "../interfaces/auth";
 import { useAppSelector } from "../redux/hooks";
-import { Auth } from "aws-amplify";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { signInWithRedirect } from "aws-amplify/auth";
 import { getBlogDetails } from "../services/blog";
 
 const marvelBlogId = process.env.NEXT_PUBLIC_MARVEL_BLOG_ID as string;
@@ -68,7 +67,7 @@ const Header = ({ width }: HeaderProps) => {
   };
 
   const loginGoogle = async () => {
-    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
+    signInWithRedirect({ provider: "Google" });
   };
 
   useEffect(() => {
@@ -126,13 +125,14 @@ const Header = ({ width }: HeaderProps) => {
           )}
         </Box>
       </Box>
-      <Modal open={openSignin} handleClose={closeSignin} title={authMode} maxWidth="sm">
+
+      {/* <Modal open={openSignin} handleClose={closeSignin} title={authMode} maxWidth="sm">
         {authMode === "Register" ? (
           <Register setAuthMode={setAuthMode} setOpenSignin={setOpenSignin} />
         ) : (
           <Login setAuthMode={setAuthMode} setOpenSignin={setOpenSignin} />
         )}
-      </Modal>
+      </Modal> */}
     </>
   );
 };

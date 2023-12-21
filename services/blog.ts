@@ -1,14 +1,16 @@
 import store from "../redux/store";
 import { v4 as uuidV4 } from "uuid";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
+// import { GraphQLResult } from "@aws-amplify/client-graphql";
 import { createBlog } from "../graphql/mutations";
-import { API } from "aws-amplify";
+import { generateClient } from "aws-amplify/api";
 import { ErrorHandler, SuccessHandler } from "../utils/handlers";
 import { getAboutByBlog, getBlog } from "../graphql/queries";
 import { setAbout, setBlog, setPostSummary } from "../redux/blogSlice";
 import { customFetchPostsByBlog } from "../graphql/customQueries";
 import { IPostData } from "../interfaces/post";
 import { IPostStats, IPostSummary } from "../interfaces/blog";
+
+const client = generateClient();
 
 export const createBlogHandler = async (userId: string) => {
   try {
@@ -22,14 +24,14 @@ export const createBlogHandler = async (userId: string) => {
         subscriber: [] as string[],
       };
 
-      const newBlog = (await API.graphql({
+      const newBlog = await client.graphql({
         query: createBlog,
         variables: {
           input: blogData,
         },
-      })) as GraphQLResult<any>;
+      });
 
-      const newBlogData = newBlog.data?.createBlog?.item;
+      const newBlogData = newBlog.data?.createBlog;
       console.log({ data: newBlog.data?.createBlog, newBlog });
 
       SuccessHandler({ message: "Create Blog" });
@@ -44,19 +46,19 @@ export const createBlogHandler = async (userId: string) => {
 
 export const getBlogDetails = async (blogId: string) => {
   // get blog
-  const blog = (await API.graphql({
+  const blog = await client.graphql({
     query: getBlog,
     variables: { id: blogId },
-  })) as GraphQLResult<any>;
+  });
 
   const blogData = blog.data?.getBlog;
   store.dispatch(setBlog({ data: blogData }));
 
   // get about
-  const about = (await API.graphql({
+  const about = await client.graphql({
     query: getAboutByBlog,
     variables: { blogId: blogId },
-  })) as GraphQLResult<any>;
+  });
 
   const aboutData = about?.data?.getAboutByBlog?.items[0];
   store.dispatch(setAbout({ data: aboutData }));
@@ -65,10 +67,10 @@ export const getBlogDetails = async (blogId: string) => {
 
   // get posts
   const getPosts = async (nextToken?: string) => {
-    const posts = (await API.graphql({
+    const posts = await client.graphql({
       query: customFetchPostsByBlog,
       variables: { blogId: blogId, nextToken },
-    })) as GraphQLResult<any>;
+    });
 
     const postsData = posts?.data?.fetchPostsByBlog?.items as IPostSummary[];
     const modifiedPostsData = postsData.filter((postData) => !!postData);

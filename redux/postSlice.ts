@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { Auth } from "aws-amplify";
 // import { ErrorHandler } from "helper/Handlers";
 import { getUserDetails, updateAuthLoading } from "../services/auth";
 import { UserDetails } from "../interfaces/auth";
 import { IPostCommentData, IPostCommentRedirect, IPostData } from "../interfaces/post";
+import { Post, Comment, Audio } from "../graphql/API";
 // import { AboutInterface, PostInterface } from "../interfaces/Post";
 
 interface PostState {
-  Post: IPostData;
-  comments: IPostCommentData[];
+  Post: Omit<Post, "__typename" | "createdAt" | "updatedAt">;
+  comments: Omit<Comment, "__typename" | "createdAt" | "updatedAt">[];
   navToComment: IPostCommentRedirect;
-  audio: any;
+  audio: Omit<Audio, "__typename" | "createdAt" | "updatedAt">;
   loading: boolean;
 }
 
 const initialState: PostState = {
-  Post: {},
+  Post: { id: "", blogId: "" },
+  audio: { id: "", blogId: "", postId: "" },
   comments: [],
   navToComment: {
     comment: "",
@@ -25,7 +26,6 @@ const initialState: PostState = {
     blogId: "",
     commentId: "",
   },
-  audio: {},
   loading: false,
 };
 

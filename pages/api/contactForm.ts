@@ -1,15 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { errorResponseCreator, successResponseCreator } from "../../utils/responseFormat";
-import SubscriptionConfirmedMailTemplate from "../../utils/mailTemplates/subscriptionConfirmedMailTemplate";
 import { sendMail } from "../../utils/mailSender";
-import NewSubscriptionMailTemplate from "../../utils/mailTemplates/newSubscriptionMailTemplate";
 import ContactMessageMailTemplate from "../../utils/mailTemplates/contactMessageMailTemplate";
 
 const BloggerMail = (process.env.NEXT_PUBLIC_CONTACT_MAIL || process.env.CONTACT_MAIL) as string;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  req.statusCode = 200;
-
   // vet method
   //get details
   // store details in db
@@ -24,6 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const { name, email, content } = req.body;
 
+    // TODO: Work on getting blogger mail dynamically from user db
     const destinationBlogger = {
       ToAddresses: [BloggerMail],
     };
