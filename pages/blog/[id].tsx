@@ -21,10 +21,11 @@ import { ErrorHandler } from "../../utils/handlers";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useAppSelector } from "../../redux/hooks";
+import { Post } from "../../graphql/API";
 dayjs.extend(relativeTime);
 
 const BlogPost = () => {
-  const [postData, setPostData] = useState<IPostData>();
+  const [postData, setPostData] = useState<Post>();
 
   const router = useRouter();
   const postId = router.query.id;
@@ -32,7 +33,7 @@ const BlogPost = () => {
   useEffect(() => {
     const getPostDetails = async (postId: string) => {
       try {
-        const postDetails = await getBlogPost(postId);
+        const postDetails = (await getBlogPost(postId)) as Post;
 
         setPostData(postDetails);
 
@@ -59,7 +60,7 @@ const BlogPost = () => {
 
       <Header width={"85%"} />
 
-      <Box display={"flex"} width={"85%"} mx={"auto"} mt={4} py={1}>
+      <Box display={"flex"} width={{ xs: "90%", md: "85%" }} mx={"auto"} mt={4} py={1}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link href="/">HOME</Link>
           <Link href="/blog">BLOG</Link>
@@ -71,27 +72,29 @@ const BlogPost = () => {
 
       {postData?.captionImage && <BlogCaption captionText={postData?.captionText as string} captionImage={postData?.captionImage as string} />}
 
-      <Box width={"85%"} mx={"auto"} pb={postData?.captionImage ? 4 : 2}>
+      <Box width={{ xs: "90%", md: "85%" }} mx={"auto"} pb={postData?.captionImage ? 4 : 2}>
         <Box display="flex" alignItems={"center"} color={"#C0C0C0"}>
           <Box display="flex" alignItems={"center"}>
             <AccessTimeIcon /> <Box px={1}>{dayjs(postData?.createdAt).fromNow()}</Box>
           </Box>
+
           <Box display="flex" alignItems={"center"} px={1}>
             <FavoriteBorderIcon /> <Box px={1}>{postData?.likes} likes</Box>
           </Box>
         </Box>
+
         <Box fontSize={"1.5rem"} fontWeight={700} color="#000">
           {postData?.title}
         </Box>
       </Box>
 
-      <Box display={"flex"} width="85%" mx={"auto"} py={1} justifyContent={"space-between"}>
-        <Box width={"65%"}>
+      <Box display={"flex"} width={{ xs: "90%", md: "85%" }} mx={"auto"} py={1} justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }}>
+        <Box width={{ xs: "100%", md: "65%" }}>
           <BlogContent postId={postData?.id as string} content={postData?.content as string} postLikes={postData?.likes as number} preview={false} />
         </Box>
-        <Box width="33%">
+        <Box width={{ xs: "100%", md: "33%" }}>
           <Box>
-            <TrendingBlog />
+            <TrendingBlog postId={postId as string} />
           </Box>
           {/* <Box>
             <FeaturedBlog />

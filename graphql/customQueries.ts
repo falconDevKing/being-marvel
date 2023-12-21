@@ -49,6 +49,7 @@ export const customFetchPostsStatsByBlog = /* GraphQL */ `
         blogId
         likes
         views
+        status
       }
       nextToken
     }

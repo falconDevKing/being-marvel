@@ -50,7 +50,7 @@ const BlogContent = ({ postId, postLikes, content, preview }: BlogContentProps) 
   }, [userDetails, postId]);
 
   return (
-    <Box bgcolor={"#F4F7FD"} p={4} borderRadius={"16px"} fontSize={"24px"}>
+    <Box bgcolor={"#F4F7FD"} p={{ xs: 2, md: 4 }} borderRadius={"16px"} fontSize={{ xs: "18px", md: "24px" }}>
       <div dangerouslySetInnerHTML={{ __html: content as string }}></div>
 
       <Box borderTop={1} borderColor={"#B6B9C0"} display={"flex"} alignItems={"center"} mt={2} p={1} justifyContent={"flex-end"}>

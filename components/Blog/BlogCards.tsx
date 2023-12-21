@@ -58,15 +58,16 @@ const BlogCards = () => {
 
   return (
     <Box width={"85%"} mx="auto" my={2}>
-      <Box display={"flex"} justifyContent={"space-between"}>
+      <Box display={"flex"} justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }}>
         <Box>
           <Box fontWeight={700} fontSize={"1.8rem"}>
             MY BLOG POSTS
           </Box>
           <Box color="#D8D6D6">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Box>
         </Box>
-        <Box display={"flex"} color="#C0C0C0">
-          <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"}>
+
+        <Box display={"flex"} color="#C0C0C0" flexDirection={{ xs: "column-reverse", sm: "row" }} width="100%">
+          <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
             <SearchIcon />
             <Input
               type="text"
@@ -79,7 +80,8 @@ const BlogCards = () => {
               }}
             />
           </Box>
-          <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} my={1} borderRadius={"4px"}>
+
+          <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
             <SortIcon />
             <select
               name="sort"

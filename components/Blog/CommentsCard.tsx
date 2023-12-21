@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, useMediaQuery } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -24,11 +24,12 @@ import {
   removePostCommentLike,
 } from "../../services/post";
 import { ErrorHandler, SuccessHandler } from "../../utils/handlers";
+import { Comment } from "../../graphql/API";
 dayjs.extend(relativeTime);
 
 type CommentsCardProps = {
-  comment: IPostCommentData;
-  subComments: IPostCommentData[];
+  comment: Comment;
+  subComments: Comment[];
   postId: string;
   blogId: string;
 };
@@ -36,6 +37,9 @@ type CommentsCardProps = {
 const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProps) => {
   const { userData, isAuthenticated, userDetails } = useAppSelector((state) => state.auth);
   const { navToComment } = useAppSelector((state) => state.post);
+
+  const abovePhone = useMediaQuery("(min-width:600px)");
+
   const { name: replyName, picture: replyPicture, email } = userData;
 
   const { id, name, picture, content, createdAt, likes } = comment;
@@ -50,7 +54,7 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
 
   const likeHandler = async () => {
     SuccessHandler({ message: "Liking" });
-    await addPostCommentLike(userEmail, id, +(likes as number) + 1, userId as string, commentLikes as string[]);
+    await addPostCommentLike(id, +(likes as number) + 1, postId, userId as string, commentLikes as string[], userEmail);
     setLiked((prev) => !prev);
   };
 
@@ -122,24 +126,35 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
 
   return (
     <Box py={1} id={id}>
-      <Box border="1px solid #C0C0C0" p={2} borderRadius={"16px"} display={"flex"} my={1}>
-        <Box width="60px" height="60px">
-          <Image src={picture as string} alt={`${name} picture`} layout="responsive" width={148} height={148} style={{ borderRadius: "50%" }} />
+      <Box border="1px solid #C0C0C0" p={2} borderRadius={"16px"} display={"flex"} my={1} flexDirection={{ xs: "column", sm: "row" }}>
+        <Box display={"flex"} alignItems={"center"}>
+          <Box width={{ xs: "40px", sm: "60px" }} height={{ xs: "40px", sm: "60px" }}>
+            <Image src={picture as string} alt={`${name} picture`} layout="responsive" width={148} height={148} style={{ borderRadius: "50%" }} />
+          </Box>
+
+          <Box fontWeight={500} display={{ xs: "block", sm: "none" }} px={2} fontSize={"1.2rem"}>
+            {name}
+          </Box>
         </Box>
-        <Box px={2} width="100%">
-          <Box fontWeight={500}>{name}</Box>
+
+        <Box px={{ xs: 0, sm: 2 }} width="100%">
+          <Box fontWeight={500} display={{ xs: "none", sm: "block" }}>
+            {name}
+          </Box>
+
           <Box py={1}>{transformText(content as string)}</Box>
-          <Box display={"flex"} justifyContent={"space-between"} width="100%">
+
+          <Box display={"flex"} justifyContent={"space-between"} width="100%" flexDirection={{ xs: "column", sm: "row" }}>
             <Box display="flex" alignItems={"center"} color={"#C0C0C0"}>
               <Box display="flex" alignItems={"center"} px={1}>
-                <AccessTimeIcon />
+                <AccessTimeIcon fontSize={abovePhone ? "medium" : "small"} />
                 <Box px={1}>{dayjs(createdAt).fromNow()}</Box>
               </Box>
 
               <Box display="flex" alignItems={"center"} color={"#C0C0C0"} px={1}>
                 {likes ? (
                   <Box display="flex" alignItems={"center"}>
-                    <FavoriteIcon />
+                    <FavoriteIcon fontSize={abovePhone ? "medium" : "small"} />
                     <Box px={1}>{likes} likes</Box>
                   </Box>
                 ) : (
@@ -147,7 +162,7 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
                 )}
                 {subComments?.length ? (
                   <Box display="flex" alignItems={"center"} px={1}>
-                    <ForumIcon />
+                    <ForumIcon fontSize={abovePhone ? "medium" : "small"} />
                     <Box px={1}>{subComments?.length || 0} replies</Box>
                   </Box>
                 ) : (
@@ -155,33 +170,41 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
                 )}
               </Box>
             </Box>
-            <Box display="flex" alignItems={"center"} color={"#C0C0C0"}>
+
+            <Box display="flex" alignItems={"center"} color={"#C0C0C0"} pt={{ xs: 3, sm: 0 }}>
               <Box display="flex" alignItems={"center"} color={"#C0C0C0"} px={1}>
                 <Box display="flex" alignItems={"center"}>
                   <Box px={1}>Like</Box>
                   {liked ? (
-                    <FavoriteIcon sx={{ color: "red", borderRadius: "50%", p: "2px", cursor: "pointer" }} onClick={unLikeHandler} />
+                    <FavoriteIcon
+                      sx={{ color: "red", borderRadius: "50%", p: "2px", cursor: "pointer" }}
+                      onClick={unLikeHandler}
+                      fontSize={abovePhone ? "medium" : "small"}
+                    />
                   ) : (
                     <FavoriteBorderIcon
                       sx={{ color: "#6289E0", backgroundColor: "#fff", borderRadius: "50%", p: "2px", cursor: "pointer" }}
                       onClick={likeHandler}
+                      fontSize={abovePhone ? "medium" : "small"}
                     />
                   )}
                 </Box>
                 <Box display="flex" alignItems={"center"} px={1} onClick={() => setToComment((prev) => !prev)} sx={{ cursor: "pointer" }}>
                   <Box px={1}>Reply</Box>
-                  <ChatIcon />
+                  <ChatIcon fontSize={abovePhone ? "medium" : "small"} />
                 </Box>
               </Box>
             </Box>
           </Box>
         </Box>
       </Box>
+
       <Box display={"flex"} flexDirection={"column"} alignItems={"flex-end"}>
         {(subComments || []).map((element, index) => (
           <SubCommentsCard key={index} subComment={element} />
         ))}
       </Box>
+
       {toComment && (
         <Box width={"85%"} mx="auto" my={2} display={"flex"} flexDirection={"column"} justifyContent={"center"}>
           <TextArea

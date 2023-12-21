@@ -57,23 +57,29 @@ const Dashboard = () => {
       const blogPostsStats = await fetchBlogPostsStats(blogId);
       const blogPostsCommentsStats = await fetchBlogCommentsStats(blogId);
 
+      const blogPostsStatsIds = blogPostsStats.map((blogPost) => blogPost.id);
+
       setNumberOfPosts(blogPostsStats.length);
 
       let views = 0;
       let likes = 0;
+      let comments = 0;
 
       blogPostsStats.forEach((blogPost) => {
         views += blogPost?.views || 0;
         likes += blogPost?.likes || 0;
       });
 
-      setNumberOfComments(blogPostsCommentsStats.length);
       blogPostsCommentsStats.forEach((blogPostsComment) => {
-        likes += blogPostsComment.likes;
+        if (blogPostsStatsIds.includes(blogPostsComment?.postId)) {
+          likes += blogPostsComment.likes;
+          comments += 1;
+        }
       });
 
       setNumberOfLikes(likes);
       setNumberOfViews(views);
+      setNumberOfComments(comments);
     };
 
     getBlogStats(blogId as string);

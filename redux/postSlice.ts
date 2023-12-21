@@ -9,7 +9,7 @@ import { Post, Comment, Audio } from "../graphql/API";
 
 interface PostState {
   Post: Omit<Post, "__typename" | "createdAt" | "updatedAt">;
-  comments: Omit<Comment, "__typename" | "createdAt" | "updatedAt">[];
+  comments: Comment[];
   navToComment: IPostCommentRedirect;
   audio: Omit<Audio, "__typename" | "createdAt" | "updatedAt">;
   loading: boolean;

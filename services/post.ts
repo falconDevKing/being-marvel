@@ -202,7 +202,7 @@ export const fetchBlogPostsStats = async (blogId: string) => {
     });
 
     const postsData = posts?.data?.fetchPostsByBlog?.items as IPostStats[];
-    const modifiedPostsData = postsData.filter((postData) => !!postData);
+    const modifiedPostsData = postsData.filter((postData) => !!postData && postData.status);
     totalPostStats = [...totalPostStats, ...(modifiedPostsData as unknown as IPostStats[])];
 
     const next = posts?.data?.fetchPostsByBlog?.nextToken as string | null;
@@ -242,21 +242,6 @@ export const fetchBlogCommentsStats = async (blogId: string) => {
   return totalCommentStats;
 };
 
-export const createBlogPostComment = async (commentData: IPostCommentData) => {
-  try {
-    const createPostCommentResponse = await client.graphql({
-      query: createComment,
-      variables: { input: commentData },
-    });
-
-    return createPostCommentResponse.data?.createComment;
-  } catch (error: any) {
-    console.error("error saving blog post", error?.message);
-    console.error("error saving blog post full", error);
-    throw error;
-  }
-};
-
 export const fetchPostComments = async (postId: string) => {
   let totalCommentsData = [] as IPostCommentData[];
 
@@ -293,12 +278,31 @@ export const getPostComments = async (postId: string) => {
   }
 };
 
-export const addPostCommentLike = async (userEmail: string, id: string, likes: number, userId?: string, userCommentLikes?: string[]) => {
+export const createBlogPostComment = async (commentData: IPostCommentData) => {
+  try {
+    const createPostCommentResponse = await client.graphql({
+      query: createComment,
+      variables: { input: commentData },
+    });
+
+    await getPostComments(commentData?.postId);
+
+    return createPostCommentResponse.data?.createComment;
+  } catch (error: any) {
+    console.error("error saving blog post", error?.message);
+    console.error("error saving blog post full", error);
+    throw error;
+  }
+};
+
+export const addPostCommentLike = async (id: string, likes: number, postId: string, userId?: string, userCommentLikes?: string[], userEmail?: string) => {
   try {
     const updateCommentResponse = await client.graphql({
       query: updateComment,
       variables: { input: { id, likes } },
     });
+
+    await getPostComments(postId);
 
     userId &&
       userCommentLikes &&

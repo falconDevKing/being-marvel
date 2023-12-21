@@ -57,6 +57,7 @@ export interface IPostStats {
   blogId: string;
   likes: number;
   views: number;
+  status: boolean;
 }
 
 export interface IPostCommentStats {
