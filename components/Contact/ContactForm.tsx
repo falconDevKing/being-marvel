@@ -8,6 +8,7 @@ import axios, { isAxiosError } from "axios";
 import { DismissHandler, ErrorHandler, LoadingHandler, SuccessHandler } from "../../utils/handlers";
 import Input from "../Input";
 import TextArea from "../TextArea";
+import { contactFormHandler } from "../../services/engagement";
 
 const ContactForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -30,21 +31,18 @@ const ContactForm = () => {
         }
         setLoading(true);
 
-        const contactFormResponse = await axios.post("/api/contactForm", values);
-        const message = contactFormResponse.data.message;
+        const { email, name, content } = values;
 
-        DismissHandler();
-        SuccessHandler({ message });
+        await contactFormHandler(name, email, content);
+
         resetForm();
         setLoading(false);
       } catch (error: any) {
         DismissHandler();
-        if (isAxiosError(error)) {
-          const message = error?.response?.data?.message;
-          ErrorHandler({ message });
-        } else {
-          ErrorHandler({ message: error?.message || "Something went wrong" });
-        }
+
+        ErrorHandler({ message: error?.message || "Something went wrong" });
+        console.log("error in contact blogger", error?.message, error);
+
         setLoading(false);
       }
     },
@@ -88,7 +86,6 @@ const ContactForm = () => {
                 onBlur={handleBlur}
                 errors={errors}
                 touched={touched}
-                autoFocus
               />
             </Box>
             <Box display={"flex"} py={2}>

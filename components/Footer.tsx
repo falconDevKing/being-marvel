@@ -3,11 +3,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { ErrorHandler, SuccessHandler } from "../utils/handlers";
-import axios, { isAxiosError } from "axios";
+
 import { createBlogHandler } from "../services/blog";
 import { useAppSelector } from "../redux/hooks";
 import { logout } from "../services/auth";
 import Link from "next/link";
+import { handleNewSubscriber } from "../services/engagement";
 
 type FooterProps = {
   width: string;
@@ -34,22 +35,17 @@ const Footer = ({ width }: FooterProps) => {
         return;
       }
       setLoading(true);
+
       if (subscriberMail) {
-        const subscribedResponse = await axios.post("/api/newSubscriber", { subscriberMail, blogId });
-        const message = subscribedResponse.data.message;
-        SuccessHandler({ message });
+        await handleNewSubscriber(subscriberMail, blogId);
+
         setSubscriberMail("");
       } else {
         ErrorHandler({ message: "Kindly fill in your email" });
       }
     } catch (error: any) {
-      console.log("err in footer", error);
-      if (isAxiosError(error)) {
-        const message = error?.response?.data?.message;
-        ErrorHandler({ message });
-      } else {
-        ErrorHandler({ message: error?.message || "Something went wrong, please try again later" });
-      }
+      console.log("err in footer subscription", error);
+      ErrorHandler({ message: error?.message || "Error Subscribing, please try again later" });
     }
     setLoading(false);
   };
