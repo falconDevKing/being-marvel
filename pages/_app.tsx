@@ -40,7 +40,7 @@ const updatedAmplifyConfig = {
   },
 };
 
-Amplify.configure({ ...updatedAmplifyConfig, ssr: true });
+Amplify.configure({ ...updatedAmplifyConfig }, { ssr: true });
 
 type NextAppProps<P = any> = {
   pageProps: P;
@@ -69,7 +69,7 @@ const MyApp: React.FunctionComponent<CustomAppProps> = (props) => {
   React.useEffect(() => {
     console.log("app loaded");
     const unsubscribe = Hub?.listen("auth", ({ payload }) => {
-      const { event, data } = payload;
+      const { event, data } = payload as any;
 
       console.log("hub event", event);
       switch (event) {
