@@ -6,6 +6,8 @@ import { ErrorHandler, SuccessHandler } from "../utils/handlers";
 import axios, { isAxiosError } from "axios";
 import { createBlogHandler } from "../services/blog";
 import { useAppSelector } from "../redux/hooks";
+import { logout } from "../services/auth";
+import Link from "next/link";
 
 type FooterProps = {
   width: string;
@@ -15,7 +17,7 @@ const Footer = ({ width }: FooterProps) => {
   const router = useRouter();
 
   const navToDashboard = () => {
-    router.push("/blogger/dashboard");
+    router.push("/blogger");
   };
 
   const { userDetails } = useAppSelector((state) => state.auth);
@@ -60,9 +62,11 @@ const Footer = ({ width }: FooterProps) => {
   return (
     <Box bgcolor={"#222"} width={"100%"} py={6} color="#fff">
       <Box bgcolor={"#222"} width={width} mx={"auto"} fontSize={"1.25rem"}>
-        <Box justifyContent={"space-between"} display={"flex"}>
+        <Box justifyContent={"space-between"} display={"flex"} flexDirection={{ xs: "column", md: "row" }}>
           <Box>
-            <Image src={darkLogo as string} alt={`${blogName} logo`} width={100} height={50} />
+            <Link href={"/"}>
+              <Image src={darkLogo as string} alt={`${blogName} logo`} width={100} height={50} style={{ cursor: "pointer" }} />
+            </Link>
             <Box py={2}>
               <Box py={1}>Lagos, Nigeria</Box>
               <Box py={1}>beingmarvelblog@gmail.com</Box>
@@ -73,10 +77,10 @@ const Footer = ({ width }: FooterProps) => {
               )}
             </Box>
           </Box>
-          <Box width={"30%"}>
+          <Box width={{ xs: "100%", md: "40%" }} mt={{ xs: 6, md: 0 }}>
             <Box py={1}>Sign Up for Our Newsletter</Box>
             <Box py={1}>Be this first to hear it when our newsletter is finally up!</Box>
-            <Box display={"flex"} py={2}>
+            <Box display={"flex"} py={2} maxWidth={"400px"}>
               <input
                 id="subscribeEmail"
                 placeholder="Enter email here"
@@ -114,7 +118,8 @@ const Footer = ({ width }: FooterProps) => {
             </Box>
           </Box>
         </Box>
-        <Box textAlign={"center"} pt={12} pb={2}>
+
+        <Box textAlign={"center"} pt={12} pb={2} onClick={logout}>
           © 2023 beingMarvel. All Rights Reserved
         </Box>
       </Box>

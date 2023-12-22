@@ -8,12 +8,6 @@ import Hero from "../components/Home/Hero";
 import Caption from "../components/Home/Caption";
 import HomeBlogSamples from "../components/Home/HomeBlogSamples";
 
-import { Amplify, withSSRContext, Hub } from "aws-amplify";
-import awsExports from "../aws-exports";
-import { getLoggedInUser } from "../redux/authSlice";
-import { saveAuthUser, setLogout } from "../services/auth";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-
 const Home: NextPage = () => {
   return (
     <Box color="#2c2c2c">
@@ -26,6 +20,7 @@ const Home: NextPage = () => {
       <Header width={"85%"} />
 
       <Hero />
+
       <Caption />
 
       <HomeBlogSamples />

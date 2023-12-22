@@ -49,3 +49,4 @@ amplify-codegen-temp/models
 node_modules
 amplify-codegen-temp/models
 .eslintrc.js
+amplify-codegen-temp\models\models

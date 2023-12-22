@@ -38,6 +38,9 @@ const userTable = process.env.API_BEINGMARVELBLOG_USERTABLE_NAME;
 
 exports.handler = async (event, context) => {
   try {
+
+    console.log('main event', event);
+
     const eventData = JSON.parse(JSON.stringify(event));
 
     const { userName, request } = eventData;

@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { Auth } from "aws-amplify";
 // import { ErrorHandler } from "helper/Handlers";
 import { getUserDetails, updateAuthLoading } from "../services/auth";
 import { UserDetails } from "../interfaces/auth";
 import { AboutInterface, BlogInterface, IPostSummary } from "../interfaces/blog";
+import { About, Blog } from "../graphql/API";
 
 interface BlogState {
-  blog: BlogInterface;
-  about: AboutInterface;
+  blog: Omit<Blog, "__typename" | "createdAt" | "updatedAt">;
+  about: Omit<About, "__typename" | "createdAt" | "updatedAt">;
   postsSummary: IPostSummary[];
   loading: boolean;
 }
 
 const initialState: BlogState = {
-  blog: {},
-  about: {},
+  blog: { id: "", name: "", userId: "" },
+  about: { id: "", blogId: "" },
   postsSummary: [],
   loading: false,
 };

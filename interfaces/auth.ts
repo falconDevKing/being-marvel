@@ -1,10 +1,12 @@
 export interface AuthUserData {
-  identities?: string;
-  email_verified?: boolean;
-  sub?: string;
-  name?: string;
   email?: string;
+  email_verified?: string;
+  identities?: string;
+  family_name?: string;
+  given_name?: string;
+  name?: string;
   picture?: string;
+  sub?: string;
 }
 
 export interface UserDetails {

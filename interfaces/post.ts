@@ -1,5 +1,5 @@
 export interface IPostData {
-  id?: string;
+  id: string;
   category?: string;
   title?: string;
   description?: string;
@@ -12,7 +12,7 @@ export interface IPostData {
   status?: boolean;
   publishedAt?: string;
   expireAt?: string;
-  blogId?: string;
+  blogId: string;
   // blog {
   //   id
   //   name
@@ -38,7 +38,7 @@ export interface IPostData {
   // }
   createdAt?: string;
   updatedAt?: string;
-  postAudioId?: string;
+  postAudioId: string;
   [x: string]: any;
 }
 
@@ -50,7 +50,7 @@ export interface IPostCommentData {
   subComment?: boolean;
   parentComment?: string;
   likes?: number;
-  blogId?: string;
+  blogId: string;
   // blog {
   //   id
   //   name
@@ -62,7 +62,7 @@ export interface IPostCommentData {
   //   updatedAt
   //   blogAboutId
   // }
-  postId?: string;
+  postId: string;
   // post {
   //   id
   //   category
@@ -84,4 +84,12 @@ export interface IPostCommentData {
   // }
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface IPostCommentRedirect {
+  comment: string;
+  section: string;
+  postId: string;
+  blogId: string;
+  commentId: string;
 }

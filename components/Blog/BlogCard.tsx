@@ -18,14 +18,22 @@ const PostCard = ({ postData }: PostCardProps) => {
   };
 
   return (
-    <Box border={"1px solid #F4F7FD"} pb={4} borderRadius={"16px"} boxShadow={"0 1px 1px 1px  #f4f7fd"} width={"32%"} mx="auto" my={1}>
+    <Box
+      border={"1px solid #F4F7FD"}
+      pb={4}
+      borderRadius={"16px"}
+      boxShadow={"0 1px 1px 1px  #f4f7fd"}
+      width={{ xs: "100%", sm: "45%", md: "32%" }}
+      mx="auto"
+      my={1}
+    >
       <Box width={"100%"} borderRadius={"16px"}>
         <Image
           src={descriptionImage}
           alt={`${title} image`}
           layout="responsive"
-          width={541}
-          height={527}
+          width={454}
+          height={340}
           style={{ borderRadius: "16px 16px 0px 0px", cursor: "pointer" }}
           onClick={navToBlogPost}
         />

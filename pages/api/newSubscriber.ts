@@ -3,43 +3,56 @@ import { errorResponseCreator, successResponseCreator } from "../../utils/respon
 import SubscriptionConfirmedMailTemplate from "../../utils/mailTemplates/subscriptionConfirmedMailTemplate";
 import { sendMail } from "../../utils/mailSender";
 import NewSubscriptionMailTemplate from "../../utils/mailTemplates/newSubscriptionMailTemplate";
-import { API } from "aws-amplify";
+import { runWithAmplifyServerContext, reqResBasedClient } from "../../utils/amplifyServerUtils";
 import { updateBlog } from "../../graphql/mutations";
 import { getBlog } from "../../graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { Blog } from "../../graphql/API";
 
 const BloggerMail = (process.env.NEXT_PUBLIC_CONTACT_MAIL || process.env.CONTACT_MAIL) as string;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  req.statusCode = 200;
-
-  // vet method
-  //get details
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+  // get details
   // store details in db
   //send notifcation to marvel
   //send notifcation to subscriber
 
-  if (req.method !== "POST") {
+  if (request.method !== "POST") {
     const errorResponse = errorResponseCreator(500, "", {});
-    return res.status(errorResponse.statusCode).json(errorResponse);
+    return response.status(errorResponse.statusCode).json(errorResponse);
   }
 
   try {
-    const { subscriberMail, blogId } = req.body;
+    const { subscriberMail, blogId } = request.body;
 
     // get blog
-    const blog = (await API.graphql({
-      query: getBlog,
-      variables: { id: blogId },
-    })) as GraphQLResult<any>;
 
-    const blogData = blog.data?.getBlog;
+    const blogData = (await runWithAmplifyServerContext({
+      nextServerContext: { request, response },
+      operation: async (contextSpec) => {
+        const request = await reqResBasedClient.graphql(contextSpec, {
+          query: getBlog,
+          variables: { id: blogId },
+        });
 
-    // update blog
-    const updatedBlog = (await API.graphql({
-      query: updateBlog,
-      variables: { input: { id: blogId, subscriber: [...blogData?.subscriber, subscriberMail] } },
-    })) as GraphQLResult<any>;
+        return request.data?.getBlog;
+      },
+    })) as Blog;
+
+    const updatedBlog = await runWithAmplifyServerContext({
+      nextServerContext: { request, response },
+      operation: async (contextSpec) => {
+        const subscribers = blogData?.subscriber || [];
+        const updatedSubscribers = subscribers.includes(subscriberMail) ? subscribers : [...subscribers, subscriberMail];
+
+        const request = await reqResBasedClient.graphql(contextSpec, {
+          query: updateBlog,
+          variables: { input: { id: blogId, subscriber: updatedSubscribers } },
+        });
+
+        return request.data?.updateBlog;
+      },
+    });
 
     const destinationUser = {
       ToAddresses: [subscriberMail],
@@ -56,10 +69,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const sendBloggerMail = await sendMail(destinationBlogger, mailSubjectBlogger, mailBodyBlogger);
 
     const successResponse = successResponseCreator(200, "Subscribed successfully", { subscriberMail });
-    return res.status(successResponse.statusCode).json(successResponse);
+    return response.status(successResponse.statusCode).json(successResponse);
   } catch (err) {
     console.log("err from api", err);
     const errorResponse = errorResponseCreator(500, "Error Subscribing", err);
-    return res.status(errorResponse.statusCode).json(errorResponse);
+    return response.status(errorResponse.statusCode).json(errorResponse);
   }
 }

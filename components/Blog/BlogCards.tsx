@@ -5,27 +5,52 @@ import SortIcon from "@mui/icons-material/Sort";
 import React, { useCallback, useEffect, useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { IPostSummary } from "../../interfaces/blog";
+import Input from "../Input";
+import dayjs from "dayjs";
 
 const BlogCards = () => {
   const [page, setPage] = useState(1);
   const [paginationCount, setPaginationCount] = useState(1);
   const [ItemsPerPage, setItemsPerPage] = useState(12);
   const [postsToShow, setPostsToShow] = useState<IPostSummary[]>([]);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
 
   const postsSummary = useAppSelector((state) => state.blog.postsSummary);
+
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log("e", event?.target?.value, event?.target, event);
+    setCategory(event.target.value);
+  };
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
   const selectPosts = useCallback(() => {
-    setPaginationCount(Math.ceil(postsSummary.length / ItemsPerPage));
+    const searchedPublishedPosts = [...postsSummary]
+      .filter((post) => post.title.toLowerCase().includes(search.toLowerCase()) && post.status)
+      .sort((a, b) => {
+        const atime = a.publishedAt;
+        const btime = b.publishedAt;
+        const alikes = a.likes;
+        const blikes = b.likes;
 
-    const publishedPosts = postsSummary.filter((postSummary) => postSummary.status);
+        if (category === "older") {
+          return dayjs(atime).isAfter(btime) ? 1 : -1;
+        }
 
-    const toDisplay = [...publishedPosts]?.slice((page - 1) * ItemsPerPage, page * ItemsPerPage);
+        if (category === "liked") {
+          return blikes - alikes;
+        }
+
+        return dayjs(atime).isAfter(btime) ? -1 : 1;
+      });
+    setPaginationCount(Math.ceil(searchedPublishedPosts.length / ItemsPerPage));
+
+    const toDisplay = [...searchedPublishedPosts]?.slice((page - 1) * ItemsPerPage, page * ItemsPerPage);
     setPostsToShow(toDisplay);
-  }, [page, ItemsPerPage, postsSummary]);
+  }, [page, ItemsPerPage, postsSummary, search, category]);
 
   useEffect(() => {
     selectPosts();
@@ -33,34 +58,30 @@ const BlogCards = () => {
 
   return (
     <Box width={"85%"} mx="auto" my={2}>
-      <Box display={"flex"} justifyContent={"space-between"}>
+      <Box display={"flex"} justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }}>
         <Box>
           <Box fontWeight={700} fontSize={"1.8rem"}>
             MY BLOG POSTS
           </Box>
           <Box color="#D8D6D6">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Box>
         </Box>
-        <Box display={"flex"} color="#C0C0C0">
-          <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"}>
+
+        <Box display={"flex"} color="#C0C0C0" flexDirection={{ xs: "column-reverse", sm: "row" }} width="100%">
+          <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
             <SearchIcon />
-            <input
+            <Input
+              type="text"
               id="searchBlogs"
               placeholder="Search Blogs"
-              style={{
-                color: "#C0C0C0",
-                padding: "4px 8px",
-                height: "40px",
-                borderRadius: "4px 0px 0px 4px",
-                outline: "none",
-                border: "none",
-                width: "100%",
-                fontSize: "1.25rem",
-                fontFamily: "Cormorant Garamond",
-                backgroundColor: "#f4f7fd",
+              name="searchBlogs"
+              value={search}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearch(e?.target?.value);
               }}
             />
           </Box>
-          <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} my={1} borderRadius={"4px"}>
+
+          <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
             <SortIcon />
             <select
               name="sort"
@@ -76,6 +97,8 @@ const BlogCards = () => {
                 fontFamily: "Cormorant Garamond",
                 backgroundColor: "#f4f7fd",
               }}
+              value={category}
+              onChange={handleCategoryChange}
             >
               <option style={{ color: "#2C2C2C" }} value="">
                 Sort by
@@ -86,9 +109,9 @@ const BlogCards = () => {
               <option style={{ color: "#2C2C2C" }} value="older">
                 Older posts
               </option>
-              <option style={{ color: "#2C2C2C" }} value="featured">
+              {/* <option style={{ color: "#2C2C2C" }} value="featured">
                 Featured posts
-              </option>
+              </option> */}
               <option style={{ color: "#2C2C2C" }} value="liked">
                 Most liked posts
               </option>

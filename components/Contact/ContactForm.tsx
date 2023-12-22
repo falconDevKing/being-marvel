@@ -54,17 +54,28 @@ const ContactForm = () => {
 
   return (
     <Box width={"100%"}>
-      <Box width={"85%"} display={"flex"} mx="auto" px={6} alignItems={"center"} pt={8}>
-        <Box width={"50%"} borderRadius={"16px"} height={"100%"} px={4}>
+      <Box
+        width={{ xs: "95%", md: "85%" }}
+        display={"flex"}
+        mx="auto"
+        px={{ xs: 1, sm: 3, md: 6 }}
+        alignItems={"center"}
+        pt={8}
+        flexDirection={{ xs: "column", md: "row" }}
+      >
+        <Box width={{ xs: "100%", sm: "80%", md: "50%" }} borderRadius={"16px"} height={"100%"} px={4}>
           <Image src="/ContactPicture2.png" alt="Contact Image" layout="responsive" width={851} height={1053} style={{ borderRadius: "16px" }} />
         </Box>
-        <Box width={"50%"} display={"flex"} flexDirection={"column"} justifyContent={"center"} px={4}>
-          <Box fontSize={"2rem"} fontWeight={700} textAlign={"center"}>
+
+        <Box width={{ xs: "100%", md: "50%" }} display={"flex"} flexDirection={"column"} justifyContent={"center"} px={4} py={{ xs: 4, md: 0 }}>
+          <Box fontSize={{ xs: "1.5rem", md: "2rem" }} fontWeight={700} textAlign={{ xs: "left", md: "center" }}>
             I can't wait to hear from you.
           </Box>
-          <Box py={2} fontSize={"1rem"} fontWeight={700} textAlign={"center"}>
+
+          <Box py={{ xs: 1, md: 2 }} fontSize={{ xs: "0.8rem", md: "1rem" }} fontWeight={700} textAlign={{ xs: "left", md: "center" }}>
             Questions. Feedbacks. Partnerships.
           </Box>
+
           <Box>
             <Box display={"flex"} py={2}>
               <Input
@@ -98,7 +109,7 @@ const ContactForm = () => {
                 rows={6}
                 name="content"
                 id="content"
-                placeholder="MESSAGE"
+                placeholder="Message"
                 value={values?.content}
                 onChange={handleChange}
                 onBlur={handleBlur}

@@ -12,10 +12,10 @@ import axios, { isAxiosError } from "axios";
 import Input from "../Input";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { API, Auth } from "aws-amplify";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { API } from "aws-amplify";
 import { getUserByEmail } from "../../graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { signInWithRedirect, signUp } from "aws-amplify/auth";
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as string;
 
@@ -74,19 +74,21 @@ const Register = ({ setAuthMode, setOpenSignin }: RegisterProps) => {
           throw new Error("User Exsits");
         }
 
-        const { user } = await Auth.signUp({
-          username: email.trim(),
-          password,
-          attributes: {
-            email: email.trim(),
-            name: name.trim(), // optional
-            // other custom attributes
-          },
-          autoSignIn: {
-            // optional - enables auto sign in after user is confirmed
-            enabled: true,
-          },
-        });
+        // const { user } = await signUp({
+        //   username: email.trim(),
+        //   password,
+        //   attributes: {
+        //     email: email.trim(),
+        //     name: name.trim(), // optional
+        //     // other custom attributes
+        //   },
+        //   autoSignIn: {
+        //     // optional - enables auto sign in after user is confirmed
+        //     enabled: true,
+        //   },
+        // });
+
+        const user = "fix me";
 
         console.log(user);
 
@@ -112,7 +114,7 @@ const Register = ({ setAuthMode, setOpenSignin }: RegisterProps) => {
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
 
   const loginGoogle = async () => {
-    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
+    signInWithRedirect({ provider: "Google" });
   };
 
   return (
