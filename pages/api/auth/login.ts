@@ -2,8 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import { errorResponseCreator, successResponseCreator } from "../../../utils/responseFormat";
-import { queryTable, putInTable } from "../../../utils/dynamodb";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { Amplify } from "aws-amplify";
 import awsExports from "../../../aws-exports";
 import { createUser, updateUser } from "../../../graphql/mutations";
