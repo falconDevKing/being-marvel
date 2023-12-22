@@ -4,10 +4,12 @@ import { v4 as uuidv4 } from "uuid";
 import { errorResponseCreator, successResponseCreator } from "../../../utils/responseFormat";
 import { queryTable, putInTable } from "../../../utils/dynamodb";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { Amplify, API, withSSRContext, Auth } from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import awsExports from "../../../aws-exports";
 import { createUser, updateUser } from "../../../graphql/mutations";
 import { getUserByEmail } from "../../../graphql/queries";
+
+import { runWithAmplifyServerContext, reqResBasedClient } from "../../../utils/amplifyServerUtils";
 
 type Data = {
   statusCode: number;
@@ -16,31 +18,38 @@ type Data = {
   error?: any;
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  if (req.method !== "POST") {
+export default async function handler(request: NextApiRequest, response: NextApiResponse<Data>) {
+  if (request.method !== "POST") {
     const errorResponse = errorResponseCreator(500, "", {});
-    return res.status(errorResponse.statusCode).json(errorResponse);
+    return response.status(errorResponse.statusCode).json(errorResponse);
   }
 
   try {
-    const { email, password } = req.body;
+    const { email, password } = request.body;
 
-    const existingUserData = (await API.graphql({
-      query: getUserByEmail,
-      variables: {
-        email: email,
+    const existingUser = await runWithAmplifyServerContext({
+      nextServerContext: { request, response },
+      operation: async (contextSpec) => {
+        const request = await reqResBasedClient.graphql(contextSpec, {
+          query: getUserByEmail,
+          variables: {
+            email: email,
+          },
+        });
+
+        return request.data?.getUserByEmail?.items[0];
       },
-    })) as GraphQLResult<any>;
-
-    const existingUser = existingUserData.data?.getUserByEmail?.items[0];
+    });
 
     if (!existingUser) {
       const errorResponse = errorResponseCreator(422, "No user found", {});
-      return res.status(errorResponse.statusCode).json(errorResponse);
+      return response.status(errorResponse.statusCode).json(errorResponse);
     }
 
-    const username = email;
-    const user = await Auth.signIn(username, password);
+    // const username = email;
+    // const user = await Auth.signIn(username, password);
+    // TODO: clean up this functions
+    const user = "just something";
 
     console.log(user);
 
@@ -69,9 +78,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     // })) as GraphQLResult<any>;
 
     const successResponse = successResponseCreator(201, "Logged in successfully", user);
-    return res.status(successResponse.statusCode).json(successResponse);
+    return response.status(successResponse.statusCode).json(successResponse);
   } catch (err) {
     const errorResponse = errorResponseCreator(500, "Error creating user", err);
-    return res.status(errorResponse.statusCode).json(errorResponse);
+    return response.status(errorResponse.statusCode).json(errorResponse);
   }
 }

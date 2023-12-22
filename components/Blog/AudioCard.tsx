@@ -23,7 +23,7 @@ const AudioCard = () => {
           Lorem ipsum dolor, sit amet conset adipisicing elit.
         </Box>
 
-        <Box display={"flex"} alignItems={"center"} py={2} onClick={navToBlogPost} sx={{ cursor: "pointer" }}>
+        <Box display={"flex"} alignItems={"center"} py={2} sx={{ cursor: "pointer" }}>
           <PlayArrowRoundedIcon sx={{ color: "#95A8D3", bgcolor: "#fff", borderRadius: "50%" }} />
           <Box component={"span"} px={1} fontWeight={700} fontSize={"0.8rem"}>
             Listen now
