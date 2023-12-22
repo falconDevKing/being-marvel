@@ -12,12 +12,14 @@ import axios, { isAxiosError } from "axios";
 import Input from "../Input";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { API } from "aws-amplify";
 import { getUserByEmail } from "../../graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { signInWithRedirect, signUp } from "aws-amplify/auth";
+import { generateClient } from "aws-amplify/api";
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as string;
+
+const client = generateClient();
 
 type RegisterProps = {
   setAuthMode: Dispatch<SetStateAction<string>>;
@@ -60,12 +62,12 @@ const Register = ({ setAuthMode, setOpenSignin }: RegisterProps) => {
           throw new Error("Passwords dont match");
         }
 
-        const existingUserData = (await API.graphql({
+        const existingUserData = await client.graphql({
           query: getUserByEmail,
           variables: {
             email: email,
           },
-        })) as GraphQLResult<any>;
+        });
 
         const existingUsers = existingUserData.data?.getUserByEmail?.items;
         console.log({ data: existingUserData.data?.getUserByEmail, existingUsers });

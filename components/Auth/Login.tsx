@@ -12,7 +12,7 @@ import axios, { isAxiosError } from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Input from "../Input";
-import { API } from "aws-amplify";
+
 import { getUserByEmail } from "../../graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { signInWithRedirect } from "aws-amplify/auth";
@@ -68,7 +68,8 @@ const Login = ({ setAuthMode, setOpenSignin }: LoginProps) => {
         // }
 
         const username = email;
-        const user = await Auth.signIn(username, password);
+        // TODO: clean up this component
+        const user = "just something";
 
         console.log(user);
 
