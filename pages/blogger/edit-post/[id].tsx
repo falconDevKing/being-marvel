@@ -226,15 +226,16 @@ const EditPost = () => {
         <Box display={"flex"} justifyContent={"space-between"} py={2}>
           <Box>
             <Box fontSize={"1.5rem"} fontWeight={700}>
-              New Blog Post
+              Edit Blog Post
             </Box>
             <Box fontSize={"1.2rem"} color="#C0C0C0">
-              Lorem ipsum dolor sit amet, consecte turcing elit.{" "}
+              Lorem ipsum dolor sit amet, consecte turcing elit.
             </Box>
           </Box>
         </Box>
-        <Box display="flex" justifyContent={"space-between"}>
-          <Box width="63%">
+
+        <Box display="flex" justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }}>
+          <Box width={{ xs: "100%", md: "63%" }}>
             <Box bgcolor="#fff" p={4} pb={2} mb={2}>
               <Box fontWeight={700} fontSize="1.5rem" pb={2}>
                 Post Content
@@ -318,7 +319,7 @@ const EditPost = () => {
             </Box>
           </Box>
 
-          <Box width="35%" height="100%">
+          <Box width={{ xs: "100%", md: "35%" }} height="100%">
             <Box bgcolor="#fff" p={4}>
               <Box fontSize="1.4rem" fontWeight={700}>
                 Post Images

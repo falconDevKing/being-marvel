@@ -83,7 +83,7 @@ const BlogPost = () => {
           </Box>
         </Box>
 
-        <Box fontSize={"1.5rem"} fontWeight={700} color="#000">
+        <Box fontSize={postData?.captionImage ? "1.5rem" : "2rem"} fontWeight={700} color="#000" mt={postData?.captionImage ? 0 : 4}>
           {postData?.title}
         </Box>
       </Box>

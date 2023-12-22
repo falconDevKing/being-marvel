@@ -196,9 +196,10 @@ const NewPost = () => {
             </Box>
           </Box>
         </Box>
-        <Box display="flex" justifyContent={"space-between"}>
-          <Box width="63%">
-            <Box bgcolor="#fff" p={4} pb={2} mb={2}>
+
+        <Box display="flex" justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }}>
+          <Box width={{ xs: "100%", md: "63%" }}>
+            <Box bgcolor="#fff" p={{ xs: 3, md: 4 }} pb={2} mb={2}>
               <Box fontWeight={700} fontSize="1.5rem" pb={2}>
                 Post Content
               </Box>
@@ -280,8 +281,8 @@ const NewPost = () => {
             </Box>
           </Box>
 
-          <Box width="35%" height="100%">
-            <Box bgcolor="#fff" p={4}>
+          <Box width={{ xs: "100%", md: "35%" }} height="100%">
+            <Box bgcolor="#fff" p={{ xs: 3, md: 4 }}>
               <Box fontSize="1.4rem" fontWeight={700}>
                 Post Images
               </Box>

@@ -88,7 +88,7 @@ const Dashboard = () => {
   return (
     <Layout>
       <Box>
-        <Box display={"flex"} justifyContent={"space-between"} py={2}>
+        <Box display={"flex"} justifyContent={"space-between"} py={2} flexDirection={{ xs: "column", sm: "row" }}>
           <Box>
             <Box fontSize={"1.5rem"} fontWeight={700}>
               Welcome back, {name}!
@@ -97,10 +97,13 @@ const Dashboard = () => {
               Lorem ipsum dolor sit amet, consecte turcing elit.{" "}
             </Box>
           </Box>
+
           <Box
             display={"flex"}
             alignItems={"center"}
+            alignSelf={"flex-end"}
             p={1}
+            my={{ xs: 2, sm: 0 }}
             onClick={() => navToBlogger("new-post")}
             bgcolor={"#fff"}
             width="max-content"
@@ -109,7 +112,7 @@ const Dashboard = () => {
           >
             <AddCircleOutlineIcon color="primary" />
             <Box component="span" px={1}>
-              Create a new Blog
+              Create a new Blog Post
             </Box>
           </Box>
         </Box>
@@ -117,7 +120,7 @@ const Dashboard = () => {
           {stats.map((stat, index) => {
             const { Icon, figure, metric } = stat;
             return (
-              <Box display="flex" bgcolor={"#fff"} width="48%" my={1} p={2} key={index}>
+              <Box display="flex" bgcolor={"#fff"} width={{ xs: "90%", sm: "48%" }} my={1} p={2} key={index} mx={{ xs: "auto", sm: "0" }}>
                 <Box width="40%">
                   <Icon color="primary" sx={{ fontSize: "108px", bgcolor: "#F4F7FD", borderRadius: "50%", p: 2 }} />
                 </Box>
