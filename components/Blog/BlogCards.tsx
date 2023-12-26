@@ -66,7 +66,7 @@ const BlogCards = () => {
           <Box color="#D8D6D6">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Box>
         </Box>
 
-        <Box display={"flex"} color="#C0C0C0" flexDirection={{ xs: "column-reverse", sm: "row" }} width="100%">
+        <Box display={"flex"} color="#C0C0C0" flexDirection={{ xs: "column-reverse", sm: "row" }} width={{ xs: "100%", md: "50%" }}>
           <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
             <SearchIcon />
             <Input
