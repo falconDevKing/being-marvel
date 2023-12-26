@@ -12,7 +12,14 @@ const HomeBlogCard = ({ postSummary }: HomeBlogCardProps) => {
   const { id, title, description, descriptionImage, category } = postSummary;
 
   return (
-    <Box border={"1px solid #F4F7FD"} pb={4} borderRadius={"16px"} boxShadow={"0 1px 1px 1px  #f4f7fd"} mx={"auto"} width={{ xs: "80%", sm: "45%", md: "30%" }}>
+    <Box
+      border={"1px solid #F4F7FD"}
+      pb={4}
+      borderRadius={"16px"}
+      boxShadow={"0 1px 1px 1px  #f4f7fd"}
+      mx={"auto"}
+      width={{ xs: "100%", sm: "45%", md: "30%" }}
+    >
       <Box width={"100%"} borderRadius={"16px"}>
         <Image src={descriptionImage} alt={`${title} Image`} layout="responsive" width={454} height={340} style={{ borderRadius: "16px 16px 0px 0px " }} />
       </Box>

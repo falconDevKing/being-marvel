@@ -11,7 +11,7 @@ const HomeBlogSamples = () => {
   const latest4PostsSummary = postsSummary.filter((postSummary) => postSummary.status).slice(0, 4);
 
   return (
-    <Box display={"flex"} flexDirection={"column"} alignItems={"center"} p={8}>
+    <Box display={"flex"} flexDirection={"column"} alignItems={"center"} p={{ xs: 4, sm: 8 }}>
       <Box fontFamily={"Tomatoes"} fontSize={{ xs: "2rem", sm: "4rem", md: "6rem" }} color="#2C2C2C" mb={{ xs: -2, sm: -3, md: -4 }}>
         Latest Posts
       </Box>
