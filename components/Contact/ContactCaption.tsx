@@ -5,13 +5,22 @@ const ContactCaption = () => {
   return (
     <Box
       width={"100%"}
-      height={"60vh"}
+      height={{ xs: "40vh", sm: "50vh", md: "60vh" }}
       display={"flex"}
       justifyContent={"space-between"}
       mx="auto"
       sx={{ backgroundImage: `url('/ContactPicture1.png')`, backgroundSize: "cover" }}
     >
-      <Box width={"60%"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} mx="auto" color={"#fff"} fontSize={"2.8rem"}>
+      <Box
+        width={{ xs: "90%", sm: "80%", md: "60%" }}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        mx="auto"
+        color={"#fff"}
+        fontSize={{ xs: "1.8rem", sm: "2.2rem", md: "2.8rem" }}
+      >
         <Box textAlign={"center"}> Hearing back from you often is a constant hope that I dream of every day. </Box>
         <Box width="100%" textAlign={"right"}>
           - Marvel

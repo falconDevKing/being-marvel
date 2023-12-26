@@ -14,43 +14,56 @@ import { useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { SuccessHandler } from "../../utils/handlers";
 import { addPostCommentLike, removePostCommentLike } from "../../services/post";
+import { Comment } from "../../graphql/API";
 
 dayjs.extend(relativeTime);
 
 type SubCommentsCardProps = {
-  subComment: IPostCommentData;
+  subComment: Comment;
 };
 
 const SubCommentsCard = ({ subComment }: SubCommentsCardProps) => {
   const { userData, isAuthenticated, userDetails } = useAppSelector((state) => state.auth);
-  const { id, name, picture, content, createdAt, likes } = subComment;
+  const { id, name, picture, content, createdAt, likes, postId } = subComment;
 
   const userId = userDetails?.id;
+  const userEmail = userDetails?.email as string;
   const commentLikes = userDetails?.commentLikes;
   const [liked, setLiked] = useState(commentLikes?.includes(id) || false);
 
   const likeHandler = async () => {
     SuccessHandler({ message: "Liking" });
-    await addPostCommentLike(id, +(likes as number) + 1, userId as string, commentLikes as string[]);
+    await addPostCommentLike(id, +(likes as number) + 1, postId, userId as string, commentLikes as string[], userEmail);
     setLiked((prev) => !prev);
   };
 
   const unLikeHandler = async () => {
     const removedLike = [...(commentLikes || [])].filter((commentLike) => commentLike !== id);
 
-    await removePostCommentLike(userId as string, removedLike as string[]);
+    await removePostCommentLike(userEmail, userId as string, removedLike as string[]);
 
     setLiked(false);
   };
 
   return (
-    <Box border="1px solid #C0C0C0" p={2} borderRadius={"16px"} display={"flex"} my={"2px"} width="95%">
-      <Box width="60px" height="60px">
-        <Image src={picture as string} alt={`${name as string} picture`} layout="responsive" width={148} height={148} style={{ borderRadius: "50%" }} />
+    <Box border="1px solid #C0C0C0" p={2} borderRadius={"16px"} display={"flex"} my={"2px"} width="95%" flexDirection={{ xs: "column", sm: "row" }}>
+      <Box display={"flex"} alignItems={"center"}>
+        <Box width={{ xs: "40px", sm: "60px" }} height={{ xs: "40px", sm: "60px" }}>
+          <Image src={picture as string} alt={`${name} picture`} layout="responsive" width={148} height={148} style={{ borderRadius: "50%" }} />
+        </Box>
+
+        <Box fontWeight={500} display={{ xs: "block", sm: "none" }} px={2} fontSize={"1.2rem"}>
+          {name}
+        </Box>
       </Box>
-      <Box px={2} width="100%">
-        <Box>{name}</Box>
+
+      <Box px={{ xs: 0, sm: 2 }} width="100%">
+        <Box fontWeight={500} display={{ xs: "none", sm: "block" }}>
+          {name}
+        </Box>
+
         <Box py={1}>{transformText(content as string)}</Box>
+
         <Box display={"flex"} justifyContent={"space-between"} width="100%">
           <Box display="flex" alignItems={"center"} color={"#C0C0C0"}>
             <Box display="flex" alignItems={"center"} px={1}>

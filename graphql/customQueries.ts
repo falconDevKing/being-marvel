@@ -1,3 +1,10 @@
+import * as APITypes from "./API";
+
+type GeneratedQuery<InputType, OutputType> = string & {
+  __generatedQueryInput: InputType;
+  __generatedQueryOutput: OutputType;
+};
+
 export const customFetchPostsByBlog = /* GraphQL */ `
   query customFetchPostsByBlog(
     $blogId: ID!
@@ -15,6 +22,7 @@ export const customFetchPostsByBlog = /* GraphQL */ `
         description
         descriptionImage
         status
+        likes
         publishedAt
         expireAt
         blogId
@@ -24,7 +32,7 @@ export const customFetchPostsByBlog = /* GraphQL */ `
       nextToken
     }
   }
-`;
+` as GeneratedQuery<APITypes.FetchPostsByBlogQueryVariables, APITypes.FetchPostsByBlogQuery>;
 
 export const customFetchPostsStatsByBlog = /* GraphQL */ `
   query customFetchPostsStatsByBlog(
@@ -41,11 +49,12 @@ export const customFetchPostsStatsByBlog = /* GraphQL */ `
         blogId
         likes
         views
+        status
       }
       nextToken
     }
   }
-`;
+` as GeneratedQuery<APITypes.FetchPostsByBlogQueryVariables, APITypes.FetchPostsByBlogQuery>;
 
 export const customFetchCommentsStatsByBlog = /* GraphQL */ `
   query customFetchCommentsStatsByBlog(
@@ -66,4 +75,4 @@ export const customFetchCommentsStatsByBlog = /* GraphQL */ `
       nextToken
     }
   }
-`;
+` as GeneratedQuery<APITypes.FetchCommentsByBlogQueryVariables, APITypes.FetchCommentsByBlogQuery>;

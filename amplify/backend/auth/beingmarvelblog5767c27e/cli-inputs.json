@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "beingmarvelblog5767c27e_identitypool_5767c27e",
-    "allowUnauthenticatedIdentities": true,
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "beingm5767c27e",
     "userPoolName": "beingmarvelblog5767c27e_userpool_5767c27e",
     "autoVerifiedAttributes": [
@@ -36,7 +36,7 @@
     "sharedId": "5767c27e",
     "resourceName": "beingmarvelblog5767c27e",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "manual",
+    "useDefault": "defaultSocial",
     "hostedUI": true,
     "usernameAttributes": [
       "email"
@@ -79,10 +79,6 @@
         ]
       }
     ],
-    "thirdPartyAuth": true,
-    "authProviders": [
-      "accounts.google.com"
-    ],
     "userPoolGroups": false,
     "adminQueries": false,
     "parentStack": {
@@ -90,6 +86,7 @@
     },
     "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"beingmarvelblog5767c27ePostAuthentication\"\n  }\n]",
     "permissions": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\",\"https://dev.d22ojjetioaog3.amplifyapp.com/\",\"https://main.d22ojjetioaog3.amplifyapp.com/\"],\"LogoutURLs\":[\"http://localhost:3000/\",\"https://dev.d22ojjetioaog3.amplifyapp.com/\",\"https://main.d22ojjetioaog3.amplifyapp.com/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\",\"https://dev.d22ojjetioaog3.amplifyapp.com/\",\"https://main.d22ojjetioaog3.amplifyapp.com/\"],\"LogoutURLs\":[\"http://localhost:3000/\",\"https://dev.d22ojjetioaog3.amplifyapp.com/\",\"https://main.d22ojjetioaog3.amplifyapp.com/\"]}",
+    "authProviders": []
   }
 }

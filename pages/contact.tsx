@@ -16,12 +16,6 @@ import Modal from "../components/Modal";
 import { useState } from "react";
 
 const Contact: NextPage = () => {
-  const [openSignin, setOpenSignin] = useState<boolean>(false);
-
-  const closeSignin = () => {
-    setOpenSignin(false);
-  };
-
   return (
     <Box color="#2c2c2c">
       <Head>
@@ -35,12 +29,22 @@ const Contact: NextPage = () => {
       <ContactCaption />
       <ContactForm />
 
-      <Box width={"100%"} display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"} py={8} bgcolor={"#F4F7FD"} my={16}>
-        <Box fontWeight={700} fontSize={"3rem"}>
+      <Box
+        width={"100%"}
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        py={8}
+        bgcolor={"#F4F7FD"}
+        my={{ xs: 6, md: 16 }}
+      >
+        <Box fontWeight={700} fontSize={{ xs: "2rem", sm: "2.5rem", md: "3rem" }}>
           Let&apos;s Connect.
         </Box>
-        <Box fontWeight={700} fontSize={"1.5rem"}>
-          Follow & Interact with Me on Social Media.
+
+        <Box fontWeight={700} fontSize={{ xs: "1rem", sm: "1.2rem", md: "1.5rem" }}>
+          Follow & Interact with me on social media.
         </Box>
 
         <Stack direction={"row"} spacing={1} width={"max-content"} py={4} px={12}>
@@ -49,16 +53,19 @@ const Contact: NextPage = () => {
               <AiOutlineMail fontSize={"24px"} color={"#6289E0"} />
             </Box>
           </a>
+
           <a href="https://www.linkedin.com/in/moyo-marv-adedayo/" target="_blank" rel="noopener noreferrer ">
             <Box borderRadius={"50%"} border={"1px solid #6289E0"} width={"40px"} display={"flex"} p={1} justifyContent={"center"} alignItems={"center"}>
               <RiLinkedinFill fontSize={"24px"} color={"#6289E0"} />
             </Box>
           </a>
+
           <a href="https://twitter.com/the_mmaa/" target="_blank" rel="noopener noreferrer ">
             <Box borderRadius={"50%"} border={"1px solid #6289E0"} width={"40px"} display={"flex"} p={1} justifyContent={"center"} alignItems={"center"}>
               <SiTwitter fontSize={"24px"} color={"#6289E0"} />
             </Box>
           </a>
+
           <a href="https://www.instagram.com/being.marvel_/" target="_blank" rel="noopener noreferrer ">
             <Box borderRadius={"50%"} border={"1px solid #6289E0"} width={"40px"} display={"flex"} p={1} justifyContent={"center"} alignItems={"center"}>
               <SiInstagram fontSize={"24px"} color={"#6289E0"} />

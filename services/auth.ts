@@ -1,9 +1,12 @@
 import { getLoggedInUser, setAuthData, setAuthLoading, setAuthUser, setLogOut, setUnAuthData, setUserData, setUserDetails } from "../redux/authSlice";
 import store from "../redux/store";
-import { API, Auth } from "aws-amplify";
 import { ErrorHandler } from "../utils/handlers";
 import { getUserByEmail } from "../graphql/queries";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { generateClient } from "aws-amplify/api";
+import { signOut, getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
+import { User } from "../graphql/API";
+
+const client = generateClient();
 
 export const updateAuthLoading = (loading: boolean) => {
   store.dispatch(setAuthLoading({ data: loading }));
@@ -17,10 +20,15 @@ export const saveAuthUser = async (authUser: any) => {
 export const getLoggedInUserFunction = async () => {
   try {
     updateAuthLoading(true);
-    const currentUser = await Auth.currentAuthenticatedUser();
+    const currentUser = await getCurrentUser();
+
+    console.log({ currentUser });
     store.dispatch(setAuthData({ data: currentUser }));
-    store.dispatch(setUserData({ data: currentUser.attributes }));
-    await getUserDetails(currentUser?.attributes?.email);
+
+    const userAttributes = await fetchUserAttributes();
+    console.log({ userAttributes });
+    store.dispatch(setUserData({ data: userAttributes }));
+    await getUserDetails(userAttributes?.email);
     return currentUser;
   } catch (err: any) {
     console.log({ err });
@@ -30,7 +38,7 @@ export const getLoggedInUserFunction = async () => {
 
 export const logout = async () => {
   console.log("Log out called");
-  await Auth.signOut({ global: true });
+  await signOut({ global: true });
 };
 
 export const setLogout = () => {
@@ -38,15 +46,15 @@ export const setLogout = () => {
   store.dispatch(setLogOut());
 };
 
-export const getUserDetails = async (userEmail: string) => {
+export const getUserDetails = async (userEmail?: string) => {
   try {
     if (userEmail) {
-      const userData = (await API.graphql({
+      const userData = await client.graphql({
         query: getUserByEmail,
         variables: { email: userEmail },
-      })) as GraphQLResult<any>;
+      });
 
-      const user = userData?.data?.getUserByEmail?.items[0];
+      const user = userData?.data?.getUserByEmail?.items[0] as User;
       store.dispatch(setUserDetails({ data: user }));
     }
   } catch (error: any) {

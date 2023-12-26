@@ -1,27 +1,27 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Box, Stack } from "@mui/material";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
 import { useEffect, useState } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import BlogCaption from "../../components/Blog/BlogCaption";
-import BlogContent from "../../components/Blog/BlogContent";
-import TrendingBlog from "../../components/Blog/TrendingBlog";
-import FeaturedBlog from "../../components/Blog/FeaturedBlog";
-import Comments from "../../components/Blog/Comments";
-import Comment from "../../components/Blog/Comment";
+import BlogCaption from "../../../components/Blog/BlogCaption";
+import BlogContent from "../../../components/Blog/BlogContent";
+import TrendingBlog from "../../../components/Blog/TrendingBlog";
+import FeaturedBlog from "../../../components/Blog/FeaturedBlog";
+import Comments from "../../../components/Blog/Comments";
+import Comment from "../../../components/Blog/Comment";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { addBlogPostViews, fetchPostComments, getBlogPost, getPostComments } from "../../services/post";
-import { IPostCommentData, IPostData } from "../../interfaces/post";
-import { ErrorHandler } from "../../utils/handlers";
+import { addBlogPostViews, fetchPostComments, getBlogPost, getPostComments } from "../../../services/post";
+import { IPostCommentData, IPostData } from "../../../interfaces/post";
+import { ErrorHandler } from "../../../utils/handlers";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useAppSelector } from "../../redux/hooks";
-import { Post } from "../../graphql/API";
+import { useAppSelector } from "../../../redux/hooks";
+import { Post } from "../../../graphql/API";
 dayjs.extend(relativeTime);
 
 const BlogPost = () => {
@@ -36,8 +36,6 @@ const BlogPost = () => {
         const postDetails = (await getBlogPost(postId)) as Post;
 
         setPostData(postDetails);
-
-        await addBlogPostViews(postId, +(postDetails.views || 0) + 1);
       } catch (error: any) {
         ErrorHandler({ message: error?.message || "Unable to get post" });
         console.log("error getting post", error);
@@ -77,20 +75,18 @@ const BlogPost = () => {
           <Box display="flex" alignItems={"center"}>
             <AccessTimeIcon /> <Box px={1}>{dayjs(postData?.createdAt).fromNow()}</Box>
           </Box>
-
           <Box display="flex" alignItems={"center"} px={1}>
             <FavoriteBorderIcon /> <Box px={1}>{postData?.likes} likes</Box>
           </Box>
         </Box>
-
-        <Box fontSize={postData?.captionImage ? "1.5rem" : "2rem"} fontWeight={700} color="#000" mt={postData?.captionImage ? 0 : 4}>
+        <Box fontSize={"1.5rem"} fontWeight={700} color="#000">
           {postData?.title}
         </Box>
       </Box>
 
       <Box display={"flex"} width={{ xs: "90%", md: "85%" }} mx={"auto"} py={1} justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }}>
         <Box width={{ xs: "100%", md: "65%" }}>
-          <BlogContent postId={postData?.id as string} content={postData?.content as string} postLikes={postData?.likes as number} preview={false} />
+          <BlogContent postId={postData?.id as string} content={postData?.content as string} postLikes={postData?.likes as number} preview={true} />
         </Box>
         <Box width={{ xs: "100%", md: "33%" }}>
           <Box>
@@ -100,14 +96,6 @@ const BlogPost = () => {
             <FeaturedBlog />
           </Box> */}
         </Box>
-      </Box>
-
-      <Box id="#comment">
-        <Comment postId={postData?.id as string} blogId={postData?.blogId as string} />
-      </Box>
-
-      <Box id="#comments">
-        <Comments postId={postData?.id as string} blogId={postData?.blogId as string} />
       </Box>
 
       <Footer width={"85%"} />

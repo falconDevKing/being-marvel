@@ -16,7 +16,7 @@ const AudioCards = () => {
 
   return (
     <Box width={"85%"} mx="auto">
-      <Box display={"flex"} justifyContent={"space-between"}>
+      <Box>
         <Box>
           <Box fontWeight={700} fontSize={"1.8rem"}>
             LISTEN TO AUDIO{" "}

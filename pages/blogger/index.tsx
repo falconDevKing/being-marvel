@@ -37,17 +37,17 @@ const Dashboard = () => {
     },
     {
       Icon: FavoriteRoundedIcon,
-      figure: numberOfLikes / (numberOfPosts || 1),
+      figure: Number(numberOfLikes / (numberOfPosts || 1)).toFixed(2),
       metric: "Average like per post",
     },
     {
       Icon: ForumRoundedIcon,
-      figure: numberOfComments / (numberOfPosts || 1),
+      figure: Number(numberOfComments / (numberOfPosts || 1)).toFixed(2),
       metric: "Average comment per post",
     },
     {
       Icon: VisibilityRoundedIcon,
-      figure: numberOfViews / (numberOfPosts || 1),
+      figure: Number(numberOfViews / (numberOfPosts || 1)).toFixed(2),
       metric: "Average views per post",
     },
   ];
@@ -57,23 +57,29 @@ const Dashboard = () => {
       const blogPostsStats = await fetchBlogPostsStats(blogId);
       const blogPostsCommentsStats = await fetchBlogCommentsStats(blogId);
 
+      const blogPostsStatsIds = blogPostsStats.map((blogPost) => blogPost.id);
+
       setNumberOfPosts(blogPostsStats.length);
 
       let views = 0;
       let likes = 0;
+      let comments = 0;
 
       blogPostsStats.forEach((blogPost) => {
         views += blogPost?.views || 0;
         likes += blogPost?.likes || 0;
       });
 
-      setNumberOfComments(blogPostsCommentsStats.length);
       blogPostsCommentsStats.forEach((blogPostsComment) => {
-        likes += blogPostsComment.likes;
+        if (blogPostsStatsIds.includes(blogPostsComment?.postId)) {
+          likes += blogPostsComment.likes;
+          comments += 1;
+        }
       });
 
       setNumberOfLikes(likes);
       setNumberOfViews(views);
+      setNumberOfComments(comments);
     };
 
     getBlogStats(blogId as string);
@@ -82,7 +88,7 @@ const Dashboard = () => {
   return (
     <Layout>
       <Box>
-        <Box display={"flex"} justifyContent={"space-between"} py={2}>
+        <Box display={"flex"} justifyContent={"space-between"} py={2} flexDirection={{ xs: "column", sm: "row" }}>
           <Box>
             <Box fontSize={"1.5rem"} fontWeight={700}>
               Welcome back, {name}!
@@ -91,11 +97,14 @@ const Dashboard = () => {
               Lorem ipsum dolor sit amet, consecte turcing elit.{" "}
             </Box>
           </Box>
+
           <Box
             display={"flex"}
             alignItems={"center"}
+            alignSelf={"flex-end"}
             p={1}
-            onClick={() => navToBlogger("new-blog")}
+            my={{ xs: 2, sm: 0 }}
+            onClick={() => navToBlogger("new-post")}
             bgcolor={"#fff"}
             width="max-content"
             fontWeight={700}
@@ -103,7 +112,7 @@ const Dashboard = () => {
           >
             <AddCircleOutlineIcon color="primary" />
             <Box component="span" px={1}>
-              Create a new Blog
+              Create a new Blog Post
             </Box>
           </Box>
         </Box>
@@ -111,7 +120,7 @@ const Dashboard = () => {
           {stats.map((stat, index) => {
             const { Icon, figure, metric } = stat;
             return (
-              <Box display="flex" bgcolor={"#fff"} width="48%" my={1} p={2} key={index}>
+              <Box display="flex" bgcolor={"#fff"} width={{ xs: "90%", sm: "48%" }} my={1} p={2} key={index} mx={{ xs: "auto", sm: "0" }}>
                 <Box width="40%">
                   <Icon color="primary" sx={{ fontSize: "108px", bgcolor: "#F4F7FD", borderRadius: "50%", p: 2 }} />
                 </Box>

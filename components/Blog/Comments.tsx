@@ -4,14 +4,15 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CommentsCard from "./CommentsCard";
 import { IPostCommentData } from "../../interfaces/post";
 import { organiseComments } from "../../utils/helper";
+import { useAppSelector } from "../../redux/hooks";
 
 interface CommentsProps {
-  comments: IPostCommentData[];
   postId: string;
   blogId: string;
 }
 
-const Comments = ({ comments, postId, blogId }: CommentsProps) => {
+const Comments = ({ postId, blogId }: CommentsProps) => {
+  const { comments } = useAppSelector((state) => state.post);
   const organisedComments = organiseComments(comments);
 
   return (

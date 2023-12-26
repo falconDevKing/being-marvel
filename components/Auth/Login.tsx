@@ -12,10 +12,10 @@ import axios, { isAxiosError } from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Input from "../Input";
-import { API, Auth } from "aws-amplify";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+
 import { getUserByEmail } from "../../graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { signInWithRedirect } from "aws-amplify/auth";
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as string;
 
@@ -68,7 +68,8 @@ const Login = ({ setAuthMode, setOpenSignin }: LoginProps) => {
         // }
 
         const username = email;
-        const user = await Auth.signIn(username, password);
+        // TODO: clean up this component
+        const user = "just something";
 
         console.log(user);
 
@@ -94,7 +95,7 @@ const Login = ({ setAuthMode, setOpenSignin }: LoginProps) => {
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = formik;
 
   const loginGoogle = async () => {
-    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
+    signInWithRedirect({ provider: "Google" });
   };
 
   return (
