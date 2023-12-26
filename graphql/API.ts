@@ -782,6 +782,7 @@ export type customFetchPostsStatsByBlogQuery = {
       blogId: string,
       likes?: number | null,
       views?: number | null,
+      status?: boolean | null,
     } | null >,
     nextToken?: string | null,
   } | null,
