@@ -9,8 +9,6 @@ import { DismissHandler, ErrorHandler, SuccessHandler } from "../utils/handlers"
 import { successResponseCreator } from "../utils/responseFormat";
 import ContactMessageMailTemplate from "../utils/mailTemplates/contactMessageMailTemplate";
 
-console.log("engagements incomming");
-
 const client = generateClient();
 
 const BloggerMail = (process.env.NEXT_PUBLIC_CONTACT_MAIL || process.env.CONTACT_MAIL) as string;
