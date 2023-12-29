@@ -26,6 +26,7 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   const router = useRouter();
 
   const { userData, isAuthenticated, isInitialized } = useAppSelector((state) => state.auth);
+  const { interimBloggers } = useAppSelector((state) => state.blog.blog);
   const { name, picture, email } = userData as AuthUserData;
 
   const navToBlogger = (section: string) => {
@@ -90,7 +91,7 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   };
 
   useEffect(() => {
-    if (isAuthenticated && isInitialized && email !== "emmanueloyekan33@gmail.com") {
+    if (isAuthenticated && isInitialized && interimBloggers?.includes(email as string)) {
       router.push("/blog");
     }
   }, []);
