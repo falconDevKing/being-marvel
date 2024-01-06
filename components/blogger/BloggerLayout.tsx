@@ -91,7 +91,7 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   };
 
   useEffect(() => {
-    if (isAuthenticated && isInitialized && interimBloggers?.includes(email as string)) {
+    if (isAuthenticated && isInitialized && !interimBloggers?.includes(email as string)) {
       router.push("/blog");
     }
   }, []);
