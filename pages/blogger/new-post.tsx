@@ -66,12 +66,13 @@ const NewPost = () => {
 
       const { category, title, description, captionText } = values;
 
-      // save file to s3 and return link
-      const descriptionFileLink = await StorageApi.putItem(`${blogId}/${descriptionFile?.name}`, descriptionFile as File);
-      const captionFileLink = await StorageApi.putItem(`${blogId}/${captionFile?.name}`, captionFile as File);
-
-      LoadingHandler({ message: "Posting..." });
       try {
+        // save file to s3 and return link
+        const descriptionFileLink = await StorageApi.putItem(`${blogId}/${descriptionFile?.name}`, descriptionFile as File);
+        const captionFileLink = await StorageApi.putItem(`${blogId}/${captionFile?.name}`, captionFile as File);
+
+        LoadingHandler({ message: "Posting..." });
+
         const postData = {
           id: uuidV4(),
           category,
