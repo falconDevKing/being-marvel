@@ -14,6 +14,7 @@ import { getBlogDetails } from "../services/blog";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
+import GoogleLogo from "../assets/GoogleLogo.svg";
 
 const marvelBlogId = process.env.NEXT_PUBLIC_MARVEL_BLOG_ID as string;
 
@@ -120,8 +121,19 @@ const Header = ({ width }: HeaderProps) => {
                     }}
                   />
                 ) : (
-                  <Box sx={{ ...selectedNav, py: 2, px: 4, bgcolor: "#fff", borderRadius: "24px" }} onClick={loginGoogle}>
-                    SIGN IN
+                  <Box
+                    sx={{ ...selectedNav, bgcolor: "#fff", borderColor: "#fff" }}
+                    onClick={loginGoogle}
+                    display="flex"
+                    alignItems={"center"}
+                    border={1}
+                    px={2}
+                    borderRadius={"16px"}
+                  >
+                    <Box pt={1}>
+                      <Image src={GoogleLogo} alt="google logo" width={24} height={24} />
+                    </Box>
+                    <Box pl={1}>Sign in</Box>
                   </Box>
                 )}
               </Box>
@@ -188,8 +200,11 @@ const Header = ({ width }: HeaderProps) => {
               }}
             />
           ) : (
-            <Box sx={selectedNav} onClick={loginGoogle}>
-              SIGN IN
+            <Box sx={selectedNav} onClick={loginGoogle} display="flex" alignItems={"center"} border={1} px={2} borderRadius={"16px"}>
+              <Box pt={1}>
+                <Image src={GoogleLogo} alt="google logo" width={24} height={24} />
+              </Box>
+              <Box pl={1}>Sign in</Box>
             </Box>
           )}
         </Box>
