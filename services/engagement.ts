@@ -1,6 +1,6 @@
-import { generateClient } from "aws-amplify/api";
+import { GraphQLResult, generateClient } from "aws-amplify/api";
 import { getBlog } from "../graphql/queries";
-import { Blog } from "../graphql/API";
+import { Blog, GetBlogQuery } from "../graphql/API";
 import { updateBlog } from "../graphql/mutations";
 import SubscriptionConfirmedMailTemplate from "../utils/mailTemplates/subscriptionConfirmedMailTemplate";
 import { sendMail } from "../utils/mailSender";
@@ -16,10 +16,10 @@ const BloggerMail = (process.env.NEXT_PUBLIC_CONTACT_MAIL || process.env.CONTACT
 export const handleNewSubscriber = async (subscriberMail: string, blogId: string) => {
   try {
     // get blog
-    const blog = await client.graphql({
+    const blog = (await client.graphql({
       query: getBlog,
       variables: { id: blogId },
-    });
+    })) as GraphQLResult<GetBlogQuery>;
 
     const blogData = blog.data?.getBlog as Blog;
 

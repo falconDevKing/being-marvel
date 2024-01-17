@@ -15,7 +15,7 @@ import Comment from "../../components/Blog/Comment";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { addBlogPostViews, fetchPostComments, getBlogPost, getPostComments } from "../../services/post";
+import { addBlogPostViews, correctPostId, fetchPostComments, getBlogPost, getPostComments } from "../../services/post";
 import { IPostCommentData, IPostData } from "../../interfaces/post";
 import { ErrorHandler } from "../../utils/handlers";
 import dayjs from "dayjs";
@@ -33,11 +33,17 @@ const BlogPost = () => {
   useEffect(() => {
     const getPostDetails = async (postId: string) => {
       try {
-        const postDetails = (await getBlogPost(postId)) as Post;
+        const correctedPostId = (await correctPostId(postId)) as string;
+        if (correctedPostId === postId) {
+          const postDetails = (await getBlogPost(postId)) as Post;
 
-        setPostData(postDetails);
+          setPostData(postDetails);
 
-        await addBlogPostViews(postId, +(postDetails.views || 0) + 1);
+          await addBlogPostViews(postId, +(postDetails.views || 0) + 1);
+          await getPostComments(postId as string);
+        } else {
+          router.replace("/blog/" + correctedPostId);
+        }
       } catch (error: any) {
         ErrorHandler({ message: error?.message || "Unable to get post" });
         console.log("error getting post", error);
@@ -46,9 +52,8 @@ const BlogPost = () => {
 
     if (postId) {
       getPostDetails(postId as string);
-      getPostComments(postId as string);
     }
-  }, [postId]);
+  }, [postId, router]);
 
   return (
     <Box color="#2c2c2c">

@@ -16,6 +16,7 @@ import { getUserByEmail } from "../../graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { signInWithRedirect, signUp } from "aws-amplify/auth";
 import { generateClient } from "aws-amplify/api";
+import { GetUserByEmailQuery } from "../../graphql/API";
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL) as string;
 
@@ -62,12 +63,12 @@ const Register = ({ setAuthMode, setOpenSignin }: RegisterProps) => {
           throw new Error("Passwords dont match");
         }
 
-        const existingUserData = await client.graphql({
+        const existingUserData = (await client.graphql({
           query: getUserByEmail,
           variables: {
             email: email,
           },
-        });
+        })) as GraphQLResult<GetUserByEmailQuery>;
 
         const existingUsers = existingUserData.data?.getUserByEmail?.items;
         console.log({ data: existingUserData.data?.getUserByEmail, existingUsers });

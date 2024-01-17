@@ -73,6 +73,12 @@ const NewPost = () => {
 
         LoadingHandler({ message: "Posting..." });
 
+        const customLink = title
+          .replace(/[^a-zA-Z ]/g, "")
+          .toLowerCase()
+          .split(" ")
+          .join("_");
+
         const postData = {
           id: uuidV4(),
           category,
@@ -86,6 +92,7 @@ const NewPost = () => {
           views: 0,
           status: false,
           blogId: blogId as string,
+          customLink,
         };
 
         await createBlogPost(postData);

@@ -2,9 +2,9 @@ import { getLoggedInUser, setAuthData, setAuthLoading, setAuthUser, setLogOut, s
 import store from "../redux/store";
 import { ErrorHandler } from "../utils/handlers";
 import { getUserByEmail } from "../graphql/queries";
-import { generateClient } from "aws-amplify/api";
+import { GraphQLResult, generateClient } from "aws-amplify/api";
 import { signOut, getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
-import { User } from "../graphql/API";
+import { GetUserByEmailQuery, User } from "../graphql/API";
 
 const client = generateClient();
 
@@ -49,10 +49,10 @@ export const setLogout = () => {
 export const getUserDetails = async (userEmail?: string) => {
   try {
     if (userEmail) {
-      const userData = await client.graphql({
+      const userData = (await client.graphql({
         query: getUserByEmail,
         variables: { email: userEmail },
-      });
+      })) as GraphQLResult<GetUserByEmailQuery>;
 
       const user = userData?.data?.getUserByEmail?.items[0] as User;
       store.dispatch(setUserDetails({ data: user }));

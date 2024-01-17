@@ -83,6 +83,12 @@ const EditPost = () => {
 
       LoadingHandler({ message: "Posting..." });
       try {
+        const customLink = title
+          .replace(/[^a-zA-Z ]/g, "")
+          .toLowerCase()
+          .split(" ")
+          .join("_");
+
         const postData = {
           id,
           blogId,
@@ -93,6 +99,7 @@ const EditPost = () => {
           content: value,
           descriptionImage: descriptionFile ? s3baseurl + descriptionFileLink : descriptionImage,
           captionImage: captionFile ? s3baseurl + captionFileLink : captionImage,
+          customLink,
         };
 
         blogId && (await updateBlogPost(postData));

@@ -63,11 +63,11 @@ exports.handler = async (event, context) => {
       const user = usersWithEmail[0];
       const updateUser = {
         ...user,
-        name,
         email,
-        firstName: given_name,
-        lastName: family_name,
-        image: picture,
+        name: name || user?.name,
+        firstName: given_name || user?.firstName,
+        lastName: family_name || user?.lastName,
+        image: picture || user?.image,
         updatedAt: dayjs().format(),
       };
 

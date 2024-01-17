@@ -4,7 +4,7 @@ import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { createBlog, createComment, createPost, updateComment, updatePost, updateUser } from "../graphql/mutations";
 
 import { ErrorHandler, SuccessHandler } from "../utils/handlers";
-import { fetchCommentsByPost, getAboutByBlog, getBlog, getPost } from "../graphql/queries";
+import { fetchCommentsByPost, fetchPostByTitleLink, getAboutByBlog, getBlog, getPost } from "../graphql/queries";
 import { setAbout, setBlog, setPostSummary } from "../redux/blogSlice";
 import { customFetchCommentsStatsByBlog, customFetchPostsByBlog, customFetchPostsStatsByBlog } from "../graphql/customQueries";
 import { IBlogPost, IPostCommentStats, IPostStats, IPostSummary } from "../interfaces/blog";
@@ -13,16 +13,25 @@ import dayjs from "dayjs";
 import { clearNavToComment, setComments, setNavToComment } from "../redux/postSlice";
 import { getUserDetails } from "./auth";
 import { generateClient } from "aws-amplify/api";
+import {
+  CreateCommentMutation,
+  CreatePostMutation,
+  FetchCommentsByPostQuery,
+  FetchPostByTitleLinkQuery,
+  GetPostQuery,
+  UpdateCommentMutation,
+  UpdatePostMutation,
+} from "../graphql/API";
 
 const client = generateClient();
 
 export const createBlogPost = async (postData: IBlogPost) => {
   try {
     console.log("services", { postData });
-    const createPostResponse = await client.graphql({
+    const createPostResponse = (await client.graphql({
       query: createPost,
       variables: { input: postData },
-    });
+    })) as GraphQLResult<CreatePostMutation>;
 
     return createPostResponse.data?.createPost;
   } catch (error: any) {
@@ -34,10 +43,10 @@ export const createBlogPost = async (postData: IBlogPost) => {
 
 export const updateBlogPost = async (postData: IBlogPost) => {
   try {
-    const updatePostResponse = await client.graphql({
+    const updatePostResponse = (await client.graphql({
       query: updatePost,
       variables: { input: postData },
-    });
+    })) as GraphQLResult<UpdatePostMutation>;
 
     return updatePostResponse.data?.updatePost;
   } catch (error: any) {
@@ -49,10 +58,10 @@ export const updateBlogPost = async (postData: IBlogPost) => {
 
 export const getBlogPost = async (postId: string) => {
   try {
-    const getPostResponse = await client.graphql({
+    const getPostResponse = (await client.graphql({
       query: getPost,
       variables: { id: postId },
-    });
+    })) as GraphQLResult<GetPostQuery>;
 
     return getPostResponse.data?.getPost;
   } catch (error: any) {
@@ -64,10 +73,10 @@ export const getBlogPost = async (postId: string) => {
 
 export const addBlogPostLike = async (userEmail: string, id: string, likes: number, userId?: string, userPostLikes?: string[]) => {
   try {
-    const updatePostResponse = await client.graphql({
+    const updatePostResponse = (await client.graphql({
       query: updatePost,
       variables: { input: { id, likes } },
-    });
+    })) as GraphQLResult<UpdatePostMutation>;
 
     userId &&
       userPostLikes &&
@@ -102,10 +111,10 @@ export const removeBlogPostLike = async (userEmail: string, userId: string, user
 
 export const addBlogPostViews = async (id: string, views: number) => {
   try {
-    const updatePostResponse = await client.graphql({
+    const updatePostResponse = (await client.graphql({
       query: updatePost,
       variables: { input: { id, views } },
-    });
+    })) as GraphQLResult<UpdatePostMutation>;
 
     return updatePostResponse.data?.updatePost;
   } catch (error: any) {
@@ -117,10 +126,10 @@ export const addBlogPostViews = async (id: string, views: number) => {
 
 export const publishPost = async (id: string, blogId: string) => {
   try {
-    const updatePostResponse = await client.graphql({
+    const updatePostResponse = (await client.graphql({
       query: updatePost,
       variables: { input: { id, status: true, publishedAt: dayjs().format(), expireAt: 1171734022 } },
-    });
+    })) as GraphQLResult<UpdatePostMutation>;
 
     await updatedBlogPostData(blogId);
 
@@ -134,10 +143,10 @@ export const publishPost = async (id: string, blogId: string) => {
 
 export const unPublishPost = async (id: string, blogId: string) => {
   try {
-    const updatePostResponse = await client.graphql({
+    const updatePostResponse = (await client.graphql({
       query: updatePost,
       variables: { input: { id, status: false, publishedAt: "", expireAt: 1171734022 } },
-    });
+    })) as GraphQLResult<UpdatePostMutation>;
 
     await updatedBlogPostData(blogId);
 
@@ -151,10 +160,10 @@ export const unPublishPost = async (id: string, blogId: string) => {
 
 export const deletePost = async (id: string, blogId: string) => {
   try {
-    const updatePostResponse = await client.graphql({
+    const updatePostResponse = (await client.graphql({
       query: updatePost,
       variables: { input: { id, status: false, expireAt: dayjs().add(7, "days").unix() } },
-    });
+    })) as GraphQLResult<UpdatePostMutation>;
 
     await updatedBlogPostData(blogId);
 
@@ -247,10 +256,10 @@ export const fetchPostComments = async (postId: string) => {
 
   // get comments
   const getCommentsData = async (nextToken?: string) => {
-    const comments = await client.graphql({
+    const comments = (await client.graphql({
       query: fetchCommentsByPost,
       variables: { postId, nextToken },
-    });
+    })) as GraphQLResult<FetchCommentsByPostQuery>;
 
     const commentsData = comments?.data?.fetchCommentsByPost?.items as IPostCommentData[];
     const modifiedCommentsData = commentsData.filter((commentData) => !!commentData);
@@ -280,10 +289,10 @@ export const getPostComments = async (postId: string) => {
 
 export const createBlogPostComment = async (commentData: IPostCommentData) => {
   try {
-    const createPostCommentResponse = await client.graphql({
+    const createPostCommentResponse = (await client.graphql({
       query: createComment,
       variables: { input: commentData },
-    });
+    })) as GraphQLResult<CreateCommentMutation>;
 
     await getPostComments(commentData?.postId);
 
@@ -297,10 +306,10 @@ export const createBlogPostComment = async (commentData: IPostCommentData) => {
 
 export const addPostCommentLike = async (id: string, likes: number, postId: string, userId?: string, userCommentLikes?: string[], userEmail?: string) => {
   try {
-    const updateCommentResponse = await client.graphql({
+    const updateCommentResponse = (await client.graphql({
       query: updateComment,
       variables: { input: { id, likes } },
-    });
+    })) as GraphQLResult<UpdateCommentMutation>;
 
     await getPostComments(postId);
 
@@ -341,4 +350,27 @@ export const setNavToCommentData = (data: IPostCommentRedirect) => {
 
 export const clearNavToCommentData = () => {
   store.dispatch(clearNavToComment());
+};
+
+export const correctPostId = async (id: string) => {
+  try {
+    if (id.includes("_")) {
+      const posts = (await client.graphql({
+        query: fetchPostByTitleLink,
+        variables: { customLink: id },
+      })) as GraphQLResult<FetchPostByTitleLinkQuery>;
+      if (posts?.data?.fetchPostByTitleLink?.items?.length) {
+        const postId = posts?.data?.fetchPostByTitleLink?.items[0]?.id;
+        return postId;
+      } else {
+        throw new Error("Link not found");
+      }
+    } else {
+      return id;
+    }
+  } catch (error: any) {
+    console.error("error getting blog post", error?.message);
+    console.error("error getting blog post full", error);
+    throw error;
+  }
 };

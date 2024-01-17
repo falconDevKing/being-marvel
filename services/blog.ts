@@ -2,13 +2,14 @@ import store from "../redux/store";
 import { v4 as uuidV4 } from "uuid";
 // import { GraphQLResult } from "@aws-amplify/client-graphql";
 import { createBlog } from "../graphql/mutations";
-import { generateClient } from "aws-amplify/api";
+import { GraphQLResult, generateClient } from "aws-amplify/api";
 import { ErrorHandler, SuccessHandler } from "../utils/handlers";
 import { getAboutByBlog, getBlog } from "../graphql/queries";
 import { setAbout, setBlog, setPostSummary } from "../redux/blogSlice";
 import { customFetchPostsByBlog } from "../graphql/customQueries";
 import { IPostData } from "../interfaces/post";
 import { IPostStats, IPostSummary } from "../interfaces/blog";
+import { CreateBlogMutation, GetAboutByBlogQuery, GetBlogQuery, GetUserByEmailQuery } from "../graphql/API";
 
 const client = generateClient();
 
@@ -24,12 +25,12 @@ export const createBlogHandler = async (userId: string) => {
         subscriber: [] as string[],
       };
 
-      const newBlog = await client.graphql({
+      const newBlog = (await client.graphql({
         query: createBlog,
         variables: {
           input: blogData,
         },
-      });
+      })) as GraphQLResult<CreateBlogMutation>;
 
       const newBlogData = newBlog.data?.createBlog;
       console.log({ data: newBlog.data?.createBlog, newBlog });
@@ -46,19 +47,19 @@ export const createBlogHandler = async (userId: string) => {
 
 export const getBlogDetails = async (blogId: string) => {
   // get blog
-  const blog = await client.graphql({
+  const blog = (await client.graphql({
     query: getBlog,
     variables: { id: blogId },
-  });
+  })) as GraphQLResult<GetBlogQuery>;
 
   const blogData = blog.data?.getBlog;
   store.dispatch(setBlog({ data: blogData }));
 
   // get about
-  const about = await client.graphql({
+  const about = (await client.graphql({
     query: getAboutByBlog,
     variables: { blogId: blogId },
-  });
+  })) as GraphQLResult<GetAboutByBlogQuery>;
 
   const aboutData = about?.data?.getAboutByBlog?.items[0];
   store.dispatch(setAbout({ data: aboutData }));

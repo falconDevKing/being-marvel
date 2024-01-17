@@ -74,6 +74,12 @@ type Post @model {
   status: Boolean
   publishedAt: String
   expireAt: Int
+  customLink: String
+  @index(
+      name: "byTitleLink"
+      queryField: "fetchPostByTitleLink"
+      sortKeyFields: ["id"]
+    )
   blogId: ID!
   @index(
       name: "byblog"
