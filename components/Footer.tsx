@@ -117,6 +117,15 @@ const Footer = ({ width }: FooterProps) => {
 
         <Box textAlign={"center"} pt={12} pb={2} onClick={logout}>
           © 2023 beingMarvel. All Rights Reserved
+          <Box display={"flex"} justifyContent={"center"} py={1}>
+            <Link href={"/terms-and-conditions"}>
+              <Box sx={{ cursor: "pointer" }}>Terms and Conditions</Box>
+            </Link>
+            &nbsp; | &nbsp;
+            <Link href={"/privacy-policy"}>
+              <Box sx={{ cursor: "pointer" }}>Privacy Policy</Box>
+            </Link>
+          </Box>
         </Box>
       </Box>
     </Box>
