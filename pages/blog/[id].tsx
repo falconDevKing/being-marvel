@@ -59,7 +59,8 @@ const BlogPost = () => {
     <Box color="#2c2c2c">
       <Head>
         <title>Being Marvel</title>
-        <meta name="description" content="A lifestyle Blog" />
+        <meta name="description" content="Blog Post | A lifestyle Blog" />
+        <meta name="image" content="/HomePicture.png" />
         <link rel="icon" href="/BeingMarvelLogo.png" />
       </Head>
 

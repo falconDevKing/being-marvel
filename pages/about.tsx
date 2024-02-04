@@ -17,7 +17,8 @@ const About: NextPage = () => {
     <Box color="#2c2c2c">
       <Head>
         <title>Being Marvel</title>
-        <meta name="description" content="A lifestyle Blog" />
+        <meta name="description" content="If this is your first time here... WELCOME TO THE TRIBE!" />
+        <meta name="image" content="/AboutPicture.png" />
         <link rel="icon" href="/BeingMarvelLogo.png" />
       </Head>
 
