@@ -8,7 +8,7 @@
   "resourceName": "beingmarvelblog5767c27ePostAuthentication",
   "parentStack": "auth",
   "triggerEnvs": "[]",
-  "triggerDir": "C:\\snapshot\\amplify-cli\\build\\node_modules\\@aws-amplify\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\PostAuthentication",
+  "triggerDir": "C:\\snapshot\\repo\\build\\node_modules\\@aws-amplify\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\PostAuthentication",
   "triggerTemplate": "PostAuthentication.json.ejs",
   "triggerEventPath": "PostAuthentication.event.json",
   "roleName": "beingmarvelblog5767c27ePostAuthentication",
