@@ -13,7 +13,11 @@ const Home: NextPage = () => {
     <Box color="#2c2c2c">
       <Head>
         <title>Being Marvel</title>
-        <meta name="description" content="A lifestyle Blog" />
+        <meta
+          name="description"
+          content="A lifestyle Blog. Explore life changing, relatable and inspiring blog posts that might help you see the world around you better, while you laugh a little."
+        />
+        <meta name="image" content="/HomePicture.png" />
         <link rel="icon" href="/BeingMarvelLogo.png" />
       </Head>
 

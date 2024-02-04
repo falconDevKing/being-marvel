@@ -20,7 +20,8 @@ const Contact: NextPage = () => {
     <Box color="#2c2c2c">
       <Head>
         <title>Being Marvel</title>
-        <meta name="description" content="A lifestyle Blog" />
+        <meta name="description" content="Hearing back from you often is a constant hope that I dream of every day. I can't wait to hear from you." />
+        <meta name="image" content="/ContactPicture2.png" />
         <link rel="icon" href="/BeingMarvelLogo.png" />
       </Head>
 
