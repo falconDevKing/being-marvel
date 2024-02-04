@@ -86,7 +86,7 @@
     },
     "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"beingmarvelblog5767c27ePostAuthentication\"\n  }\n]",
     "permissions": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\",\"https://dev.d22ojjetioaog3.amplifyapp.com/\",\"https://main.d22ojjetioaog3.amplifyapp.com/\"],\"LogoutURLs\":[\"http://localhost:3000/\",\"https://dev.d22ojjetioaog3.amplifyapp.com/\",\"https://main.d22ojjetioaog3.amplifyapp.com/\"]}",
-    "authProviders": []
+    "authProviders": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\",\"https://dev.beingmarvel.blog/\",\"https://www.beingmarvel.blog/\"],\"LogoutURLs\":[\"http://localhost:3000/\",\"https://dev.beingmarvel.blog/\",\"https://www.beingmarvel.blog/\"]}"
   }
 }
