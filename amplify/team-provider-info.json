@@ -37,42 +37,5 @@
         "beingmarvels3": {}
       }
     }
-  },
-  "prodd": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-beingmarvelblog-prodd-112435-authRole",
-      "UnauthRoleArn": "arn:aws:iam::013882496498:role/amplify-beingmarvelblog-prodd-112435-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::013882496498:role/amplify-beingmarvelblog-prodd-112435-authRole",
-      "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-beingmarvelblog-prodd-112435-deployment",
-      "UnauthRoleName": "amplify-beingmarvelblog-prodd-112435-unauthRole",
-      "StackName": "amplify-beingmarvelblog-prodd-112435",
-      "StackId": "arn:aws:cloudformation:eu-west-1:013882496498:stack/amplify-beingmarvelblog-prodd-112435/f99ddd00-a3d8-11ee-a1bf-06cf262624fd",
-      "AmplifyAppId": "d22ojjetioaog3",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-beingmarvelblog-prodd-112435-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
-    },
-    "categories": {
-      "auth": {
-        "beingmarvelblog5767c27e": {}
-      },
-      "function": {
-        "beingmarvelblog5767c27ePostAuthentication": {
-          "deploymentBucketName": "amplify-beingmarvelblog-prodd-112435-deployment",
-          "s3Key": "amplify-builds/beingmarvelblog5767c27ePostAuthentication-503736505a6978346b6c-build.zip"
-        },
-        "mailSender": {
-          "deploymentBucketName": "amplify-beingmarvelblog-prodd-112435-deployment",
-          "s3Key": "amplify-builds/mailSender-356279472b58702b5074-build.zip",
-          "sesEmail": "emmanueloyekan33@gmail.com"
-        },
-        "beingmarvelblog": {}
-      },
-      "api": {
-        "beingmarvelblog": {}
-      },
-      "storage": {
-        "beingmarvels3": {}
-      }
-    }
   }
 }
