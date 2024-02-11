@@ -7,6 +7,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { IPostSummary } from "../../interfaces/blog";
 import Input from "../Input";
 import dayjs from "dayjs";
+import ISelect from "../ISelect";
 
 const BlogCards = () => {
   const [page, setPage] = useState(1);
@@ -83,39 +84,18 @@ const BlogCards = () => {
 
           <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
             <SortIcon />
-            <select
+            <ISelect
+              id="sort"
               name="sort"
-              style={{
-                color: "#302F2F",
-                padding: "4px 8px",
-                height: "40px",
-                borderRadius: "4px 0px 0px 4px",
-                outline: "none",
-                border: "none",
-                width: "100%",
-                fontSize: "1.25rem",
-                fontFamily: "Cormorant Garamond",
-                backgroundColor: "#f4f7fd",
-              }}
               value={category}
               onChange={handleCategoryChange}
-            >
-              <option style={{ color: "#2C2C2C" }} value="">
-                Sort by
-              </option>
-              <option style={{ color: "#2C2C2C" }} value="recent">
-                Recent posts
-              </option>
-              <option style={{ color: "#2C2C2C" }} value="older">
-                Older posts
-              </option>
-              {/* <option style={{ color: "#2C2C2C" }} value="featured">
-                Featured posts
-              </option> */}
-              <option style={{ color: "#2C2C2C" }} value="liked">
-                Most liked posts
-              </option>
-            </select>
+              options={[
+                { name: "Sort by", value: "" },
+                { name: "Recent posts", value: "recent" },
+                { name: "Older posts", value: "older" },
+                { name: "Most liked posts", value: "liked" },
+              ]}
+            />
           </Box>
         </Box>
       </Box>

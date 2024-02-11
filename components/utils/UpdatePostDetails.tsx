@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import IDatePicker from "../IDatePicker";
 import { ErrorHandler } from "../../utils/handlers";
 import { updateBlogPost } from "../../services/post";
+import ISelect from "../ISelect";
 
 interface UpdatePostDetailsProps {
   postsSummary: IPostSummary[];
@@ -45,20 +46,9 @@ const UpdatePostDetails = ({ postsSummary, blogId }: UpdatePostDetailsProps) => 
   return (
     <Box p={2} border={"1px dashed #ccc"}>
       <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
-        <select
+        <ISelect
+          id="postId"
           name="postId"
-          style={{
-            color: "#302F2F",
-            padding: "4px 8px",
-            height: "40px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
           value={postId}
           onChange={(e) => {
             setPostId(e.target.value);
@@ -66,18 +56,8 @@ const UpdatePostDetails = ({ postsSummary, blogId }: UpdatePostDetailsProps) => 
             setPostLikes(0);
             setPostViews(0);
           }}
-        >
-          <option style={{ color: "#2C2C2C" }} value="">
-            Post Name
-          </option>
-          {postsSummary.map((postSummary) => {
-            return (
-              <option style={{ color: "#2C2C2C" }} value={postSummary.id}>
-                {postSummary?.title}
-              </option>
-            );
-          })}
-        </select>
+          options={[{ name: "Post Name", value: "" }, ...postsSummary.map((postSummary) => ({ name: postSummary?.title, value: postSummary.id }))]}
+        />
       </Box>
 
       <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">

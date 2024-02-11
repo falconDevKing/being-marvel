@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import TextArea from "../TextArea";
 import { IPostCommentData } from "../../interfaces/post";
 import { putInTable } from "../../utils/dynamodb";
+import ISelect from "../ISelect";
 
 interface UpdatePostCommentsProps {
   postsSummary: IPostSummary[];
@@ -81,20 +82,9 @@ const UpdatePostComments = ({ postsSummary, blogId }: UpdatePostCommentsProps) =
   return (
     <Box p={2} border={"1px dashed #ccc"}>
       <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
-        <select
+        <ISelect
+          id="postId"
           name="postId"
-          style={{
-            color: "#302F2F",
-            padding: "4px 8px",
-            height: "40px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
           value={postId}
           onChange={(e) => {
             setPostId(e.target.value);
@@ -104,53 +94,23 @@ const UpdatePostComments = ({ postsSummary, blogId }: UpdatePostCommentsProps) =
             setCommentLikes(0);
             setCommentDate("");
           }}
-        >
-          <option style={{ color: "#2C2C2C" }} value="">
-            Post Name
-          </option>
-          {postsSummary.map((postSummary) => {
-            return (
-              <option style={{ color: "#2C2C2C" }} value={postSummary.id}>
-                {postSummary?.title}
-              </option>
-            );
-          })}
-        </select>
+          options={[{ name: "Post Name", value: "" }, ...postsSummary.map((postSummary) => ({ name: postSummary?.title, value: postSummary.id }))]}
+        />
       </Box>
 
       <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
-        <select
+        <ISelect
+          id="commentParentId"
           name="commentParentId"
-          style={{
-            color: "#302F2F",
-            padding: "4px 8px",
-            height: "40px",
-            borderRadius: "4px 0px 0px 4px",
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "1.25rem",
-            fontFamily: "Cormorant Garamond",
-            backgroundColor: "#f4f7fd",
-          }}
           value={commentParentId}
           onChange={(e) => {
             setCommentParentId(e.target.value);
           }}
-        >
-          <option style={{ color: "#2C2C2C" }} value="">
-            {loadingParentComments ? "Loading Parent Comments..." : "Parent Comment"}
-          </option>
-          {parentComments
-            .filter((parentComment) => !parentComment.subComment)
-            .map((parentComment) => {
-              return (
-                <option style={{ color: "#2C2C2C", padding: "10px" }} value={parentComment.id}>
-                  {parentComment?.content}
-                </option>
-              );
-            })}
-        </select>
+          options={[
+            { name: loadingParentComments ? "Loading Parent Comments..." : "Parent Comment", value: "" },
+            ...parentComments.map((parentComment) => ({ name: parentComment.content as string, value: parentComment.id })),
+          ]}
+        />
       </Box>
 
       <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
