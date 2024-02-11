@@ -118,3 +118,10 @@ export const transformText = (str: string) => {
 
   return <Box>{textLine}</Box>;
 };
+
+export const categoryOptions = [
+  { name: "Category", value: "" },
+  { name: "FAITH", value: "FAITH" },
+  { name: "LOVE", value: "LOVE" },
+  { name: "LIFESTYLE", value: "LIFESTYLE" },
+];

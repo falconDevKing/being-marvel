@@ -23,6 +23,8 @@ import { v4 as uuidV4 } from "uuid";
 import { ConfigurationSetAlreadyExistsException } from "@aws-sdk/client-ses";
 import { StorageApi } from "../../services/storage";
 import { createBlogPost } from "../../services/post";
+import { categoryOptions } from "../../utils/helper";
+import ISelect from "../../components/ISelect";
 
 const s3baseurl = process.env.NEXT_PUBLIC_S3_BASE_URL || "";
 
@@ -262,16 +264,15 @@ const NewPost = () => {
               <Box>
                 <Box>Category</Box>
                 <Box display={"flex"} pb={1}>
-                  <Input
+                  <ISelect
                     id="category"
                     name="category"
-                    type="text"
-                    placeholder="Category"
                     value={values?.category}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     errors={errors}
                     touched={touched}
+                    options={categoryOptions}
                   />
                 </Box>
               </Box>

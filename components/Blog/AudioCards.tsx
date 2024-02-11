@@ -19,18 +19,18 @@ const AudioCards = () => {
       <Box>
         <Box>
           <Box fontWeight={700} fontSize={"1.8rem"}>
-            LISTEN TO AUDIO{" "}
-            <Box component={"span"} fontStyle={"italic"} fontSize={"0.9rem"}>
+            LISTEN TO AUDIO
+            <Box component={"span"} fontStyle={"italic"} fontSize={"0.9rem"} pl={1}>
               Coming soon
             </Box>
           </Box>
-          <Box color="#D8D6D6">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Box>
+          {/* <Box color="#D8D6D6">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Box> */}
         </Box>
       </Box>
 
       <Box display={"flex"} flexDirection={"row"} py={4} flexWrap="wrap">
-        {[1, 2, 3, 4, 5, 6].map((element, index) => (
-          <AudioCard key={element} />
+        {["Being Here", "Being Away", "Being In A Season", "Being In A Lot", "Being Disabled", "Being Home & Away"].map((element, index) => (
+          <AudioCard key={element} name={element} />
         ))}
       </Box>
 

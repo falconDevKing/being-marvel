@@ -16,9 +16,18 @@ const About: NextPage = () => {
   return (
     <Box color="#2c2c2c">
       <Head>
-        <title>Being Marvel</title>
-        <meta name="description" content="If this is your first time here... WELCOME TO THE TRIBE!" />
+        <title>About | Being Marvel</title>
+        <meta property="og:title" content="About | Being Marvel" />
+        <meta
+          name="description"
+          content="If this is your first time here... WELCOME TO THE TRIBE! I'm not certain what brought you here, but every word that this blog is made up of was written with you in mind."
+        />
+        <meta
+          property="og:description"
+          content="If this is your first time here... WELCOME TO THE TRIBE! I'm not certain what brought you here, but every word that this blog is made up of was written with you in mind."
+        />
         <meta name="image" content="/AboutPicture.png" />
+        <meta property="og:image" content="/AboutPicture.png" />
         <link rel="icon" href="/BeingMarvelLogo.png" />
       </Head>
 

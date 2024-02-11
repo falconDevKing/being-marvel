@@ -23,6 +23,8 @@ import { v4 as uuidV4 } from "uuid";
 import { StorageApi } from "../../../services/storage";
 import { createBlogPost, getBlogPost, updateBlogPost } from "../../../services/post";
 import { IBlogPost } from "../../../interfaces/blog";
+import ISelect from "../../../components/ISelect";
+import { categoryOptions } from "../../../utils/helper";
 
 const s3baseurl = process.env.NEXT_PUBLIC_S3_BASE_URL || "";
 
@@ -298,16 +300,15 @@ const EditPost = () => {
               <Box>
                 <Box>Category</Box>
                 <Box display={"flex"} pb={1}>
-                  <Input
+                  <ISelect
                     id="category"
                     name="category"
-                    type="text"
-                    placeholder="Category"
                     value={values?.category}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     errors={errors}
                     touched={touched}
+                    options={categoryOptions}
                   />
                 </Box>
               </Box>

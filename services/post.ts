@@ -133,6 +133,8 @@ export const publishPost = async (id: string, blogId: string) => {
 
     await updatedBlogPostData(blogId);
 
+    // TODO: work on notifying subscribers
+
     return updatePostResponse.data?.updatePost;
   } catch (error: any) {
     console.error("error getting blog post", error?.message);
@@ -276,11 +278,12 @@ export const fetchPostComments = async (postId: string) => {
   return totalCommentsData;
 };
 
-export const getPostComments = async (postId: string) => {
+export const getPostComments = async (postId: string, dontSaveToStore = false) => {
   try {
     const postComments = await fetchPostComments(postId);
 
-    store.dispatch(setComments({ data: postComments }));
+    !dontSaveToStore && store.dispatch(setComments({ data: postComments }));
+    if (dontSaveToStore) return postComments;
   } catch (error: any) {
     console.log("error getting comments", error);
     ErrorHandler({ message: error?.message || "Unable to get comments" });
@@ -363,7 +366,7 @@ export const correctPostId = async (id: string) => {
         const postId = posts?.data?.fetchPostByTitleLink?.items[0]?.id;
         return postId;
       } else {
-        throw new Error("Link not found");
+        return "returnHome";
       }
     } else {
       return id;

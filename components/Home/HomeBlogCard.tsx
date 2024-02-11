@@ -21,7 +21,11 @@ const HomeBlogCard = ({ postSummary }: HomeBlogCardProps) => {
       width={{ xs: "100%", sm: "45%", md: "30%" }}
     >
       <Box width={"100%"} borderRadius={"16px"}>
-        <Image src={descriptionImage} alt={`${title} Image`} layout="responsive" width={454} height={340} style={{ borderRadius: "16px 16px 0px 0px " }} />
+        <Link href={`/blog/${id}`}>
+          <a>
+            <Image src={descriptionImage} alt={`${title} Image`} layout="responsive" width={454} height={340} style={{ borderRadius: "16px 16px 0px 0px " }} />
+          </a>
+        </Link>
       </Box>
       <Box p={2}>
         <Box fontSize={"1.25rem"} textTransform={"uppercase"}>

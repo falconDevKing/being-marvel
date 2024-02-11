@@ -15,6 +15,8 @@ import { logout } from "../../services/auth";
 import { getBlogDetails } from "../../services/blog";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
+import Head from "next/head";
+import HandymanIcon from "@mui/icons-material/Handyman";
 
 const marvelBlogId = process.env.NEXT_PUBLIC_MARVEL_BLOG_ID as string;
 
@@ -101,142 +103,25 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
   }, []);
 
   return (
-    <Box display="flex">
-      <Box width={"20%"} p={"32px 16px 16px 32px"} height="100vh" display={{ xs: "none", md: "block" }}>
-        <Link href={"/"}>
-          <a>
-            <Image src="/BeingMarvelLogo.png" alt="being marvel logo" width={100} height={50} style={{ cursor: "pointer" }} />
-          </a>
-        </Link>
+    <>
+      <Head>
+        <title>Blogger | Being Marvel</title>
+        <meta property="og:title" content="Blogger | Being Marvel" />
+        <meta
+          name="description"
+          content="If this is your first time here... WELCOME TO THE TRIBE! I'm not certain what brought you here, but every word that this blog is made up of was written with you in mind."
+        />
+        <meta
+          property="og:description"
+          content="If this is your first time here... WELCOME TO THE TRIBE! I'm not certain what brought you here, but every word that this blog is made up of was written with you in mind."
+        />
+        <meta name="image" content="/AboutPicture.png" />
+        <meta property="og:image" content="/AboutPicture.png" />
+        <link rel="icon" href="/BeingMarvelLogo.png" />
+      </Head>
 
-        <Box pt={2}>
-          <Box py={3}>
-            <Box display={"flex"} alignItems={"center"} p={1} sx={activePath === "dashboard" ? selectedNav : unSelectedNav} onClick={() => navToBlogger("")}>
-              <SpaceDashboardIcon color="primary" />
-              <Box component="span" px={1}>
-                Dashboard
-              </Box>
-            </Box>
-          </Box>
-
-          <Box>
-            <Box py={2}>
-              <Box>Manage Blog Posts</Box>
-
-              <Box>
-                <Box
-                  display={"flex"}
-                  alignItems={"center"}
-                  p={1}
-                  sx={activePath === "new-post" ? selectedNav : unSelectedNav}
-                  onClick={() => navToBlogger("new-post")}
-                >
-                  <AddCircleOutlineIcon color="primary" />
-                  <Box component="span" px={1}>
-                    New Post
-                  </Box>
-                </Box>
-                <Box
-                  display={"flex"}
-                  alignItems={"center"}
-                  p={1}
-                  sx={activePath === "posts" ? selectedNav : unSelectedNav}
-                  onClick={() => navToBlogger("posts")}
-                >
-                  <ListAltIcon color="primary" />
-                  <Box component="span" px={1}>
-                    Posts
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-            <Box py={2}>
-              <Box>Manage Account</Box>
-              <Box>
-                <Box
-                  display={"flex"}
-                  alignItems={"center"}
-                  p={1}
-                  sx={activePath === "profile" ? selectedNav : unSelectedNav}
-                  onClick={() => navToBlogger("profile")}
-                >
-                  <PersonOutlineIcon color="primary" />
-                  <Box component="span" px={1}>
-                    Profile
-                  </Box>
-                </Box>
-                <Box display={"flex"} alignItems={"center"} p={1} sx={activePath === "logout" ? selectedNav : unSelectedNav} onClick={logout}>
-                  <LogoutIcon color="primary" />
-                  <Box component="span" px={1}>
-                    Logout
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-
-      <Box width="100%" borderLeft={"1px solid #CCC"} height={"100%"} minHeight="100vh" bgcolor="#F4F7FD">
-        <Box height="100%">
-          <Box
-            bgcolor="#fff"
-            display={{ xs: "none", md: "flex" }}
-            justifyContent={"flex-end"}
-            alignItems={"center"}
-            px={2}
-            py={2}
-            borderBottom={"1px solid #CCC"}
-          >
-            <ProfileAvatar
-              name={name}
-              src={picture}
-              hasImage
-              sx={{
-                width: "60px",
-                height: "60px",
-                background: "#E77A0C",
-              }}
-            />
-            <Divider orientation="vertical" flexItem />
-            <Box px={2} py={1} bgcolor={"#6E87DC88"} mx={2} color="#fff" fontWeight={700} onClick={logout} sx={{ cursor: "pointer" }}>
-              Logout
-            </Box>
-          </Box>
-
-          <Box
-            bgcolor="#fff"
-            display={{ xs: "flex", md: "none" }}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-            px={1}
-            py={2}
-            borderBottom={"1px solid #CCC"}
-          >
-            <Box px={1} py={1} fontWeight={700} onClick={toggleDrawer(openDrawer ? false : true)} sx={{ cursor: "pointer" }}>
-              {openDrawer ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
-            </Box>
-
-            <ProfileAvatar
-              name={name}
-              src={picture}
-              hasImage
-              sx={{
-                width: "60px",
-                height: "60px",
-                background: "#E77A0C",
-              }}
-            />
-          </Box>
-
-          <Box p={{ xs: 2, md: 4 }} height={"100%"}>
-            {children}
-          </Box>
-        </Box>
-      </Box>
-
-      <Drawer anchor={"left"} open={openDrawer} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: "auto" }} role="presentation" p={"32px 16px 16px 32px"} height="100vh" minHeight={"100%"} bgcolor="#6A85DB">
+      <Box display="flex">
+        <Box width={"20%"} p={"32px 16px 16px 32px"} height="100vh" display={{ xs: "none", md: "block" }}>
           <Link href={"/"}>
             <a>
               <Image src="/BeingMarvelLogo.png" alt="being marvel logo" width={100} height={50} style={{ cursor: "pointer" }} />
@@ -245,14 +130,8 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
 
           <Box pt={2}>
             <Box py={3}>
-              <Box
-                display={"flex"}
-                alignItems={"center"}
-                p={1}
-                sx={activePath === "dashboard" ? selectedNavMobile : unSelectedNav}
-                onClick={() => navToBlogger("")}
-              >
-                <SpaceDashboardIcon sx={{ color: activePath === "dashboard" ? "#fff" : "#302F2F" }} />
+              <Box display={"flex"} alignItems={"center"} p={1} sx={activePath === "dashboard" ? selectedNav : unSelectedNav} onClick={() => navToBlogger("")}>
+                <SpaceDashboardIcon color="primary" />
                 <Box component="span" px={1}>
                   Dashboard
                 </Box>
@@ -268,10 +147,10 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
                     display={"flex"}
                     alignItems={"center"}
                     p={1}
-                    sx={activePath === "new-post" ? selectedNavMobile : unSelectedNav}
+                    sx={activePath === "new-post" ? selectedNav : unSelectedNav}
                     onClick={() => navToBlogger("new-post")}
                   >
-                    <AddCircleOutlineIcon sx={{ color: activePath === "new-post" ? "#fff" : "#302F2F" }} />
+                    <AddCircleOutlineIcon color="primary" />
                     <Box component="span" px={1}>
                       New Post
                     </Box>
@@ -280,12 +159,24 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
                     display={"flex"}
                     alignItems={"center"}
                     p={1}
-                    sx={activePath === "posts" ? selectedNavMobile : unSelectedNav}
+                    sx={activePath === "posts" ? selectedNav : unSelectedNav}
                     onClick={() => navToBlogger("posts")}
                   >
-                    <ListAltIcon sx={{ color: activePath === "posts" ? "#fff" : "#302F2F" }} />
+                    <ListAltIcon color="primary" />
                     <Box component="span" px={1}>
                       Posts
+                    </Box>
+                  </Box>
+                  <Box
+                    display={"flex"}
+                    alignItems={"center"}
+                    p={1}
+                    sx={activePath === "posts" ? selectedNav : unSelectedNav}
+                    onClick={() => navToBlogger("utility")}
+                  >
+                    <HandymanIcon color="primary" />
+                    <Box component="span" px={1}>
+                      Utility
                     </Box>
                   </Box>
                 </Box>
@@ -297,16 +188,16 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
                     display={"flex"}
                     alignItems={"center"}
                     p={1}
-                    sx={activePath === "profile" ? selectedNavMobile : unSelectedNav}
+                    sx={activePath === "profile" ? selectedNav : unSelectedNav}
                     onClick={() => navToBlogger("profile")}
                   >
-                    <PersonOutlineIcon sx={{ color: activePath === "profile" ? "#fff" : "#302F2F" }} />
+                    <PersonOutlineIcon color="primary" />
                     <Box component="span" px={1}>
                       Profile
                     </Box>
                   </Box>
-                  <Box display={"flex"} alignItems={"center"} p={1} sx={activePath === "logout" ? selectedNavMobile : unSelectedNav} onClick={logout}>
-                    <LogoutIcon sx={{ color: activePath === "logout" ? "#fff" : "#302F2F" }} />
+                  <Box display={"flex"} alignItems={"center"} p={1} sx={activePath === "logout" ? selectedNav : unSelectedNav} onClick={logout}>
+                    <LogoutIcon color="primary" />
                     <Box component="span" px={1}>
                       Logout
                     </Box>
@@ -316,8 +207,149 @@ const BloggerLayout = ({ children }: BloggerLayoutProps) => {
             </Box>
           </Box>
         </Box>
-      </Drawer>
-    </Box>
+
+        <Box width="100%" borderLeft={"1px solid #CCC"} height={"100%"} minHeight="100vh" bgcolor="#F4F7FD">
+          <Box height="100%">
+            <Box
+              bgcolor="#fff"
+              display={{ xs: "none", md: "flex" }}
+              justifyContent={"flex-end"}
+              alignItems={"center"}
+              px={2}
+              py={2}
+              borderBottom={"1px solid #CCC"}
+            >
+              <ProfileAvatar
+                name={name}
+                src={picture}
+                hasImage
+                sx={{
+                  width: "60px",
+                  height: "60px",
+                  background: "#E77A0C",
+                }}
+              />
+              <Divider orientation="vertical" flexItem />
+              <Box px={2} py={1} bgcolor={"#6E87DC88"} mx={2} color="#fff" fontWeight={700} onClick={logout} sx={{ cursor: "pointer" }}>
+                Logout
+              </Box>
+            </Box>
+
+            <Box
+              bgcolor="#fff"
+              display={{ xs: "flex", md: "none" }}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              px={1}
+              py={2}
+              borderBottom={"1px solid #CCC"}
+            >
+              <Box px={1} py={1} fontWeight={700} onClick={toggleDrawer(openDrawer ? false : true)} sx={{ cursor: "pointer" }}>
+                {openDrawer ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+              </Box>
+
+              <ProfileAvatar
+                name={name}
+                src={picture}
+                hasImage
+                sx={{
+                  width: "60px",
+                  height: "60px",
+                  background: "#E77A0C",
+                }}
+              />
+            </Box>
+
+            <Box p={{ xs: 2, md: 4 }} height={"100%"}>
+              {children}
+            </Box>
+          </Box>
+        </Box>
+
+        <Drawer anchor={"left"} open={openDrawer} onClose={toggleDrawer(false)}>
+          <Box sx={{ width: "auto" }} role="presentation" p={"32px 16px 16px 32px"} height="100vh" minHeight={"100%"} bgcolor="#6A85DB">
+            <Link href={"/"}>
+              <a>
+                <Image src="/BeingMarvelLogo.png" alt="being marvel logo" width={100} height={50} style={{ cursor: "pointer" }} />
+              </a>
+            </Link>
+
+            <Box pt={2}>
+              <Box py={3}>
+                <Box
+                  display={"flex"}
+                  alignItems={"center"}
+                  p={1}
+                  sx={activePath === "dashboard" ? selectedNavMobile : unSelectedNav}
+                  onClick={() => navToBlogger("")}
+                >
+                  <SpaceDashboardIcon sx={{ color: activePath === "dashboard" ? "#fff" : "#302F2F" }} />
+                  <Box component="span" px={1}>
+                    Dashboard
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box>
+                <Box py={2}>
+                  <Box>Manage Blog Posts</Box>
+
+                  <Box>
+                    <Box
+                      display={"flex"}
+                      alignItems={"center"}
+                      p={1}
+                      sx={activePath === "new-post" ? selectedNavMobile : unSelectedNav}
+                      onClick={() => navToBlogger("new-post")}
+                    >
+                      <AddCircleOutlineIcon sx={{ color: activePath === "new-post" ? "#fff" : "#302F2F" }} />
+                      <Box component="span" px={1}>
+                        New Post
+                      </Box>
+                    </Box>
+                    <Box
+                      display={"flex"}
+                      alignItems={"center"}
+                      p={1}
+                      sx={activePath === "posts" ? selectedNavMobile : unSelectedNav}
+                      onClick={() => navToBlogger("posts")}
+                    >
+                      <ListAltIcon sx={{ color: activePath === "posts" ? "#fff" : "#302F2F" }} />
+                      <Box component="span" px={1}>
+                        Posts
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box py={2}>
+                  <Box>Manage Account</Box>
+                  <Box>
+                    <Box
+                      display={"flex"}
+                      alignItems={"center"}
+                      p={1}
+                      sx={activePath === "profile" ? selectedNavMobile : unSelectedNav}
+                      onClick={() => navToBlogger("profile")}
+                    >
+                      <PersonOutlineIcon sx={{ color: activePath === "profile" ? "#fff" : "#302F2F" }} />
+                      <Box component="span" px={1}>
+                        Profile
+                      </Box>
+                    </Box>
+                    <Box display={"flex"} alignItems={"center"} p={1} sx={activePath === "logout" ? selectedNavMobile : unSelectedNav} onClick={logout}>
+                      <LogoutIcon sx={{ color: activePath === "logout" ? "#fff" : "#302F2F" }} />
+                      <Box component="span" px={1}>
+                        Logout
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Drawer>
+      </Box>
+    </>
   );
 };
 
