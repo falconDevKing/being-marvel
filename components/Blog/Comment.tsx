@@ -26,7 +26,7 @@ const Comment = ({ postId, blogId }: CommentProps) => {
         if (comment) {
           const commentData = {
             id: uuidv4(),
-            name: name || fallBackName || "anonymous",
+            name: name || fallBackName || "Guest",
             picture: picture || image || "",
             content: comment,
             subComment: false,

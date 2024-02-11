@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
-import { useRouter } from "next/router";
 import { IPostSummary } from "../../interfaces/blog";
 import Link from "next/link";
 
@@ -10,13 +9,7 @@ interface PostCardProps {
 }
 
 const PostCard = ({ postData }: PostCardProps) => {
-  const router = useRouter();
-
   const { id, title, description, descriptionImage, category } = postData;
-
-  const navToBlogPost = () => {
-    router.push("/blog/" + id);
-  };
 
   return (
     <Box

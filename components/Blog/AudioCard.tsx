@@ -4,18 +4,18 @@ import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import PlayCircleFilledRoundedIcon from "@mui/icons-material/PlayCircleFilledRounded";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 interface AudioCardProps {
   name: string;
 }
 
 const AudioCard = ({ name }: AudioCardProps) => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const navToBlogPost = () => {
-    router.push("/blog/1");
-  };
+  // const navToBlogPost = () => {
+  //   router.push("/blog/1");
+  // };
 
   return (
     <Box display={"flex"} p={2} bgcolor="#F4F7FD" borderRadius="24px" width={{ xs: "90%", sm: "45%", md: "31%" }} mx="auto" my={2} alignItems={"center"}>

@@ -278,11 +278,12 @@ export const fetchPostComments = async (postId: string) => {
   return totalCommentsData;
 };
 
-export const getPostComments = async (postId: string) => {
+export const getPostComments = async (postId: string, dontSaveToStore = false) => {
   try {
     const postComments = await fetchPostComments(postId);
 
-    store.dispatch(setComments({ data: postComments }));
+    !dontSaveToStore && store.dispatch(setComments({ data: postComments }));
+    if (dontSaveToStore) return postComments;
   } catch (error: any) {
     console.log("error getting comments", error);
     ErrorHandler({ message: error?.message || "Unable to get comments" });

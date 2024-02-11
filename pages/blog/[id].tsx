@@ -6,6 +6,7 @@ import Footer from "../../components/Footer";
 import { useEffect, useState } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import BlogCaption from "../../components/Blog/BlogCaption";
 import BlogContent from "../../components/Blog/BlogContent";
 import TrendingBlog from "../../components/Blog/TrendingBlog";
@@ -93,7 +94,11 @@ const BlogPost = () => {
       <Box width={{ xs: "90%", md: "85%" }} mx={"auto"} pb={postData?.captionImage ? 4 : 2}>
         <Box display="flex" alignItems={"center"} color={"#C0C0C0"}>
           <Box display="flex" alignItems={"center"}>
-            <AccessTimeIcon /> <Box px={1}>{dayjs(postData?.createdAt).fromNow()}</Box>
+            <AccessTimeIcon /> <Box px={1}>{dayjs(postData?.publishedAt).fromNow()}</Box>
+          </Box>
+
+          <Box display="flex" alignItems={"center"} px={1}>
+            <VisibilityIcon /> <Box px={1}>{postData?.views} views</Box>
           </Box>
 
           <Box display="flex" alignItems={"center"} px={1}>

@@ -86,7 +86,7 @@ const BlogCards = () => {
             <select
               name="sort"
               style={{
-                color: "#C0C0C0",
+                color: "#302F2F",
                 padding: "4px 8px",
                 height: "40px",
                 borderRadius: "4px 0px 0px 4px",
