@@ -58,12 +58,12 @@ const BlogCards = () => {
 
   return (
     <Box width={"85%"} mx="auto" my={2}>
-      <Box display={"flex"} justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }}>
+      <Box display={"flex"} justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }} alignItems={"center"}>
         <Box>
           <Box fontWeight={700} fontSize={"1.8rem"}>
             MY BLOG POSTS
           </Box>
-          <Box color="#D8D6D6">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Box>
+          {/* <Box color="#D8D6D6">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Box> */}
         </Box>
 
         <Box display={"flex"} color="#C0C0C0" flexDirection={{ xs: "column-reverse", sm: "row" }} width={{ xs: "100%", md: "50%" }}>

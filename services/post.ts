@@ -133,6 +133,8 @@ export const publishPost = async (id: string, blogId: string) => {
 
     await updatedBlogPostData(blogId);
 
+    // TODO: work on notifying subscribers
+
     return updatePostResponse.data?.updatePost;
   } catch (error: any) {
     console.error("error getting blog post", error?.message);
@@ -363,7 +365,7 @@ export const correctPostId = async (id: string) => {
         const postId = posts?.data?.fetchPostByTitleLink?.items[0]?.id;
         return postId;
       } else {
-        throw new Error("Link not found");
+        return "returnHome";
       }
     } else {
       return id;

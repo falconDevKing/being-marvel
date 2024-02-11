@@ -3,6 +3,7 @@ import Image from "next/image";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import { useRouter } from "next/router";
 import { IPostSummary } from "../../interfaces/blog";
+import Link from "next/link";
 
 interface PostCardProps {
   postData: IPostSummary;
@@ -28,15 +29,18 @@ const PostCard = ({ postData }: PostCardProps) => {
       my={1}
     >
       <Box width={"100%"} borderRadius={"16px"}>
-        <Image
-          src={descriptionImage}
-          alt={`${title} image`}
-          layout="responsive"
-          width={454}
-          height={340}
-          style={{ borderRadius: "16px 16px 0px 0px", cursor: "pointer" }}
-          onClick={navToBlogPost}
-        />
+        <Link href={`/blog/${id}`}>
+          <a>
+            <Image
+              src={descriptionImage}
+              alt={`${title} image`}
+              layout="responsive"
+              width={454}
+              height={340}
+              style={{ borderRadius: "16px 16px 0px 0px", cursor: "pointer" }}
+            />
+          </a>
+        </Link>
       </Box>
       <Box p={2}>
         <Box fontSize={"1.25rem"} textTransform={"uppercase"}>
@@ -46,22 +50,31 @@ const PostCard = ({ postData }: PostCardProps) => {
           {title}
         </Box>
         <Box py={1}>{description}</Box>
-        <Box
-          fontSize={"1rem"}
-          p={"8px 12px"}
-          width={"max-content"}
-          display={"flex"}
-          alignItems={"center"}
-          bgcolor={"#F4F7FD"}
-          borderRadius={"16px"}
-          sx={{ cursor: " pointer" }}
-          onClick={navToBlogPost}
-        >
-          <Box component={"span"} fontWeight={700} color="#282828">
+        <Link href={`/blog/${id}`}>
+          <a>
+            <Box
+              fontSize={"1rem"}
+              p={"12px 12px"}
+              width={"max-content"}
+              display={"flex"}
+              alignItems={"center"}
+              bgcolor={"#F4F7FD"}
+              borderRadius={"16px"}
+              sx={{ cursor: " pointer" }}
+              // onClick={navToBlogPost}
+            >
+              <Box component={"span"} fontWeight={700} color="#282828">
+                READ MORE
+              </Box>
+              <TrendingFlatIcon fontSize="small" />
+            </Box>
+          </a>
+        </Link>
+
+        {/* <Box component={"span"} fontWeight={700} color="#282828">
             READ MORE
           </Box>
-          <TrendingFlatIcon fontSize="small" />
-        </Box>
+          <TrendingFlatIcon fontSize="small" /> */}
       </Box>
     </Box>
   );

@@ -41,12 +41,15 @@ const BlogPost = () => {
 
           await addBlogPostViews(postId, +(postDetails.views || 0) + 1);
           await getPostComments(postId as string);
+        } else if (correctedPostId === "returnHome") {
+          router.replace("/blog");
         } else {
           router.replace("/blog/" + correctedPostId);
         }
       } catch (error: any) {
         ErrorHandler({ message: error?.message || "Unable to get post" });
         console.log("error getting post", error);
+        router.replace("/blog");
       }
     };
 
@@ -58,9 +61,18 @@ const BlogPost = () => {
   return (
     <Box color="#2c2c2c">
       <Head>
-        <title>Being Marvel</title>
-        <meta name="description" content="Blog Post | A lifestyle Blog" />
+        <title>Blog | Being Marvel</title>
+        <meta property="og:title" content="Blog | Being Marvel" />
+        <meta
+          name="description"
+          content="A lifestyle Blog. Explore life changing, relatable and inspiring blog posts that might help you see the world around you better, while you laugh a little."
+        />
+        <meta
+          property="og:description"
+          content="A lifestyle Blog. Explore life changing, relatable and inspiring blog posts that might help you see the world around you better, while you laugh a little."
+        />
         <meta name="image" content="/HomePicture.png" />
+        <meta property="og:image" content="/HomePicture.png" />
         <link rel="icon" href="/BeingMarvelLogo.png" />
       </Head>
 
@@ -96,7 +108,13 @@ const BlogPost = () => {
 
       <Box display={"flex"} width={{ xs: "90%", md: "85%" }} mx={"auto"} py={1} justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }}>
         <Box width={{ xs: "100%", md: "65%" }}>
-          <BlogContent postId={postData?.id as string} content={postData?.content as string} postLikes={postData?.likes as number} preview={false} />
+          <BlogContent
+            postId={postData?.id as string}
+            content={postData?.content as string}
+            postLikes={postData?.likes as number}
+            preview={false}
+            customLink={postData?.customLink as string}
+          />
         </Box>
         <Box width={{ xs: "100%", md: "33%" }}>
           <Box>
