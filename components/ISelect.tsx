@@ -5,7 +5,6 @@ interface selectProps {
   id: string;
   name: string;
   options: { name: string; value: string }[];
-  placeholder?: string;
   required?: boolean;
   style?: CSSProperties;
   disabled?: boolean;
@@ -29,7 +28,6 @@ const getValueFromPath = (object: any, path: string) => {
 const Select = ({
   id,
   name,
-  placeholder,
   required = false,
   style = {},
   disabled = false,
@@ -66,7 +64,6 @@ const Select = ({
         onChange={onChange}
         onBlur={onBlur}
         autoFocus={autoFocus}
-        placeholder={placeholder}
         style={{
           color: "#302F2F",
           padding: "4px 8px",
