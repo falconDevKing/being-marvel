@@ -66,41 +66,45 @@ const MyApp: React.FunctionComponent<CustomAppProps> = (props) => {
     router.push("/blog/" + postId);
   };
 
-  React.useEffect(() => {
-    console.log("app loaded");
-    const unsubscribe = Hub?.listen("auth", ({ payload }) => {
-      const { event, data } = payload as any;
+  Hub?.listen("auth", ({ payload }) => {
+    console.log("Hub listening ");
+    const { event, data } = payload as any;
 
-      console.log("hub event", event);
-      switch (event) {
-        case "signInWithRedirect":
-          console.log({ data });
-          saveAuthUser(data);
-          break;
-        case "signInWithRedirect_failure":
-          console.log("payload", payload);
-          console.log("data", data);
-          break;
-        case "signedIn":
-          console.log({ data });
-          saveAuthUser(data);
-          break;
-        case "customOAuthState":
-          console.log("customState", event, data);
-          const navData = JSON.parse(data) as IPostCommentRedirect;
-          setNavToCommentData(navData);
-          console.log("hub", "comment set, about to nav");
-          navigateToBlogPost(navData?.postId);
-        case "signedOut":
-          setLogout();
-          break;
-      }
-    });
+    console.log("hub event", event);
+    console.log("hub data", data);
+    console.log("hub payload", payload);
+    switch (event) {
+      case "signInWithRedirect":
+        console.log({ data });
+        saveAuthUser(data);
+        break;
+      case "signInWithRedirect_failure":
+        console.log("payload", payload);
+        console.log("data", data);
+        break;
+      case "signedIn":
+        console.log({ data });
+        saveAuthUser(data);
+        break;
+      case "customOAuthState":
+        console.log("customState", event, data);
+        const navData = JSON.parse(data) as IPostCommentRedirect;
+        setNavToCommentData(navData);
+        console.log("hub", "comment set, about to nav");
+        navigateToBlogPost(navData?.postId);
+      case "signedOut":
+        setLogout();
+        break;
+    }
+  });
 
-    // dispatch(getLoggedInUser());
+  // React.useEffect(() => {
+  //   console.log("app loaded");
 
-    return unsubscribe;
-  }, []);
+  //   // dispatch(getLoggedInUser());
+
+  //   // return unsubscribe();
+  // }, []);
 
   return (
     <CacheProvider value={emotionCache}>

@@ -75,7 +75,7 @@ const Footer = ({ width }: FooterProps) => {
           </Box>
           <Box width={{ xs: "100%", md: "40%" }} mt={{ xs: 6, md: 0 }}>
             <Box py={1}>Sign Up for Our Newsletter</Box>
-            <Box py={1}>Be the first to hear when our newsletter is up!</Box>
+            <Box py={1}>Be the first to hear when new content is up!</Box>
             <Box display={"flex"} py={2} maxWidth={"400px"}>
               <input
                 id="subscribeEmail"

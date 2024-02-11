@@ -25,6 +25,7 @@ import {
 } from "../../services/post";
 import { ErrorHandler, SuccessHandler } from "../../utils/handlers";
 import { Comment } from "../../graphql/API";
+import DefaultProfileImage from "../../assets/defaultProfileImage.png";
 dayjs.extend(relativeTime);
 
 type CommentsCardProps = {
@@ -41,6 +42,7 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
   const abovePhone = useMediaQuery("(min-width:600px)");
 
   const { name: replyName, picture: replyPicture, email } = userData;
+  const { name: fallBackName, image: fallBackImage } = userDetails;
 
   const { id, name, picture, content, createdAt, likes } = comment;
 
@@ -72,8 +74,8 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
         if (reply) {
           const replyData = {
             id: uuidv4(),
-            name: replyName || "anonymous",
-            picture: replyPicture || "",
+            name: replyName || fallBackName || "Guest",
+            picture: replyPicture || fallBackImage || "",
             content: reply,
             likes: 0,
             blogId,
@@ -129,7 +131,14 @@ const CommentsCard = ({ comment, subComments, postId, blogId }: CommentsCardProp
       <Box border="1px solid #C0C0C0" p={2} borderRadius={"16px"} display={"flex"} my={1} flexDirection={{ xs: "column", sm: "row" }}>
         <Box display={"flex"} alignItems={"center"}>
           <Box width={{ xs: "40px", sm: "60px" }} height={{ xs: "40px", sm: "60px" }}>
-            <Image src={picture as string} alt={`${name} picture`} layout="responsive" width={148} height={148} style={{ borderRadius: "50%" }} />
+            <Image
+              src={(picture as string) || DefaultProfileImage}
+              alt={`${name} picture`}
+              layout="responsive"
+              width={148}
+              height={148}
+              style={{ borderRadius: "50%" }}
+            />
           </Box>
 
           <Box fontWeight={500} display={{ xs: "block", sm: "none" }} px={2} fontSize={"1.2rem"}>

@@ -86,7 +86,13 @@ const BlogPost = () => {
 
       <Box display={"flex"} width={{ xs: "90%", md: "85%" }} mx={"auto"} py={1} justifyContent={"space-between"} flexDirection={{ xs: "column", md: "row" }}>
         <Box width={{ xs: "100%", md: "65%" }}>
-          <BlogContent postId={postData?.id as string} content={postData?.content as string} postLikes={postData?.likes as number} preview={true} />
+          <BlogContent
+            postId={postData?.id as string}
+            content={postData?.content as string}
+            postLikes={postData?.likes as number}
+            preview={true}
+            customLink={postData?.customLink as string}
+          />
         </Box>
         <Box width={{ xs: "100%", md: "33%" }}>
           <Box>

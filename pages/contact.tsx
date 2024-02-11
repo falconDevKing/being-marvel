@@ -19,9 +19,12 @@ const Contact: NextPage = () => {
   return (
     <Box color="#2c2c2c">
       <Head>
-        <title>Being Marvel</title>
+        <title>Contact | Being Marvel</title>
+        <meta property="og:title" content="Contact | Being Marvel" />
         <meta name="description" content="Hearing back from you often is a constant hope that I dream of every day. I can't wait to hear from you." />
+        <meta property="og:description" content="Hearing back from you often is a constant hope that I dream of every day. I can't wait to hear from you." />
         <meta name="image" content="/ContactPicture2.png" />
+        <meta property="og:image" content="/ContactPicture2.png" />
         <link rel="icon" href="/BeingMarvelLogo.png" />
       </Head>
 
