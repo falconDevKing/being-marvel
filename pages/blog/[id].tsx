@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { Box, Stack } from "@mui/material";
 import Header from "../../components/Header";
@@ -22,58 +22,41 @@ import { ErrorHandler } from "../../utils/handlers";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useAppSelector } from "../../redux/hooks";
-import { Post } from "../../graphql/API";
+import { About, FetchPostByTitleLinkQuery, GetAboutByBlogQuery, GetPostQuery, Post } from "../../graphql/API";
+import { runWithAmplifyServerContext, reqResBasedClient } from "../../utils/amplifyServerUtils";
+import { GraphQLResult } from "aws-amplify/api";
+import { fetchPostByTitleLink, getAboutByBlog, getPost } from "../../graphql/queries";
 dayjs.extend(relativeTime);
 
-const BlogPost = () => {
-  const [postData, setPostData] = useState<Post>();
+interface BlogPostProps {
+  postData: Post;
+}
 
-  const router = useRouter();
-  const postId = router.query.id;
-
-  useEffect(() => {
-    const getPostDetails = async (postId: string) => {
-      try {
-        const correctedPostId = (await correctPostId(postId)) as string;
-        if (correctedPostId === postId) {
-          const postDetails = (await getBlogPost(postId)) as Post;
-
-          setPostData(postDetails);
-
-          await addBlogPostViews(postId, +(postDetails.views || 0) + 1);
-          await getPostComments(postId as string);
-        } else if (correctedPostId === "returnHome") {
-          router.replace("/blog");
-        } else {
-          router.replace("/blog/" + correctedPostId);
-        }
-      } catch (error: any) {
-        ErrorHandler({ message: error?.message || "Unable to get post" });
-        console.log("error getting post", error);
-        router.replace("/blog");
-      }
-    };
-
-    if (postId) {
-      getPostDetails(postId as string);
-    }
-  }, [postId, router]);
-
+const BlogPost = ({ postData }: BlogPostProps) => {
   return (
     <Box color="#2c2c2c">
       <Head>
-        <title>Blog | Being Marvel</title>
-        <meta property="og:title" content="Blog | Being Marvel" />
+        <title>{postData.title || "Blog"} | Being Marvel Blog</title>
+        <meta property="og:title" content={`${postData.title || "Blog"} | Being Marvel Blog`} />
+
         <meta
           name="description"
-          content="A lifestyle Blog. Explore life changing, relatable and inspiring blog posts that might help you see the world around you better, while you laugh a little."
+          content={
+            `${postData.description}` ||
+            "A lifestyle Blog. Explore life changing, relatable and inspiring blog posts that might help you see the world around you better, while you laugh a little."
+          }
         />
         <meta
           property="og:description"
-          content="A lifestyle Blog. Explore life changing, relatable and inspiring blog posts that might help you see the world around you better, while you laugh a little."
+          content={
+            `${postData.description}` ||
+            "A lifestyle Blog. Explore life changing, relatable and inspiring blog posts that might help you see the world around you better, while you laugh a little."
+          }
         />
-        <meta name="image" content="/HomePicture.png" />
+
+        <meta name="image" content={`${postData.descriptionImage}` || "/HomePicture.png"} />
         <meta property="og:image" content="/HomePicture.png" />
+
         <link rel="icon" href="/BeingMarvelLogo.png" />
       </Head>
 
@@ -123,7 +106,7 @@ const BlogPost = () => {
         </Box>
         <Box width={{ xs: "100%", md: "33%" }}>
           <Box>
-            <TrendingBlog postId={postId as string} />
+            <TrendingBlog postId={postData?.id as string} />
           </Box>
           {/* <Box>
             <FeaturedBlog />
@@ -145,3 +128,69 @@ const BlogPost = () => {
 };
 
 export default BlogPost;
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res, query }) => {
+  try {
+    const { id } = query;
+
+    let correctedPostId = id;
+
+    if (id?.includes("_")) {
+      const posts = (await runWithAmplifyServerContext({
+        nextServerContext: { request: req, response: res },
+        operation: async (contextSpec: any) =>
+          reqResBasedClient.graphql(contextSpec, {
+            query: fetchPostByTitleLink,
+            variables: { customLink: id },
+          }),
+      })) as GraphQLResult<FetchPostByTitleLinkQuery>;
+
+      if (posts?.data?.fetchPostByTitleLink?.items?.length) {
+        const postId = posts?.data?.fetchPostByTitleLink?.items[0]?.id;
+        correctedPostId = postId;
+      } else {
+        correctedPostId = "returnHome";
+      }
+    }
+
+    if (!correctedPostId || correctedPostId === "returnHome") {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    if (correctedPostId !== id) {
+      return {
+        redirect: {
+          destination: "/blog/" + correctedPostId,
+          permanent: false,
+        },
+      };
+    }
+
+    const post = (await runWithAmplifyServerContext({
+      nextServerContext: { request: req, response: res },
+      operation: async (contextSpec: any) =>
+        reqResBasedClient.graphql(contextSpec, {
+          query: getPost,
+          variables: { id: correctedPostId },
+        }),
+    })) as GraphQLResult<GetPostQuery>;
+
+    const postData = post?.data?.getPost as Post;
+
+    return {
+      props: { postData },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: "/blog",
+        permanent: false,
+      },
+    };
+  }
+};

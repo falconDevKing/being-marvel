@@ -15,18 +15,23 @@ import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import GoogleLogo from "../assets/GoogleLogo.svg";
+import { Blog } from "../graphql/API";
 
 const marvelBlogId = process.env.NEXT_PUBLIC_MARVEL_BLOG_ID as string;
 
 type HeaderProps = {
   width: string;
+  propsBlog?: Blog;
 };
 
-const Header = ({ width }: HeaderProps) => {
+const Header = ({ width, propsBlog }: HeaderProps) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const { name: blogName, logo, darkLogo } = useAppSelector((state) => state.blog.blog);
+  const stateBlog = useAppSelector((state) => state.blog.blog);
+  const blogToUse = stateBlog || propsBlog;
+  const { name: blogName, logo, darkLogo } = blogToUse;
+
   const { userData, isAuthenticated, userDetails } = useAppSelector((state) => state.auth);
   const { name, picture, email } = userData as AuthUserData;
 

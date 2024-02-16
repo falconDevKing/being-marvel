@@ -362,6 +362,7 @@ export const onCreatePost = /* GraphQL */ `
       views
       status
       publishedAt
+      published
       expireAt
       customLink
       blogId
@@ -410,6 +411,7 @@ export const onUpdatePost = /* GraphQL */ `
       views
       status
       publishedAt
+      published
       expireAt
       customLink
       blogId
@@ -458,6 +460,7 @@ export const onDeletePost = /* GraphQL */ `
       views
       status
       publishedAt
+      published
       expireAt
       customLink
       blogId
@@ -528,6 +531,7 @@ export const onCreateComment = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -577,6 +581,7 @@ export const onUpdateComment = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -626,6 +631,7 @@ export const onDeleteComment = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -671,6 +677,7 @@ export const onCreateAudio = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -716,6 +723,7 @@ export const onUpdateAudio = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -761,6 +769,7 @@ export const onDeleteAudio = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
