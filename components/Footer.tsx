@@ -9,12 +9,14 @@ import { useAppSelector } from "../redux/hooks";
 import { logout } from "../services/auth";
 import Link from "next/link";
 import { handleNewSubscriber } from "../services/engagement";
+import { Blog } from "../graphql/API";
 
 type FooterProps = {
   width: string;
+  propsBlog?: Blog;
 };
 
-const Footer = ({ width }: FooterProps) => {
+const Footer = ({ width, propsBlog }: FooterProps) => {
   const router = useRouter();
 
   const navToDashboard = () => {
@@ -25,7 +27,10 @@ const Footer = ({ width }: FooterProps) => {
   const id = userDetails?.id || "";
   const email = userDetails?.email || "";
 
-  const { name: blogName, logo, darkLogo, id: blogId, interimBloggers } = useAppSelector((state) => state.blog.blog);
+  const stateBlog = useAppSelector((state) => state.blog.blog);
+  const blogToUse = stateBlog || propsBlog;
+  const { name: blogName, darkLogo, id: blogId, interimBloggers } = blogToUse;
+
   const [loading, setLoading] = useState<boolean>(false);
   const [subscriberMail, setSubscriberMail] = useState<string>("");
 
