@@ -3,8 +3,18 @@
 // this is an auto generated file. This will be overwritten
 
 export const genericMailSender = /* GraphQL */ `
-  query GenericMailSender($destination: MailDestination, $mailSubject: String, $mailBody: String, $replyAddresses: [String]) {
-    genericMailSender(destination: $destination, mailSubject: $mailSubject, mailBody: $mailBody, replyAddresses: $replyAddresses)
+  query GenericMailSender(
+    $destination: MailDestination
+    $mailSubject: String
+    $mailBody: String
+    $replyAddresses: [String]
+  ) {
+    genericMailSender(
+      destination: $destination
+      mailSubject: $mailSubject
+      mailBody: $mailBody
+      replyAddresses: $replyAddresses
+    )
   }
 `;
 export const getUser = /* GraphQL */ `
@@ -40,7 +50,11 @@ export const getUser = /* GraphQL */ `
   }
 `;
 export const listUsers = /* GraphQL */ `
-  query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -117,7 +131,11 @@ export const getBlog = /* GraphQL */ `
   }
 `;
 export const listBlogs = /* GraphQL */ `
-  query ListBlogs($filter: ModelBlogFilterInput, $limit: Int, $nextToken: String) {
+  query ListBlogs(
+    $filter: ModelBlogFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
     listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -165,7 +183,11 @@ export const getAbout = /* GraphQL */ `
   }
 `;
 export const listAbouts = /* GraphQL */ `
-  query ListAbouts($filter: ModelAboutFilterInput, $limit: Int, $nextToken: String) {
+  query ListAbouts(
+    $filter: ModelAboutFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
     listAbouts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -199,6 +221,7 @@ export const getPost = /* GraphQL */ `
       views
       status
       publishedAt
+      published
       expireAt
       customLink
       blogId
@@ -233,7 +256,11 @@ export const getPost = /* GraphQL */ `
   }
 `;
 export const listPosts = /* GraphQL */ `
-  query ListPosts($filter: ModelPostFilterInput, $limit: Int, $nextToken: String) {
+  query ListPosts(
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -248,6 +275,7 @@ export const listPosts = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -296,6 +324,7 @@ export const getComment = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -309,7 +338,11 @@ export const getComment = /* GraphQL */ `
   }
 `;
 export const listComments = /* GraphQL */ `
-  query ListComments($filter: ModelCommentFilterInput, $limit: Int, $nextToken: String) {
+  query ListComments(
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -361,6 +394,7 @@ export const getAudio = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -374,7 +408,11 @@ export const getAudio = /* GraphQL */ `
   }
 `;
 export const listAudio = /* GraphQL */ `
-  query ListAudio($filter: ModelAudioFilterInput, $limit: Int, $nextToken: String) {
+  query ListAudio(
+    $filter: ModelAudioFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
     listAudio(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -398,7 +436,14 @@ export const getUserByEmail = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    getUserByEmail(email: $email, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    getUserByEmail(
+      email: $email
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         customId
@@ -428,7 +473,14 @@ export const getBlogByUser = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    getBlogByUser(userId: $userId, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    getBlogByUser(
+      userId: $userId
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         name
@@ -454,7 +506,14 @@ export const getAboutByBlog = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    getAboutByBlog(blogId: $blogId, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    getAboutByBlog(
+      blogId: $blogId
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         title
@@ -481,7 +540,14 @@ export const fetchPostByTitleLink = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    fetchPostByTitleLink(customLink: $customLink, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    fetchPostByTitleLink(
+      customLink: $customLink
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         category
@@ -495,6 +561,7 @@ export const fetchPostByTitleLink = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -515,7 +582,14 @@ export const fetchPostsByBlog = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    fetchPostsByBlog(blogId: $blogId, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    fetchPostsByBlog(
+      blogId: $blogId
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         category
@@ -529,6 +603,7 @@ export const fetchPostsByBlog = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -549,7 +624,14 @@ export const fetchCommentsByBlog = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    fetchCommentsByBlog(blogId: $blogId, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    fetchCommentsByBlog(
+      blogId: $blogId
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         name
@@ -576,7 +658,14 @@ export const fetchCommentsByPost = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    fetchCommentsByPost(postId: $postId, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    fetchCommentsByPost(
+      postId: $postId
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         name
@@ -603,7 +692,14 @@ export const fetchAudiosByBlog = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    fetchAudiosByBlog(blogId: $blogId, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    fetchAudiosByBlog(
+      blogId: $blogId
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         duration
@@ -626,7 +722,14 @@ export const getAudioByPost = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    getAudioByPost(postId: $postId, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    getAudioByPost(
+      postId: $postId
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         duration

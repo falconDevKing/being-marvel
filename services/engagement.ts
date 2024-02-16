@@ -24,7 +24,7 @@ export const handleNewSubscriber = async (subscriberMail: string, blogId: string
     const blogData = blog.data?.getBlog as Blog;
 
     const subscribers = blogData?.subscriber || [];
-    const updatedSubscribers = subscribers.includes(subscriberMail) ? subscribers : [...subscribers, subscriberMail];
+    const updatedSubscribers = Array.from(new Set([...subscribers, subscriberMail]));
 
     const updatedBlog = await client.graphql({
       query: updateBlog,
@@ -47,6 +47,32 @@ export const handleNewSubscriber = async (subscriberMail: string, blogId: string
 
     DismissHandler();
     SuccessHandler({ message: "Subscribed successfully" });
+  } catch (error: any) {
+    console.log("graphql err registering subscriber", error?.message, error);
+    throw error;
+  }
+};
+
+export const handleUnSubscribe = async (subscriberMail: string, blogId: string) => {
+  try {
+    // get blog
+    const blog = (await client.graphql({
+      query: getBlog,
+      variables: { id: blogId },
+    })) as GraphQLResult<GetBlogQuery>;
+
+    const blogData = blog.data?.getBlog as Blog;
+
+    const subscribers = blogData?.subscriber || [];
+    const updatedSubscribers = subscribers.filter((subscriber) => subscriber !== subscriberMail);
+
+    const updatedBlog = await client.graphql({
+      query: updateBlog,
+      variables: { input: { id: blogId, subscriber: updatedSubscribers } },
+    });
+
+    DismissHandler();
+    SuccessHandler({ message: "Unsubscribed successfully" });
   } catch (error: any) {
     console.log("graphql err registering subscriber", error?.message, error);
     throw error;
