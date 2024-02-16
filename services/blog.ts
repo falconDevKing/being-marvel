@@ -87,3 +87,15 @@ export const getBlogDetails = async (blogId: string) => {
 
   store.dispatch(setPostSummary({ data: totalPosts }));
 };
+
+export const getBlogSubscribers = async (blogId: string) => {
+  const blog = (await client.graphql({
+    query: getBlog,
+    variables: { id: blogId },
+  })) as GraphQLResult<GetBlogQuery>;
+
+  const blogData = blog.data?.getBlog;
+  const subscribers = blogData?.subscriber || [];
+
+  return subscribers;
+};

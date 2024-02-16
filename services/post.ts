@@ -22,6 +22,9 @@ import {
   UpdateCommentMutation,
   UpdatePostMutation,
 } from "../graphql/API";
+import { getBlogSubscribers } from "./blog";
+import NewPostMailTemplate from "../utils/mailTemplates/newPostMailTemplate";
+import { sendMail } from "../utils/mailSender";
 
 const client = generateClient();
 
@@ -126,14 +129,30 @@ export const addBlogPostViews = async (id: string, views: number) => {
 
 export const publishPost = async (id: string, blogId: string) => {
   try {
+    const initialPost = await getBlogPost(id);
+
     const updatePostResponse = (await client.graphql({
       query: updatePost,
-      variables: { input: { id, status: true, publishedAt: dayjs().format(), expireAt: 1171734022 } },
+      variables: { input: { id, status: true, publishedAt: dayjs().format(), expireAt: 1171734022, published: true } },
     })) as GraphQLResult<UpdatePostMutation>;
 
     await updatedBlogPostData(blogId);
 
-    // TODO: work on notifying subscribers
+    if (!initialPost?.published) {
+      // TODO: work on notifying subscribers
+      const blogSubscribers = await getBlogSubscribers(blogId);
+
+      const postTitle = initialPost?.title as string;
+      const postlink = process.env.NEXT_PUBLIC_BASE_URL + "/blog/" + id;
+      const mailSubject = "New Post: " + initialPost?.title;
+      const mailBody = NewPostMailTemplate(postTitle, postlink);
+      const ToAddresses = blogSubscribers.filter(Boolean) as string[];
+      const recipients = {
+        ToAddresses,
+      };
+
+      await sendMail(recipients, mailSubject, mailBody);
+    }
 
     return updatePostResponse.data?.updatePost;
   } catch (error: any) {

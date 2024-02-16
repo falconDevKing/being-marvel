@@ -73,6 +73,7 @@ type Post @model {
   views: Int
   status: Boolean
   publishedAt: String
+  published: Boolean
   expireAt: Int
   customLink: String
   @index(
