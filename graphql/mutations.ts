@@ -3,7 +3,10 @@
 // this is an auto generated file. This will be overwritten
 
 export const createUser = /* GraphQL */ `
-  mutation CreateUser($input: CreateUserInput!, $condition: ModelUserConditionInput) {
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
     createUser(input: $input, condition: $condition) {
       id
       customId
@@ -35,7 +38,10 @@ export const createUser = /* GraphQL */ `
   }
 `;
 export const updateUser = /* GraphQL */ `
-  mutation UpdateUser($input: UpdateUserInput!, $condition: ModelUserConditionInput) {
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
     updateUser(input: $input, condition: $condition) {
       id
       customId
@@ -67,7 +73,10 @@ export const updateUser = /* GraphQL */ `
   }
 `;
 export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser($input: DeleteUserInput!, $condition: ModelUserConditionInput) {
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
     deleteUser(input: $input, condition: $condition) {
       id
       customId
@@ -99,7 +108,10 @@ export const deleteUser = /* GraphQL */ `
   }
 `;
 export const createBlog = /* GraphQL */ `
-  mutation CreateBlog($input: CreateBlogInput!, $condition: ModelBlogConditionInput) {
+  mutation CreateBlog(
+    $input: CreateBlogInput!
+    $condition: ModelBlogConditionInput
+  ) {
     createBlog(input: $input, condition: $condition) {
       id
       name
@@ -153,7 +165,10 @@ export const createBlog = /* GraphQL */ `
   }
 `;
 export const updateBlog = /* GraphQL */ `
-  mutation UpdateBlog($input: UpdateBlogInput!, $condition: ModelBlogConditionInput) {
+  mutation UpdateBlog(
+    $input: UpdateBlogInput!
+    $condition: ModelBlogConditionInput
+  ) {
     updateBlog(input: $input, condition: $condition) {
       id
       name
@@ -207,7 +222,10 @@ export const updateBlog = /* GraphQL */ `
   }
 `;
 export const deleteBlog = /* GraphQL */ `
-  mutation DeleteBlog($input: DeleteBlogInput!, $condition: ModelBlogConditionInput) {
+  mutation DeleteBlog(
+    $input: DeleteBlogInput!
+    $condition: ModelBlogConditionInput
+  ) {
     deleteBlog(input: $input, condition: $condition) {
       id
       name
@@ -261,7 +279,10 @@ export const deleteBlog = /* GraphQL */ `
   }
 `;
 export const createAbout = /* GraphQL */ `
-  mutation CreateAbout($input: CreateAboutInput!, $condition: ModelAboutConditionInput) {
+  mutation CreateAbout(
+    $input: CreateAboutInput!
+    $condition: ModelAboutConditionInput
+  ) {
     createAbout(input: $input, condition: $condition) {
       id
       title
@@ -290,7 +311,10 @@ export const createAbout = /* GraphQL */ `
   }
 `;
 export const updateAbout = /* GraphQL */ `
-  mutation UpdateAbout($input: UpdateAboutInput!, $condition: ModelAboutConditionInput) {
+  mutation UpdateAbout(
+    $input: UpdateAboutInput!
+    $condition: ModelAboutConditionInput
+  ) {
     updateAbout(input: $input, condition: $condition) {
       id
       title
@@ -319,7 +343,10 @@ export const updateAbout = /* GraphQL */ `
   }
 `;
 export const deleteAbout = /* GraphQL */ `
-  mutation DeleteAbout($input: DeleteAboutInput!, $condition: ModelAboutConditionInput) {
+  mutation DeleteAbout(
+    $input: DeleteAboutInput!
+    $condition: ModelAboutConditionInput
+  ) {
     deleteAbout(input: $input, condition: $condition) {
       id
       title
@@ -348,7 +375,10 @@ export const deleteAbout = /* GraphQL */ `
   }
 `;
 export const createPost = /* GraphQL */ `
-  mutation CreatePost($input: CreatePostInput!, $condition: ModelPostConditionInput) {
+  mutation CreatePost(
+    $input: CreatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
     createPost(input: $input, condition: $condition) {
       id
       category
@@ -362,6 +392,7 @@ export const createPost = /* GraphQL */ `
       views
       status
       publishedAt
+      published
       expireAt
       customLink
       blogId
@@ -396,7 +427,10 @@ export const createPost = /* GraphQL */ `
   }
 `;
 export const updatePost = /* GraphQL */ `
-  mutation UpdatePost($input: UpdatePostInput!, $condition: ModelPostConditionInput) {
+  mutation UpdatePost(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
     updatePost(input: $input, condition: $condition) {
       id
       category
@@ -410,6 +444,7 @@ export const updatePost = /* GraphQL */ `
       views
       status
       publishedAt
+      published
       expireAt
       customLink
       blogId
@@ -444,7 +479,10 @@ export const updatePost = /* GraphQL */ `
   }
 `;
 export const deletePost = /* GraphQL */ `
-  mutation DeletePost($input: DeletePostInput!, $condition: ModelPostConditionInput) {
+  mutation DeletePost(
+    $input: DeletePostInput!
+    $condition: ModelPostConditionInput
+  ) {
     deletePost(input: $input, condition: $condition) {
       id
       category
@@ -458,6 +496,7 @@ export const deletePost = /* GraphQL */ `
       views
       status
       publishedAt
+      published
       expireAt
       customLink
       blogId
@@ -492,7 +531,10 @@ export const deletePost = /* GraphQL */ `
   }
 `;
 export const createComment = /* GraphQL */ `
-  mutation CreateComment($input: CreateCommentInput!, $condition: ModelCommentConditionInput) {
+  mutation CreateComment(
+    $input: CreateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
     createComment(input: $input, condition: $condition) {
       id
       name
@@ -528,6 +570,7 @@ export const createComment = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -541,7 +584,10 @@ export const createComment = /* GraphQL */ `
   }
 `;
 export const updateComment = /* GraphQL */ `
-  mutation UpdateComment($input: UpdateCommentInput!, $condition: ModelCommentConditionInput) {
+  mutation UpdateComment(
+    $input: UpdateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
     updateComment(input: $input, condition: $condition) {
       id
       name
@@ -577,6 +623,7 @@ export const updateComment = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -590,7 +637,10 @@ export const updateComment = /* GraphQL */ `
   }
 `;
 export const deleteComment = /* GraphQL */ `
-  mutation DeleteComment($input: DeleteCommentInput!, $condition: ModelCommentConditionInput) {
+  mutation DeleteComment(
+    $input: DeleteCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
     deleteComment(input: $input, condition: $condition) {
       id
       name
@@ -626,6 +676,7 @@ export const deleteComment = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -639,7 +690,10 @@ export const deleteComment = /* GraphQL */ `
   }
 `;
 export const createAudio = /* GraphQL */ `
-  mutation CreateAudio($input: CreateAudioInput!, $condition: ModelAudioConditionInput) {
+  mutation CreateAudio(
+    $input: CreateAudioInput!
+    $condition: ModelAudioConditionInput
+  ) {
     createAudio(input: $input, condition: $condition) {
       id
       duration
@@ -671,6 +725,7 @@ export const createAudio = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -684,7 +739,10 @@ export const createAudio = /* GraphQL */ `
   }
 `;
 export const updateAudio = /* GraphQL */ `
-  mutation UpdateAudio($input: UpdateAudioInput!, $condition: ModelAudioConditionInput) {
+  mutation UpdateAudio(
+    $input: UpdateAudioInput!
+    $condition: ModelAudioConditionInput
+  ) {
     updateAudio(input: $input, condition: $condition) {
       id
       duration
@@ -716,6 +774,7 @@ export const updateAudio = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
@@ -729,7 +788,10 @@ export const updateAudio = /* GraphQL */ `
   }
 `;
 export const deleteAudio = /* GraphQL */ `
-  mutation DeleteAudio($input: DeleteAudioInput!, $condition: ModelAudioConditionInput) {
+  mutation DeleteAudio(
+    $input: DeleteAudioInput!
+    $condition: ModelAudioConditionInput
+  ) {
     deleteAudio(input: $input, condition: $condition) {
       id
       duration
@@ -761,6 +823,7 @@ export const deleteAudio = /* GraphQL */ `
         views
         status
         publishedAt
+        published
         expireAt
         customLink
         blogId
