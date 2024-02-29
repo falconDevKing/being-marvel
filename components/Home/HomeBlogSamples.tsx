@@ -2,19 +2,13 @@ import { Box, Stack, useMediaQuery } from "@mui/material";
 import HomeBlogCard from "./HomeBlogCard";
 import Link from "next/link";
 import { useAppSelector } from "../../redux/hooks";
-import { IPostSummary } from "../../interfaces/blog";
 
-interface HomeProps {
-  summaryPosts: IPostSummary;
-}
-
-const HomeBlogSamples = ({ summaryPosts }: HomeProps) => {
+const HomeBlogSamples = () => {
   const { postsSummary } = useAppSelector((state) => state.blog);
-  const postsSummaryToUse = postsSummary || summaryPosts;
   const matches = useMediaQuery("(min-width:900px)");
 
-  const latest3PostsSummary = postsSummaryToUse.filter((postSummary) => postSummary.status).slice(0, 3);
-  const latest4PostsSummary = postsSummaryToUse.filter((postSummary) => postSummary.status).slice(0, 4);
+  const latest3PostsSummary = postsSummary.filter((postSummary) => postSummary.status).slice(0, 3);
+  const latest4PostsSummary = postsSummary.filter((postSummary) => postSummary.status).slice(0, 4);
 
   return (
     <Box display={"flex"} flexDirection={"column"} alignItems={"center"} p={{ xs: 4, sm: 8 }}>

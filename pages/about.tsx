@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { NextPage } from "next";
 import Head from "next/head";
 import { Box, Stack, Typography } from "@mui/material";
 import Header from "../components/Header";
@@ -9,17 +9,9 @@ import { RiLinkedinFill } from "react-icons/ri";
 import { AiOutlineMail } from "react-icons/ai";
 import SocialMediaHandles from "../components/About/SocialMediaHandles";
 import { useAppSelector } from "../redux/hooks";
-import { runWithAmplifyServerContext, reqResBasedClient } from "../utils/amplifyServerUtils";
-import { About, Blog, GetAboutByBlogQuery, GetBlogQuery } from "../graphql/API";
-import { getAboutByBlog, getBlog } from "../graphql/queries";
-import { GraphQLResult } from "aws-amplify/api";
 
-interface AboutProps {
-  about: About;
-}
-
-const AboutPage: NextPage<AboutProps> = ({ about }) => {
-  const { title, logo, twitter, linkedIn, instagram, email, content } = about;
+const About: NextPage = () => {
+  const { title, logo, twitter, linkedIn, instagram, email, content } = useAppSelector((state) => state.blog.about);
 
   return (
     <Box color="#2c2c2c">
@@ -67,27 +59,4 @@ const AboutPage: NextPage<AboutProps> = ({ about }) => {
   );
 };
 
-export default AboutPage;
-
-export const getStaticProps: GetStaticProps = async () => {
-  try {
-    const aboutData = (await runWithAmplifyServerContext({
-      nextServerContext: null,
-      operation: async (contextSpec) =>
-        reqResBasedClient.graphql(contextSpec, {
-          query: getAboutByBlog,
-          variables: { blogId: process.env.MARVEL_BLOG_ID },
-        }),
-    })) as GraphQLResult<GetAboutByBlogQuery>;
-
-    const about = aboutData?.data?.getAboutByBlog?.items[0] as About;
-
-    return {
-      props: { about },
-    };
-  } catch (error) {
-    return {
-      props: { about: {} },
-    };
-  }
-};
+export default About;
