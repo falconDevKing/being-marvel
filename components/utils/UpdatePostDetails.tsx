@@ -4,7 +4,7 @@ import { IPostSummary } from "../../interfaces/blog";
 import Input from "../Input";
 import dayjs from "dayjs";
 import IDatePicker from "../IDatePicker";
-import { ErrorHandler } from "../../utils/handlers";
+import { ErrorHandler, SuccessHandler } from "../../utils/handlers";
 import { updateBlogPost } from "../../services/post";
 import ISelect from "../ISelect";
 
@@ -29,6 +29,7 @@ const UpdatePostDetails = ({ postsSummary, blogId }: UpdatePostDetailsProps) => 
       console.log("it", item);
 
       await updateBlogPost(item);
+      SuccessHandler({ message: "Updated Successfully" });
       resetParams();
     } catch (err: any) {
       console.log("err", err?.message, err);
@@ -59,7 +60,6 @@ const UpdatePostDetails = ({ postsSummary, blogId }: UpdatePostDetailsProps) => 
           options={[{ name: "Post Name", value: "" }, ...postsSummary.map((postSummary) => ({ name: postSummary?.title, value: postSummary.id }))]}
         />
       </Box>
-
       <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
         <IDatePicker
           label={
@@ -74,7 +74,7 @@ const UpdatePostDetails = ({ postsSummary, blogId }: UpdatePostDetailsProps) => 
           name="postDate"
         />
       </Box>
-
+      Post Likes
       <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
         <Input
           type="number"
@@ -88,7 +88,7 @@ const UpdatePostDetails = ({ postsSummary, blogId }: UpdatePostDetailsProps) => 
           }}
         />
       </Box>
-
+      Post Views
       <Box display={"flex"} alignItems={"center"} py={1} px={1} bgcolor={"#f4f7fd"} m={1} borderRadius={"4px"} width="100%">
         <Input
           type="number"
@@ -102,7 +102,6 @@ const UpdatePostDetails = ({ postsSummary, blogId }: UpdatePostDetailsProps) => 
           }}
         />
       </Box>
-
       <Box display={"flex"} justifyContent={"flex-end"}>
         <Button onClick={handlePostDetailsUpdate} variant={"contained"}>
           Submit

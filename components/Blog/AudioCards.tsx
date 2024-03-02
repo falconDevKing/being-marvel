@@ -16,25 +16,25 @@ const AudioCards = () => {
 
   return (
     <Box width={"85%"} mx="auto">
-      <Box>
+      <Box py={8}>
         <Box>
           <Box fontWeight={700} fontSize={"1.8rem"}>
             LISTEN TO AUDIO
-            <Box component={"span"} fontStyle={"italic"} fontSize={"0.9rem"} pl={1}>
-              Coming soon
+            <Box component={"span"} fontStyle={"italic"} fontSize={"1rem"} pl={1} color="red">
+              ...Coming soon
             </Box>
           </Box>
           {/* <Box color="#D8D6D6">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</Box> */}
         </Box>
       </Box>
 
-      <Box display={"flex"} flexDirection={"row"} py={4} flexWrap="wrap">
+      <Box display={"none"} flexDirection={"row"} py={4} flexWrap="wrap">
         {["Being Here", "Being Away", "Being In A Season", "Being In A Lot", "Being Disabled", "Being Home & Away"].map((element, index) => (
           <AudioCard key={element} name={element} />
         ))}
       </Box>
 
-      <Box justifyContent={"center"} display={"flex"} py={2}>
+      <Box justifyContent={"center"} display={"none"} py={2}>
         <Pagination count={paginationCount} page={page} onChange={handlePageChange} color="primary" showFirstButton showLastButton />
       </Box>
     </Box>
