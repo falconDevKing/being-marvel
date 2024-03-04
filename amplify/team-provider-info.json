@@ -22,7 +22,7 @@
         "mailSender": {
           "deploymentBucketName": "amplify-beingmarvelblog-dev-81553-deployment",
           "s3Key": "amplify-builds/mailSender-356279472b58702b5074-build.zip",
-          "sesEmail": "emmanueloyekan33@gmail.com"
+          "sesEmail": "beingmarvelblog@gmail.com"
         },
         "beingmarvelblog5767c27ePostAuthentication": {
           "deploymentBucketName": "amplify-beingmarvelblog-dev-81553-deployment",
@@ -63,7 +63,7 @@
         "mailSender": {
           "deploymentBucketName": "amplify-beingmarvelblog-prodd-112435-deployment",
           "s3Key": "amplify-builds/mailSender-356279472b58702b5074-build.zip",
-          "sesEmail": "emmanueloyekan33@gmail.com"
+          "sesEmail": "beingmarvelblog@gmail.com"
         },
         "beingmarvelblog": {}
       },
