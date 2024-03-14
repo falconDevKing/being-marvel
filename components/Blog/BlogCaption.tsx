@@ -16,7 +16,7 @@ const BlogCaption = ({ captionText, captionImage }: BlogCaptionProps) => {
       mx="auto"
       mb={4}
       sx={{
-        backgroundImage: `url(${captionImage})`,
+        backgroundImage: `url("${captionImage}")`,
         backgroundSize: "cover",
       }}
     >

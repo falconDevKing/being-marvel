@@ -85,7 +85,7 @@ const NewPost = () => {
           id: uuidV4(),
           category,
           title,
-          description,
+          description: description ? description + "..." : value.replace(/<[^>]+>/g, "").substring(0, 140) + "...",
           content: value,
           captionText,
           descriptionImage: s3baseurl + descriptionFileLink,

@@ -78,9 +78,9 @@ const Select = ({
           ...style,
         }}
       >
-        {options?.map((option) => {
+        {options?.map((option, index) => {
           return (
-            <option style={{ color: "#2C2C2C" }} value={option?.value}>
+            <option style={{ color: "#2C2C2C" }} value={option?.value} key={index}>
               {option?.name}
             </option>
           );

@@ -95,7 +95,7 @@ const EditPost = () => {
           id,
           blogId,
           title,
-          description,
+          description: description ? description + "..." : value.replace(/<[^>]+>/g, "").substring(0, 140) + "...",
           captionText,
           category,
           content: value,
