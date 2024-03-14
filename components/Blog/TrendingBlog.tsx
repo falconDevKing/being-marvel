@@ -22,7 +22,7 @@ const TrendingBlog = ({ postId }: TrendingBlogProps) => {
       {toDisplay.map((post, index) => {
         const { title, category, descriptionImage, id } = post;
         return (
-          <Link href={`/blog/${id}`}>
+          <Link href={`/blog/${id}`} key={index}>
             <a>
               <Box key={index} display={"flex"} alignItems={"center"} borderTop={1} borderColor={"#B6B9C0"} p={2}>
                 <Box width="40%" borderRadius={"24px"}>

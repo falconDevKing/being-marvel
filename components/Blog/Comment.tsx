@@ -62,16 +62,16 @@ const Comment = ({ postId, blogId }: CommentProps) => {
     });
   };
 
-  useEffect(() => {
-    console.log({ navToComment });
-    const { comment, commentId, section } = navToComment;
-
-    if (comment && !commentId && section === "comment") {
-      console.log("entered comment");
-      setComment(comment);
-      scrollToComment("comment");
-    }
-  }, [navToComment]);
+  // useEffect(() => {
+  //   console.log({ navToComment });
+  //   const { comment, commentId, section } = navToComment;
+  //
+  //   if (comment && !commentId && section === "comment") {
+  //     console.log("entered comment");
+  //     setComment(comment);
+  //     scrollToComment("comment");
+  //   }
+  // }, [navToComment]);
 
   return (
     <Box bgcolor="#F4F7FD" width={"100%"} py={4} my={4}>

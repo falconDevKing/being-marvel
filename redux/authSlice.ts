@@ -80,7 +80,7 @@ const authSlice = createSlice({
     ) => {
       state.loading = false;
       state.isAuthenticated = true;
-      state.authUser = action.payload.data;
+      state.authUser = action.payload.data || {};
       state.isInitialized = true;
     },
     setAuthData: (
@@ -92,7 +92,10 @@ const authSlice = createSlice({
       state.isInitialized = true;
       state.loading = false;
       state.isAuthenticated = true;
-      state.authData = action.payload.data;
+      state.authData = action.payload.data || {
+        username: "",
+        userId: "",
+      };
     },
     setUserData: (
       state,
@@ -100,7 +103,7 @@ const authSlice = createSlice({
         data: any;
       }>,
     ) => {
-      state.userData = action.payload.data;
+      state.userData = action.payload.data || {};
     },
     setUserDetails: (
       state,
@@ -108,7 +111,7 @@ const authSlice = createSlice({
         data: any;
       }>,
     ) => {
-      state.userDetails = action.payload.data;
+      state.userDetails = action.payload.data || { id: "" };
     },
     setUnAuthData: (
       state,
@@ -123,7 +126,8 @@ const authSlice = createSlice({
         username: "",
         userId: "",
       };
-      (state.userDetails = { id: "" }), (state.error = action.payload.data);
+      state.userDetails = { id: "" };
+      state.error = action.payload.data;
     },
     setLogOut: (state) => {
       state.loading = false;
