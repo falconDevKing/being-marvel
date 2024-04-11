@@ -21,6 +21,11 @@
         "read",
         "update",
         "delete"
+      ],
+      "Blog:@model(appsync)": [
+        "create",
+        "read",
+        "update"
       ]
     }
   }

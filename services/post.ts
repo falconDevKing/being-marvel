@@ -30,6 +30,7 @@ const client = generateClient();
 
 export const createBlogPost = async (postData: IBlogPost) => {
   try {
+    //TODO: check for unique custom link
     console.log("services", { postData });
     const createPostResponse = (await client.graphql({
       query: createPost,
@@ -46,6 +47,7 @@ export const createBlogPost = async (postData: IBlogPost) => {
 
 export const updateBlogPost = async (postData: IBlogPost) => {
   try {
+    //TODO: check for unique custom link
     const updatePostResponse = (await client.graphql({
       query: updatePost,
       variables: { input: postData },

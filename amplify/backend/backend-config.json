@@ -80,14 +80,6 @@
     }
   },
   "parameters": {
-    "AMPLIFY_auth_beingmarvelblog5767c27e_googleClientId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "beingmarvelblog5767c27e"
-        }
-      ]
-    },
     "AMPLIFY_function_beingmarvelblog5767c27ePostAuthentication_deploymentBucketName": {
       "usedBy": [
         {
