@@ -25,7 +25,7 @@ const NewPostMailTemplate = (title: string, link: string) => {
       </tr>
       <tr>
         <td style="background: linear-gradient(180deg, rgba(16, 25, 136, 0.2) 0%, rgba(68, 205, 224, 0.2) 100%); padding: 48px 42px; border-radius: 10px">
-          <p style="font-weight: 700; font-size: 24px; line-height: 32px; color: #253858">New Post: Being Away</p>
+          <p style="font-weight: 700; font-size: 24px; line-height: 32px; color: #253858">New Post: ${title}</p>
         </td>
       </tr>
       <tr>
