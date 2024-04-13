@@ -148,9 +148,10 @@ export const publishPost = async (id: string, blogId: string) => {
       const postlink = process.env.NEXT_PUBLIC_BASE_URL + "/blog/" + id;
       const mailSubject = "New Post: " + initialPost?.title;
       const mailBody = NewPostMailTemplate(postTitle, postlink);
-      const ToAddresses = blogSubscribers.filter(Boolean) as string[];
+      const BccAddresses = blogSubscribers.filter(Boolean) as string[];
       const recipients = {
-        ToAddresses,
+        ToAddresses: [],
+        BccAddresses,
       };
 
       await sendMail(recipients, mailSubject, mailBody);
