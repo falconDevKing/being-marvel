@@ -2,13 +2,21 @@ import { Box, Stack, useMediaQuery } from "@mui/material";
 import HomeBlogCard from "./HomeBlogCard";
 import Link from "next/link";
 import { useAppSelector } from "../../redux/hooks";
+import dayjs from "dayjs";
 
 const HomeBlogSamples = () => {
   const { postsSummary } = useAppSelector((state) => state.blog);
   const matches = useMediaQuery("(min-width:900px)");
 
-  const latest3PostsSummary = postsSummary.filter((postSummary) => postSummary.status).slice(0, 3);
-  const latest4PostsSummary = postsSummary.filter((postSummary) => postSummary.status).slice(0, 4);
+  const sortedPostSummary = ([...postsSummary] || []).sort((a, b) => {
+    const atime = a.publishedAt;
+    const btime = b.publishedAt;
+
+    return dayjs(atime).isAfter(btime) ? -1 : 1;
+  });
+
+  const latest3PostsSummary = sortedPostSummary.filter((postSummary) => postSummary.status).slice(0, 3);
+  const latest4PostsSummary = sortedPostSummary.filter((postSummary) => postSummary.status).slice(0, 4);
 
   return (
     <Box display={"flex"} flexDirection={"column"} alignItems={"center"} p={{ xs: 4, sm: 8 }}>
